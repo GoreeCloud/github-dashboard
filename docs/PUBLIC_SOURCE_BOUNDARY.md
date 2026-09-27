@@ -2,7 +2,7 @@
 
 ## Decision
 
-`GoreeCloud/goreecloud-github-dashboard` is intentionally a **public, open-source repository**.
+`GoreeCloud/github-dashboard` is intentionally a **public, open-source repository**.
 
 The operational GoreeCloud GitHub Dashboard is intentionally a **private, authenticated deployment** whenever it can expose non-public GoreeCloud repository information.
 
