@@ -2,7 +2,7 @@
 
 GoreeCloud GitHub Dashboard is intended to reduce the operational cost of understanding the GoreeCloud repository portfolio without weakening GitHub's authority or the private-data boundary.
 
-## Benefits delivered by current Development source
+## Benefits delivered by current Forge source
 
 ### Faster portfolio awareness
 
