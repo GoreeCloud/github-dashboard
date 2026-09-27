@@ -257,7 +257,7 @@ if (!failures.length) {
     failures.push("Platform Contract validation must resolve pull requests to the exact head SHA.");
   }
   if (!platformWorkflow.includes("result['anchor_eligible'] is False")) {
-    failures.push("Platform Contract workflow must verify Development is not Stable-eligible.");
+    failures.push("Platform Contract workflow must verify Forge remains fail-closed and is not Anchor-eligible.");
   }
 }
 
