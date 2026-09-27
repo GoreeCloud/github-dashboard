@@ -7,7 +7,7 @@
     <meta name="theme-color" content="#0f6f6a" />
     <meta
       name="description"
-      content="Private GoreeCloud GitHub portfolio governance observation view for baseline files, policy-defined documentation evidence and applicability declarations, classic default-branch protection, active rulesets, and required-workflow references."
+      content="Private GoreeCloud GitHub portfolio governance observation view for baseline files, current application/service repository baseline evidence and applicability declarations, classic default-branch protection, active rulesets, and required-workflow references."
     />
     <title>GoreeCloud GitHub Governance</title>
     <link rel="stylesheet" href="/styles.css" />
@@ -27,7 +27,7 @@
           <a class="nav-item" href="/">Dashboard</a>
           <a class="nav-item is-active" href="#summary" aria-current="page">Governance</a>
           <a class="nav-item" href="#baseline-files">Baseline files</a>
-          <a class="nav-item" href="#documentation">Documentation</a>
+          <a class="nav-item" href="#documentation">Required files</a>
           <a class="nav-item" href="#classic-protection">Classic protection</a>
           <a class="nav-item" href="#rulesets">Rulesets</a>
           <a class="nav-item" href="#required-workflows">Required workflows</a>
@@ -55,7 +55,7 @@
         <section id="summary" class="hero panel panel-glaze" aria-labelledby="governance-title">
           <div class="hero-copy">
             <span class="hero-kicker">Read-only observation</span>
-            <h2 id="governance-title">See baseline files, documentation evidence, applicability declarations, branch protections, active rulesets, and required-workflow references across the portfolio.</h2>
+            <h2 id="governance-title">See baseline files, application/service repository baseline evidence, applicability declarations, branch protections, active rulesets, and required-workflow references across the portfolio.</h2>
             <p>
               These signals are repository-state evidence, not proof of policy satisfaction. Documentation applicability is classified only when the exact default-branch Platform Contract explicitly declares <code>component.type</code> as application or service; every other repository remains unclassified. Required-workflow references likewise remain evidence until separate governed interpretation exists.
             </p>
@@ -88,7 +88,7 @@
           <article class="stat-card panel">
             <span class="stat-label">Docs complete</span>
             <strong class="stat-value" id="stat-documentation-complete">—</strong>
-            <span class="stat-caption">All six documentation paths present</span>
+            <span class="stat-caption">All 14 required repository paths present</span>
           </article>
           <article class="stat-card panel">
             <span class="stat-label">Docs gaps</span>
@@ -145,16 +145,16 @@
         <section id="documentation" class="panel section-panel repository-section" aria-labelledby="documentation-heading">
           <div class="section-heading">
             <div>
-              <p class="eyebrow">Policy-defined file evidence</p>
-              <h2 id="documentation-heading">Application/service documentation observation</h2>
+              <p class="eyebrow">Policy-defined repository evidence</p>
+              <h2 id="documentation-heading">Application/service repository baseline observation</h2>
             </div>
             <span class="section-count" id="documentation-count">0</span>
           </div>
           <p id="documentation-boundary" class="item-meta">
-            Applicability is classified only from an explicit Platform Contract component.type declaration of application or service. Presence or absence remains evidence only.
+            Applicability is classified only from an explicit Platform Contract component.type declaration of application or service. The 14 required paths are observed as evidence only; presence or absence is not a compliance verdict.
           </p>
           <div id="documentation-list" class="content-grid" aria-live="polite">
-            <div class="empty-state">Refresh to inspect repository documentation evidence.</div>
+            <div class="empty-state">Refresh to inspect the current application/service repository baseline evidence.</div>
           </div>
         </section>
 
@@ -216,7 +216,7 @@
                   <th scope="col">Visibility</th>
                   <th scope="col">Baseline files</th>
                   <th scope="col">Absent baseline files</th>
-                  <th scope="col">Documentation evidence</th>
+                  <th scope="col">Required repository files</th>
                   <th scope="col">Classic branch protection</th>
                   <th scope="col">Active rulesets</th>
                   <th scope="col">Updated</th>
@@ -239,7 +239,7 @@
 
       <nav class="mobile-nav" aria-label="Mobile navigation">
         <a href="/">Dashboard</a>
-        <a href="#documentation">Docs</a>
+        <a href="#documentation">Files</a>
         <a href="#rulesets">Rulesets</a>
         <a href="#repositories">Repos</a>
       </nav>

@@ -1,5 +1,24 @@
 # Changelogs
 
+## 0.3.0-dev — continued 2026-09-27 — current repository baseline observation
+
+### Added
+
+- Current fourteen-file application/service repository-baseline observation in the existing bounded GraphQL governance channel.
+- New evidence paths for `IMPLEMENTED-FEATURES.md`, `PLANNED-FEATURES.md`, `CHANGELOGS.md`, `USER-MANUAL.md`, `PRIVACY POLICY.md`, `NOTES.md`, and `.gitignore`.
+- UI and test coverage for the 14-path count and current baseline terminology.
+
+### Changed
+
+- `SECURITY.md` now serves both the historical four-file baseline and current application/service repository baseline without a duplicate upstream GraphQL field/read.
+- Governance documentation/applicability remains fail-soft and observational: missing or present files do not become a compliance, conformance, release-eligibility, or lifecycle verdict.
+- Former planned item PF-001 is moved to implemented source state as IF-023.
+
+### Validation boundary
+
+- This increment requires fresh exact-head foundation and Platform Contract validation.
+- No GitHub mutation route, credential expansion, deployment, ready-for-review transition, Seal/Anchor promotion, or production approval is introduced.
+
 All notable source changes to GoreeCloud GitHub Dashboard are recorded here. Git history remains authoritative for exact commits and pull requests. Historical dated entries retain the terminology and validation boundary that applied when recorded.
 
 ## 0.3.0-dev — continued 2026-09-27

@@ -1,8 +1,10 @@
 import { githubRequest } from "./github.js";
 
+const SECURITY_PROBE = Object.freeze({ key: "security", label: "SECURITY", path: "SECURITY.md" });
+
 export const GOVERNANCE_PROBES = Object.freeze([
   Object.freeze({ key: "platformContract", label: "Platform Contract", path: "goreecloud.platform.yaml" }),
-  Object.freeze({ key: "security", label: "SECURITY", path: "SECURITY.md" }),
+  SECURITY_PROBE,
   Object.freeze({ key: "contributing", label: "CONTRIBUTING", path: "CONTRIBUTING.md" }),
   Object.freeze({ key: "codeowners", label: "CODEOWNERS", path: ".github/CODEOWNERS" }),
 ]);
@@ -11,6 +13,9 @@ export const DOCUMENTATION_PROBES = Object.freeze([
   Object.freeze({ key: "readme", label: "README", path: "README.md" }),
   Object.freeze({ key: "specifications", label: "SPECIFICATIONS", path: "SPECIFICATIONS.md" }),
   Object.freeze({ key: "features", label: "FEATURES", path: "FEATURES.md" }),
+  Object.freeze({ key: "implementedFeatures", label: "IMPLEMENTED-FEATURES", path: "IMPLEMENTED-FEATURES.md" }),
+  Object.freeze({ key: "plannedFeatures", label: "PLANNED-FEATURES", path: "PLANNED-FEATURES.md" }),
+  Object.freeze({ key: "changelogs", label: "CHANGELOGS", path: "CHANGELOGS.md" }),
   Object.freeze({ key: "benefits", label: "BENEFITS", path: "BENEFITS.md" }),
   Object.freeze({
     key: "competitiveObjectives",
@@ -18,9 +23,18 @@ export const DOCUMENTATION_PROBES = Object.freeze([
     path: "COMPETITIVE-OBJECTIVES.md",
   }),
   Object.freeze({ key: "branding", label: "BRANDING", path: "BRANDING.md" }),
+  Object.freeze({ key: "userManual", label: "USER-MANUAL", path: "USER-MANUAL.md" }),
+  Object.freeze({ key: "privacyPolicy", label: "PRIVACY POLICY", path: "PRIVACY POLICY.md" }),
+  Object.freeze({ key: "notes", label: "NOTES", path: "NOTES.md" }),
+  SECURITY_PROBE,
+  Object.freeze({ key: "gitignore", label: ".gitignore", path: ".gitignore" }),
 ]);
 
-const ALL_FILE_PROBES = Object.freeze([...GOVERNANCE_PROBES, ...DOCUMENTATION_PROBES]);
+const ALL_FILE_PROBES = Object.freeze([
+  ...new Map(
+    [...GOVERNANCE_PROBES, ...DOCUMENTATION_PROBES].map((probe) => [probe.key, probe]),
+  ).values(),
+]);
 const DEFAULT_BATCH_SIZE = 20;
 const MAX_BATCH_SIZE = 25;
 const MAX_BRANCH_PROTECTION_RULES = 100;
@@ -404,7 +418,9 @@ export function buildGovernanceCoverage(repositories, observations = [], protect
     probes,
     documentation: {
       status: documentationStatus,
-      scope: "policy-defined-application-service-documentation-evidence",
+      scope: "policy-defined-application-service-repository-baseline-evidence",
+      baselineModel: "application-service-fourteen-file-repository-baseline",
+      requiredPathCount: DOCUMENTATION_PROBES.length,
       applicability: summaryApplicability(
         classifiedDocumentationRepositories.length,
         unclassifiedDocumentationRepositories,

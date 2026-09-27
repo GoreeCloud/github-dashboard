@@ -12,6 +12,8 @@ This record contains planned, blocked, deferred, recommended, or acceptance-gate
 
 ## Open product and acceptance work
 
+Former PF-001 (current fourteen-file application/service repository baseline observation) is implemented in source and recorded as IF-023 in `IMPLEMENTED-FEATURES.md`.
+
 | ID | Work | Priority | Current boundary |
 | --- | --- | --- | --- |
 | PF-001 | Expand peer-repository observation from the historical six-file documentation channel to the current fourteen-file application/service baseline. | High | Must preserve observation vs. policy-evaluation separation. |

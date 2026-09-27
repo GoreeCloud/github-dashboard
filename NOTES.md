@@ -17,7 +17,7 @@ Representative live private-repository acceptance, rendered form-factor/accessib
 
 ## Governance migration
 
-The peer documentation observation channel still represents a historical six-file application/service subset. GoreeCloud’s current application/service repository baseline contains fourteen required root records/controls. Expansion is tracked in [PLANNED-FEATURES.md](PLANNED-FEATURES.md).
+The governance control plane now observes the current fourteen-file application/service repository baseline. Applicability remains limited to explicit Platform Contract application/service declarations, and presence/absence remains evidence rather than a compliance verdict. `SECURITY.md` is reused from the historical baseline probe rather than queried twice.
 
 ## Changelog and roadmap
 

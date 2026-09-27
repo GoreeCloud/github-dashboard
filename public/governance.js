@@ -14,9 +14,17 @@ const DOCUMENTATION_LABELS = {
   readme: "README",
   specifications: "SPECIFICATIONS",
   features: "FEATURES",
+  implementedFeatures: "IMPLEMENTED-FEATURES",
+  plannedFeatures: "PLANNED-FEATURES",
+  changelogs: "CHANGELOGS",
   benefits: "BENEFITS",
   competitiveObjectives: "COMPETITIVE-OBJECTIVES",
   branding: "BRANDING",
+  userManual: "USER-MANUAL",
+  privacyPolicy: "PRIVACY POLICY",
+  notes: "NOTES",
+  security: "SECURITY",
+  gitignore: ".gitignore",
 };
 
 const byId = (id) => document.getElementById(id);
@@ -160,7 +168,7 @@ function renderDocumentation(documentation = {}) {
     "documentation-count",
     documentation.probes || [],
     DOCUMENTATION_LABELS,
-    "No documentation evidence was returned.",
+    "No application/service repository baseline evidence was returned.",
   );
 
   const boundary = byId("documentation-boundary");
@@ -176,7 +184,7 @@ function renderDocumentation(documentation = {}) {
     return;
   }
 
-  const classifiedText = `${classified} repositories explicitly classified for documentation applicability from Platform Contract component.type · ${applications} application · ${services} service`;
+  const classifiedText = `${classified} repositories explicitly classified for application/service baseline applicability from Platform Contract component.type · ${applications} application · ${services} service`;
   boundary.textContent = unclassified > 0
     ? `${classifiedText} · ${unclassified} remain unclassified. Presence or absence is evidence only; the declaration is not full manifest validation or policy satisfaction.`
     : `${classifiedText}. Presence or absence is evidence only; the declaration is not full manifest validation or policy satisfaction.`;
@@ -340,14 +348,14 @@ function rulesetTerms(ruleset = {}) {
 }
 
 function documentationTerms(documentation = {}) {
-  if (!documentation.available) return ["documentation unavailable"];
+  if (!documentation.available) return ["repository baseline unavailable"];
   const applicability = documentation.applicability || {};
   return [
     documentation.status,
     applicability.status,
     applicability.componentType,
     applicability.reason,
-    applicability.status === "applicable" ? "documentation applicable" : "role unclassified",
+    applicability.status === "applicable" ? "repository baseline applicable" : "role unclassified",
     ...(documentation.presentChecks || []).map((key) => DOCUMENTATION_LABELS[key] || key),
     ...(documentation.missingChecks || []).map((key) => `missing ${DOCUMENTATION_LABELS[key] || key}`),
   ];
@@ -435,11 +443,11 @@ function renderRepositoryRows(repositories = [], rulesetByRepository = new Map()
       documentationCell.append(createBadge("Unavailable", "private"));
       const detail = document.createElement("div");
       detail.className = "repo-description";
-      detail.textContent = "Documentation observation unavailable";
+      detail.textContent = "Application/service repository baseline observation unavailable";
       documentationCell.append(detail);
     } else {
       const present = documentation.presentChecks?.length || 0;
-      const total = Object.keys(DOCUMENTATION_LABELS).length;
+      const total = documentation.requiredPathCount || Object.keys(DOCUMENTATION_LABELS).length;
       documentationCell.append(createBadge(
         documentation.missingChecks?.length ? `${present} / ${total} observed` : "All observed",
         documentation.missingChecks?.length ? "" : "success",
@@ -460,7 +468,7 @@ function renderRepositoryRows(repositories = [], rulesetByRepository = new Map()
       detail.className = "repo-description";
       detail.textContent = documentation.missingChecks?.length
         ? `Absent evidence: ${documentation.missingChecks.map((key) => DOCUMENTATION_LABELS[key] || key).join(" · ")}`
-        : "All six policy-defined application/service documentation paths are present";
+        : "All 14 required application/service repository paths are present";
       documentationCell.append(detail);
     }
 

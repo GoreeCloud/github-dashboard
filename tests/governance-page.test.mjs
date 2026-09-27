@@ -21,6 +21,8 @@ test("governance page keeps the same no-inline-script and no-inline-style bounda
   assert.match(html, /id="stat-documentation-applicable"/);
   assert.match(html, /id="stat-documentation-unclassified"/);
   assert.match(html, /Platform Contract component\.type/);
+  assert.match(html, /All 14 required repository paths present/);
+  assert.match(html, /application\/service repository baseline/i);
   assert.match(html, /id="classic-protection"/);
   assert.match(html, /id="classic-protection-list"/);
   assert.match(html, /id="stat-classic-protected"/);
@@ -52,7 +54,8 @@ test("governance renderer exposes application/service applicability without weak
   assert.match(renderer, /No repository state was changed/);
   assert.match(renderer, /Unknown — observation unavailable/);
   assert.match(renderer, /None observed/);
-  assert.match(renderer, /documentation evidence/i);
+  assert.match(renderer, /repository baseline evidence/i);
+  assert.match(renderer, /All 14 required application\/service repository paths are present/);
   assert.match(renderer, /Repository role\/type applicability is not evaluated by this view/);
   assert.match(renderer, /Platform Contract component\.type/);
   assert.match(renderer, /documentationClassifiedRepositories/);

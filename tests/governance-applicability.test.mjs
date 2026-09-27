@@ -41,16 +41,23 @@ function fileNode(name, componentType = null, missing = []) {
     "readme",
     "specifications",
     "features",
+    "implementedFeatures",
+    "plannedFeatures",
+    "changelogs",
     "benefits",
     "competitiveObjectives",
     "branding",
+    "userManual",
+    "privacyPolicy",
+    "notes",
+    "gitignore",
   ];
   const node = {
     name,
     ...Object.fromEntries(keys.map((key) => [key, missing.includes(key) ? null : { oid: `${name}-${key}` }])),
   };
   if (node.platformContract && componentType) {
-    const text = `schema_version: "0.2"\n\ncomponent:\n  type: ${componentType}\n  id: fixture\n  product_name: Fixture\n  repository: GoreeCloud/${name}\n`;
+    const text = `schema_version: "2.0"\n\ncomponent:\n  type: ${componentType}\n  id: fixture\n  product_name: Fixture\n  repository: GoreeCloud/${name}\n`;
     node.platformContract = {
       ...node.platformContract,
       byteSize: Buffer.byteLength(text),

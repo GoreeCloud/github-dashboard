@@ -26,5 +26,6 @@ These entries record source capabilities implemented in the authoritative reposi
 | IF-020 | Private API boundary | Server-side credentials, read-only routes, security headers, sanitized errors, and private/no-store responses. |
 | IF-021 | Platform declaration | Platform Contract 2.0 manifest covering all nine Integral Platform Systems in nonconformant Forge state. |
 | IF-022 | Automated validation | Unit, fixture, contract, governance, appearance, source-policy, repository-policy, and exact-head Platform Contract checks. |
+| IF-023 | Current application/service repository baseline observation | Observes all 14 required root records/controls when an explicit Platform Contract application/service declaration establishes applicability; `SECURITY.md` is shared with the legacy baseline probe and queried once. This implements former planned item PF-001. |
 
 See [PLANNED-FEATURES.md](PLANNED-FEATURES.md) for incomplete and acceptance-gated work and [CHANGELOGS.md](CHANGELOGS.md) for chronology.

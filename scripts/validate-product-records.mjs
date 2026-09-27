@@ -114,6 +114,14 @@ if (!failures.length) {
   }
 
   for (const marker of [
+    'baselineModel: "application-service-fourteen-file-repository-baseline"',
+    "implementedFeatures",
+    "plannedFeatures",
+    "changelogs",
+    "userManual",
+    "privacyPolicy",
+    "notes",
+    "gitignore",
     "buildClassicBranchProtectionGraphqlQuery",
     "branchProtectionRules(first:",
     "matchingRefs(first:",
@@ -141,6 +149,7 @@ if (!failures.length) {
   ]) {
     if (!rulesetsSource.includes(marker)) failures.push(`Governance ruleset source missing invariant: ${marker}`);
   }
+  if (!governancePage.includes("All 14 required repository paths present")) failures.push("Governance page must expose the current fourteen-file application/service baseline.");
   if (!governancePage.includes('id="classic-protection"') || !governancePage.includes('id="stat-classic-protected"')) {
     failures.push("Governance page must expose the classic default-branch protection surface.");
   }

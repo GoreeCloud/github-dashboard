@@ -42,9 +42,16 @@ function governanceNode({ missing = [] } = {}) {
     "readme",
     "specifications",
     "features",
+    "implementedFeatures",
+    "plannedFeatures",
+    "changelogs",
     "benefits",
     "competitiveObjectives",
     "branding",
+    "userManual",
+    "privacyPolicy",
+    "notes",
+    "gitignore",
   ];
   const node = {
     name: "governance-fixture",
@@ -53,7 +60,7 @@ function governanceNode({ missing = [] } = {}) {
 
   if (node.platformContract) {
     const text = [
-      'schema_version: "0.2"',
+      'schema_version: "2.0"',
       "",
       "component:",
       "  type: application",

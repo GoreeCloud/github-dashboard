@@ -99,9 +99,17 @@ test("governance GraphQL query binds exact default branches, baseline paths, and
   assert.match(query, /master:README\.md/);
   assert.match(query, /master:SPECIFICATIONS\.md/);
   assert.match(query, /master:FEATURES\.md/);
+  assert.match(query, /master:IMPLEMENTED-FEATURES\.md/);
+  assert.match(query, /master:PLANNED-FEATURES\.md/);
+  assert.match(query, /master:CHANGELOGS\.md/);
   assert.match(query, /master:BENEFITS\.md/);
   assert.match(query, /master:COMPETITIVE-OBJECTIVES\.md/);
   assert.match(query, /master:BRANDING\.md/);
+  assert.match(query, /master:USER-MANUAL\.md/);
+  assert.match(query, /master:PRIVACY POLICY\.md/);
+  assert.match(query, /master:NOTES\.md/);
+  assert.match(query, /master:\.gitignore/);
+  assert.equal((query.match(/master:SECURITY\.md/g) || []).length, 1);
   assert.match(query, /release\/v1:goreecloud\.platform\.yaml/);
   assert.match(query, /release\/v1:SPECIFICATIONS\.md/);
 });
@@ -176,7 +184,9 @@ test("governance coverage reports baseline, documentation, and classic protectio
     assert.equal(contributing.status, "complete");
 
     assert.equal(coverage.documentation.status, "complete");
-    assert.equal(coverage.documentation.scope, "policy-defined-application-service-documentation-evidence");
+    assert.equal(coverage.documentation.scope, "policy-defined-application-service-repository-baseline-evidence");
+    assert.equal(coverage.documentation.baselineModel, "application-service-fourteen-file-repository-baseline");
+    assert.equal(coverage.documentation.requiredPathCount, 14);
     assert.equal(coverage.documentation.applicability, "repository-role-unclassified");
     assert.equal(coverage.documentation.checkedRepositories, 2);
     assert.equal(coverage.documentation.repositoriesWithAllObservedFiles, 1);

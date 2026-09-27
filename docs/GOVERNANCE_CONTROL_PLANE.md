@@ -17,7 +17,7 @@ The governance control-plane view provides a compact observation of repository-g
 The current Development slice observes four independent source channels:
 
 1. exact default-branch presence of four baseline files, including `goreecloud.platform.yaml`;
-2. exact default-branch presence of six policy-defined application/service documentation paths, with bounded application/service applicability evidence when the Platform Contract explicitly declares `component.type`;
+2. exact default-branch presence of the fourteen required application/service repository paths, with bounded application/service applicability evidence when the Platform Contract explicitly declares `component.type`;
 3. classic GitHub branch-protection rules that GitHub reports as matching the exact default branch; and
 4. active GitHub ruleset rules that GitHub reports as applying to the exact default branch, including bounded required-workflow references when an active workflow rule is returned.
 
@@ -38,16 +38,24 @@ A successful observation can report a file as present or absent. A failed GraphQ
 
 ## Documentation evidence and applicability observation
 
-The current Repository Control policy defines these six root Markdown records as mandatory for GoreeCloud application and service repositories:
+The current Repository Control standard defines the following fourteen root records/controls as the application/service baseline:
 
 - `README.md`
 - `SPECIFICATIONS.md`
 - `FEATURES.md`
+- `IMPLEMENTED-FEATURES.md`
+- `PLANNED-FEATURES.md`
+- `CHANGELOGS.md`
 - `BENEFITS.md`
 - `COMPETITIVE-OBJECTIVES.md`
 - `BRANDING.md`
+- `USER-MANUAL.md`
+- `PRIVACY POLICY.md`
+- `NOTES.md`
+- `SECURITY.md`
+- `.gitignore`
 
-The dashboard observes those paths on the exact default branch using the same GraphQL repository batch as the four baseline paths. This adds no GitHub endpoint, permission, or repository fan-out.
+The dashboard observes those paths on the exact default branch using the same GraphQL repository batch as the four baseline paths. `SECURITY.md` is shared with the historical baseline probe and is queried only once per repository. This adds no GitHub endpoint, permission, or repository fan-out.
 
 The evidence is deliberately normalized into its own `documentation` channel. It does not alter the historical four-file baseline result.
 
@@ -64,9 +72,9 @@ This is declaration evidence, not full manifest validation. The dashboard does *
 
 Those cases remain `unclassified`. Raw Platform Contract text is used only server-side for this bounded declaration read and is not returned to the browser.
 
-Portfolio documentation summaries expose the applicability model `platform-contract-component-type-declaration`, counts for classified and unclassified repositories, application/service counts, and raw six-path presence evidence. Per-repository documentation evidence exposes the normalized applicability status and declared component type when safely available.
+Portfolio documentation summaries expose the applicability model `platform-contract-component-type-declaration`, counts for classified and unclassified repositories, application/service counts, and raw fourteen-path presence evidence. Per-repository documentation evidence exposes the normalized applicability status and declared component type when safely available.
 
-`Docs complete` means only that all six paths were present for the observed repository. `Docs gaps` means only that at least one path was absent from the successfully observed default branch. For an explicitly classified application/service repository, the declaration establishes that the six-path policy category is applicable; it still does **not** establish compliance, release eligibility, or Stable qualification. For an unclassified repository, presence/absence remains evidence without a policy-applicability conclusion.
+`Docs complete` means only that all fourteen paths were present for the observed repository. `Docs gaps` means only that at least one path was absent from the successfully observed default branch. For an explicitly classified application/service repository, the declaration establishes that the fourteen-path policy category is applicable; it still does **not** establish compliance, release eligibility, or Stable qualification. For an unclassified repository, presence/absence remains evidence without a policy-applicability conclusion.
 
 ## Classic default-branch protection
 
@@ -148,7 +156,7 @@ Per-channel unavailable evidence is never converted into absence.
 The following distinctions are mandatory:
 
 - `Baseline gaps` means only that one or more of the four baseline paths were absent in a successfully observed default branch.
-- `Docs gaps` means only that one or more of the six policy-defined application/service documentation paths were absent. An explicit Platform Contract `component.type` may establish application/service applicability, but the label itself is still not a compliance classification.
+- `Docs gaps` means only that one or more of the fourteen required application/service repository paths were absent. An explicit Platform Contract `component.type` may establish application/service applicability, but the label itself is still not a compliance classification.
 - `Unclassified` documentation applicability means no safe application/service declaration was normalized from the bounded exact-default-branch Platform Contract evidence.
 - `No matching classic rule` means only that the classic-rule observation completed and no classic rule matched the exact default branch.
 - `No active rules` means only that the active-rules endpoint returned an empty set for the exact default branch.
@@ -188,7 +196,7 @@ The current slice still does not determine:
 
 - repository role/type when no bounded readable Platform Contract explicitly declares `application` or `service`;
 - full Platform Contract validity or computed conformance for peer repositories;
-- whether an unclassified repository is subject to the six-file documentation policy through another governed authority;
+- whether an unclassified repository is subject to the fourteen-file application/service repository baseline through another governed authority;
 - which observed workflow references are required by GoreeCloud policy for a repository role/type;
 - whether an observed required workflow reference points to an approved governed workflow revision;
 - whether required workflows executed successfully for a particular pull request or push;
@@ -201,7 +209,7 @@ The current slice still does not determine:
 
 ## Acceptance boundary
 
-Automated source tests validate bounded batching/concurrency, exact default-branch targeting, baseline and documentation file-presence normalization, bounded Platform Contract blob-text requesting, strict application/service component-type parsing, classified/unclassified applicability counts, unavailable/unreadable declaration handling, classic matching-ref behavior, active-ruleset source/type normalization, bounded required-workflow reference normalization, local repository-id resolution, unavailable-evidence handling, channel independence, credential non-disclosure, no-store responses, page structure, bootstrap order, and conservative terminology.
+Automated source tests validate bounded batching/concurrency, exact default-branch targeting, baseline and application/service repository-baseline file-presence normalization, bounded Platform Contract blob-text requesting, strict application/service component-type parsing, classified/unclassified applicability counts, unavailable/unreadable declaration handling, classic matching-ref behavior, active-ruleset source/type normalization, bounded required-workflow reference normalization, local repository-id resolution, unavailable-evidence handling, channel independence, credential non-disclosure, no-store responses, page structure, bootstrap order, and conservative terminology.
 
 Exact-head CI remains mandatory for the current pull-request head. A passing result for an earlier revision is historical evidence only and must not be treated as validation of a newer head. The dashboard foundation workflow and independent Platform Contract 2.0 workflow must both validate the exact candidate revision before their results are cited as current.
 
