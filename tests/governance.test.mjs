@@ -36,7 +36,7 @@ function response(body, status = 200) {
 }
 
 function completeNode(name, missing = []) {
-  return {
+  const node = {
     name,
     ...Object.fromEntries(
       [...GOVERNANCE_PROBES, ...DOCUMENTATION_PROBES].map((probe) => [
@@ -45,6 +45,17 @@ function completeNode(name, missing = []) {
       ]),
     ),
   };
+
+  if (node.platformContract) {
+    const text = "# readable fixture with no recognized application/service declaration\nmetadata: fixture\n";
+    node.platformContract = {
+      ...node.platformContract,
+      byteSize: Buffer.byteLength(text),
+      text,
+    };
+  }
+
+  return node;
 }
 
 function classicRule(defaultBranch, overrides = {}) {
