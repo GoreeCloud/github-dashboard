@@ -67,6 +67,12 @@ function governanceNode({ missing = [] } = {}) {
       "  id: github-dashboard",
       "  product_name: Governance Fixture",
       `  repository: ${OWNER}/governance-fixture`,
+      "lifecycle: forge",
+      "compatibility:",
+      '  platform_contract: "2.0"',
+      '  glaze_ui_required: "1.6.0"',
+      "conformance:",
+      "  status: nonconformant",
       "",
     ].join("\n");
     node.platformContract = {
@@ -218,6 +224,27 @@ test("governance API returns normalized baseline, documentation applicability, c
     assert.equal(payload.summary.documentationServiceRepositories, 0);
     assert.equal(payload.summary.applicableRepositoriesWithAllObservedDocumentation, 0);
     assert.equal(payload.summary.applicableRepositoriesWithObservedDocumentationGaps, 1);
+    assert.equal(payload.summary.platformManifestObservedRepositories, 1);
+    assert.equal(payload.summary.platformManifestAbsentRepositories, 0);
+    assert.equal(payload.summary.platformManifestUnavailableRepositories, 0);
+    assert.equal(payload.summary.platformContract2DeclaredRepositories, 1);
+    assert.equal(payload.summary.platformApplicationRepositories, 1);
+    assert.equal(payload.governance.platformDeclarations.fullValidationPerformed, false);
+    assert.deepEqual(payload.governance.repositories[0].platformDeclaration, {
+      status: "observed",
+      source: "goreecloud.platform.yaml",
+      interpretation: "declaration-only",
+      fullValidationPerformed: false,
+      reason: "bounded-declaration-observed",
+      declaration: {
+        schemaVersion: "2.0",
+        componentType: "application",
+        lifecycle: "forge",
+        platformContract: "2.0",
+        glazeUiRequired: "1.6.0",
+        declaredConformance: "nonconformant",
+      },
+    });
     assert.equal(payload.summary.classicProtectionCheckedRepositories, 1);
     assert.equal(payload.summary.classicProtectedRepositories, 1);
     assert.equal(payload.summary.rulesetCheckedRepositories, 1);
@@ -251,6 +278,7 @@ test("governance API returns normalized baseline, documentation applicability, c
     assert.ok(authorizations.every((value) => value === `Bearer ${TOKEN}`));
     assert.doesNotMatch(serialized, new RegExp(TOKEN));
     assert.doesNotMatch(serialized, /schema_version/);
+    assert.doesNotMatch(serialized, /product_name/);
     assert.doesNotMatch(serialized, /Governance Fixture/);
     assert.equal(response.headers.get("cache-control"), "private, no-store, max-age=0");
   } finally {

@@ -50,6 +50,7 @@ export async function onRequestGet(context) {
       fetchRulesetCoverage(env, owner, repositories),
     ]);
     const documentation = governance.documentation || {};
+    const platformDeclarations = governance.platformDeclarations || {};
     const classicProtection = governance.classicBranchProtection || {};
     const observationStatus = combinedObservationStatus(governance.status, rulesets.status);
 
@@ -76,6 +77,14 @@ export async function onRequestGet(context) {
         documentationServiceRepositories: documentation.serviceRepositories || 0,
         applicableRepositoriesWithAllObservedDocumentation: documentation.applicableRepositoriesWithAllObservedFiles || 0,
         applicableRepositoriesWithObservedDocumentationGaps: documentation.applicableRepositoriesWithObservedGaps || 0,
+        platformManifestCheckedRepositories: platformDeclarations.checkedRepositories || 0,
+        platformManifestObservedRepositories: platformDeclarations.observedRepositories || 0,
+        platformManifestAbsentRepositories: platformDeclarations.absentRepositories || 0,
+        platformManifestUnavailableRepositories: platformDeclarations.unavailableRepositories || 0,
+        platformContract2DeclaredRepositories: platformDeclarations.contract2DeclaredRepositories || 0,
+        platformApplicationRepositories: platformDeclarations.applicationRepositories || 0,
+        platformServiceRepositories: platformDeclarations.serviceRepositories || 0,
+        platformSharedLibraryRepositories: platformDeclarations.sharedLibraryRepositories || 0,
         classicProtectionCheckedRepositories: classicProtection.checkedRepositories || 0,
         classicProtectedRepositories: classicProtection.protectedRepositories || 0,
         classicUnprotectedRepositories: classicProtection.unprotectedRepositories || 0,

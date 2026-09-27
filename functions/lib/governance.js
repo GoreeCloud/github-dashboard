@@ -70,31 +70,138 @@ function combinedCoverageStatus(...statuses) {
   return "partial";
 }
 
-export function parsePlatformComponentType(text) {
-  if (typeof text !== "string" || !text.trim()) return null;
+function simpleYamlScalar(line, key) {
+  const match = line.trim().match(/^([A-Za-z0-9_.-]+)\s*:\s*(?:"([^"]*)"|'([^']*)'|([A-Za-z0-9._-]+))\s*(?:#.*)?$/);
+  if (!match || match[1].toLowerCase() !== key.toLowerCase()) return null;
+  return match[2] ?? match[3] ?? match[4] ?? null;
+}
 
-  const lines = text.replace(/\r\n?/g, "\n").split("\n");
-  let componentIndent = null;
+function nestedScalar(lines, section, key) {
+  let sectionIndent = null;
 
   for (const rawLine of lines) {
     const trimmed = rawLine.trim();
     if (!trimmed || trimmed.startsWith("#")) continue;
     const indent = rawLine.length - rawLine.trimStart().length;
 
-    if (componentIndent === null) {
-      if (/^component\s*:\s*(?:#.*)?$/i.test(trimmed)) componentIndent = indent;
+    if (sectionIndent === null) {
+      const heading = trimmed.match(/^([A-Za-z0-9_.-]+)\s*:\s*(?:#.*)?$/);
+      if (heading && heading[1].toLowerCase() === section.toLowerCase()) sectionIndent = indent;
       continue;
     }
 
-    if (indent <= componentIndent) break;
-
-    const match = trimmed.match(/^type\s*:\s*["']?(application|service)["']?\s*(?:#.*)?$/i);
-    if (match && APPLICABLE_COMPONENT_TYPES.has(match[1].toLowerCase())) {
-      return match[1].toLowerCase();
-    }
+    if (indent <= sectionIndent) break;
+    const value = simpleYamlScalar(rawLine, key);
+    if (value !== null) return value;
   }
 
   return null;
+}
+
+function topLevelScalar(lines, key) {
+  for (const rawLine of lines) {
+    const trimmed = rawLine.trim();
+    if (!trimmed || trimmed.startsWith("#")) continue;
+    const indent = rawLine.length - rawLine.trimStart().length;
+    if (indent !== 0) continue;
+    const value = simpleYamlScalar(rawLine, key);
+    if (value !== null) return value;
+  }
+  return null;
+}
+
+export function parsePlatformDeclaration(text) {
+  if (typeof text !== "string" || !text.trim()) {
+    return {
+      schemaVersion: null,
+      componentType: null,
+      lifecycle: null,
+      platformContract: null,
+      glazeUiRequired: null,
+      declaredConformance: null,
+    };
+  }
+
+  const lines = text.replace(/\r\n?/g, "\n").split("\n");
+  const componentType = nestedScalar(lines, "component", "type");
+  const declaredConformance = nestedScalar(lines, "conformance", "status");
+
+  return {
+    schemaVersion: topLevelScalar(lines, "schema_version"),
+    componentType: ["application", "service", "shared-library"].includes(componentType?.toLowerCase())
+      ? componentType.toLowerCase()
+      : null,
+    lifecycle: topLevelScalar(lines, "lifecycle")?.toLowerCase() || null,
+    platformContract: nestedScalar(lines, "compatibility", "platform_contract"),
+    glazeUiRequired: nestedScalar(lines, "compatibility", "glaze_ui_required"),
+    declaredConformance: ["conformant", "nonconformant", "unverified"].includes(declaredConformance?.toLowerCase())
+      ? declaredConformance.toLowerCase()
+      : null,
+  };
+}
+
+export function parsePlatformComponentType(text) {
+  const componentType = parsePlatformDeclaration(text).componentType;
+  return APPLICABLE_COMPONENT_TYPES.has(componentType) ? componentType : null;
+}
+
+function platformDeclarationObservation(node, observationAvailable = true) {
+  if (!observationAvailable) {
+    return {
+      status: "unavailable",
+      source: null,
+      interpretation: "declaration-only",
+      fullValidationPerformed: false,
+      reason: "file-observation-unavailable",
+      declaration: null,
+    };
+  }
+
+  if (!node?.oid) {
+    return {
+      status: "absent",
+      source: null,
+      interpretation: "declaration-only",
+      fullValidationPerformed: false,
+      reason: "platform-contract-absent",
+      declaration: null,
+    };
+  }
+
+  const byteSize = Number(node.byteSize);
+  if (Number.isFinite(byteSize) && byteSize > MAX_PLATFORM_CONTRACT_BYTES) {
+    return {
+      status: "unavailable",
+      source: "goreecloud.platform.yaml",
+      interpretation: "declaration-only",
+      fullValidationPerformed: false,
+      reason: "platform-contract-too-large",
+      declaration: null,
+    };
+  }
+
+  if (typeof node.text !== "string") {
+    return {
+      status: "unavailable",
+      source: "goreecloud.platform.yaml",
+      interpretation: "declaration-only",
+      fullValidationPerformed: false,
+      reason: "platform-contract-text-unavailable",
+      declaration: null,
+    };
+  }
+
+  const declaration = parsePlatformDeclaration(node.text);
+  const recognized = Object.values(declaration).some((value) => value !== null);
+
+  return {
+    status: "observed",
+    source: "goreecloud.platform.yaml",
+    interpretation: "declaration-only",
+    fullValidationPerformed: false,
+    reason: recognized ? "bounded-declaration-observed" : "declaration-partial-or-unrecognized",
+    declaration,
+  };
 }
 
 function platformRoleObservation(node, observationAvailable = true) {
@@ -315,6 +422,7 @@ export function buildGovernanceCoverage(repositories, observations = [], protect
       ? DOCUMENTATION_PROBES.filter((probe) => presence[probe.key] !== true).map((probe) => probe.key)
       : [];
     const documentationApplicability = observation?.documentationApplicability || platformRoleObservation(null, available);
+    const platformDeclaration = observation?.platformDeclaration || platformDeclarationObservation(null, available);
 
     const protection = protectionByRepository.get(repository.name);
     const protectionAvailable = protection?.available === true;
@@ -325,6 +433,7 @@ export function buildGovernanceCoverage(repositories, observations = [], protect
       checksAvailable: available,
       presentChecks,
       missingChecks,
+      platformDeclaration,
       documentation: {
         available,
         status: available ? (documentationMissingChecks.length ? "gaps" : "observed") : "unavailable",
@@ -332,7 +441,21 @@ export function buildGovernanceCoverage(repositories, observations = [], protect
         presentChecks: documentationPresentChecks,
         missingChecks: documentationMissingChecks,
       },
-      classicBranchProtection: {
+      platformDeclarations: {
+      status: platformDeclarationStatus,
+      scope: "platform-contract-declaration-evidence",
+      interpretation: "declaration-only",
+      fullValidationPerformed: false,
+      checkedRepositories: platformDeclarationCheckedRepositories,
+      observedRepositories: platformDeclarationObservedRows.length,
+      absentRepositories: platformDeclarationAbsentRepositories,
+      unavailableRepositories: platformDeclarationUnavailableRepositories,
+      contract2DeclaredRepositories: platformContract2DeclaredRepositories,
+      applicationRepositories: platformApplicationRepositories,
+      serviceRepositories: platformServiceRepositories,
+      sharedLibraryRepositories: platformSharedLibraryRepositories,
+    },
+    classicBranchProtection: {
         available: protectionAvailable,
         defaultBranchProtected: protectionAvailable ? protection.defaultBranchProtected === true : null,
         matchingRules: protectionAvailable && Array.isArray(protection.matchingRules) ? protection.matchingRules : [],
@@ -392,6 +515,29 @@ export function buildGovernanceCoverage(repositories, observations = [], protect
     (row) => row.documentation.applicability.componentType === "service",
   ).length;
 
+  const platformDeclarationObservedRows = rows.filter((row) => row.platformDeclaration?.status === "observed");
+  const platformDeclarationAbsentRepositories = rows.filter((row) => row.platformDeclaration?.status === "absent").length;
+  const platformDeclarationUnavailableRepositories = rows.filter((row) => row.platformDeclaration?.status === "unavailable").length;
+  const platformDeclarationCheckedRepositories = rows.length - platformDeclarationUnavailableRepositories;
+  const platformDeclarationStatus = coverageStatus(
+    rows.length,
+    platformDeclarationCheckedRepositories,
+    platformDeclarationUnavailableRepositories,
+  );
+  const platformContract2DeclaredRepositories = platformDeclarationObservedRows.filter((row) => (
+    row.platformDeclaration.declaration?.schemaVersion === "2.0"
+    || row.platformDeclaration.declaration?.platformContract === "2.0"
+  )).length;
+  const platformApplicationRepositories = platformDeclarationObservedRows.filter(
+    (row) => row.platformDeclaration.declaration?.componentType === "application",
+  ).length;
+  const platformServiceRepositories = platformDeclarationObservedRows.filter(
+    (row) => row.platformDeclaration.declaration?.componentType === "service",
+  ).length;
+  const platformSharedLibraryRepositories = platformDeclarationObservedRows.filter(
+    (row) => row.platformDeclaration.declaration?.componentType === "shared-library",
+  ).length;
+
   const protectionCheckedRepositories = rows.filter((row) => row.classicBranchProtection.available).length;
   const protectionUnavailableRepositories = rows.length - protectionCheckedRepositories;
   const defaultBranchProtectedRepositories = rows.filter(
@@ -408,7 +554,7 @@ export function buildGovernanceCoverage(repositories, observations = [], protect
   );
 
   return {
-    status: combinedCoverageStatus(fileStatus, documentationStatus, protectionStatus),
+    status: combinedCoverageStatus(fileStatus, documentationStatus, platformDeclarationStatus, protectionStatus),
     fileStatus,
     totalRepositories: rows.length,
     checkedRepositories,
@@ -475,6 +621,8 @@ async function fetchGovernanceBatch(env, owner, repositories) {
         available: false,
         presence: {},
         documentationApplicability: platformRoleObservation(null, false),
+    platformDeclaration: platformDeclarationObservation(null, false),
+        platformDeclaration: platformDeclarationObservation(null, false),
       };
     }
 
@@ -485,6 +633,7 @@ async function fetchGovernanceBatch(env, owner, repositories) {
         ALL_FILE_PROBES.map((probe) => [probe.key, Boolean(node[probe.key]?.oid)]),
       ),
       documentationApplicability: platformRoleObservation(node.platformContract, true),
+      platformDeclaration: platformDeclarationObservation(node.platformContract, true),
     };
   });
 }
@@ -512,6 +661,7 @@ function unavailableFileObservations(batch) {
     available: false,
     presence: {},
     documentationApplicability: platformRoleObservation(null, false),
+    platformDeclaration: platformDeclarationObservation(null, false),
   }));
 }
 

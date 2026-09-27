@@ -4,6 +4,7 @@ import {
   buildGovernanceGraphqlQuery,
   fetchGovernanceCoverage,
   parsePlatformComponentType,
+  parsePlatformDeclaration,
 } from "../functions/lib/governance.js";
 
 const OWNER = "GoreeCloud";
@@ -89,6 +90,36 @@ test("platform component parser accepts only explicit application/service declar
   assert.equal(parsePlatformComponentType("component: { type: application }\n"), null);
 });
 
+test("bounded Platform Contract parser normalizes declaration-only fields without validating the manifest", () => {
+  assert.deepEqual(parsePlatformDeclaration([
+    'schema_version: "2.0"',
+    "component:",
+    "  type: shared-library",
+    "lifecycle: anchor",
+    "compatibility:",
+    '  platform_contract: "2.0"',
+    '  glaze_ui_required: "1.6.0"',
+    "conformance:",
+    "  status: conformant",
+  ].join("\n")), {
+    schemaVersion: "2.0",
+    componentType: "shared-library",
+    lifecycle: "anchor",
+    platformContract: "2.0",
+    glazeUiRequired: "1.6.0",
+    declaredConformance: "conformant",
+  });
+
+  assert.deepEqual(parsePlatformDeclaration("component: { type: application }\n"), {
+    schemaVersion: null,
+    componentType: null,
+    lifecycle: null,
+    platformContract: null,
+    glazeUiRequired: null,
+    declaredConformance: null,
+  });
+});
+
 test("governance GraphQL query requests bounded Platform Contract blob text in the existing file observation", () => {
   const query = buildGovernanceGraphqlQuery(OWNER, [repository("alpha")]);
   assert.match(query, /platformContract: object\(expression: "main:goreecloud\.platform\.yaml"\)/);
@@ -136,6 +167,13 @@ test("documentation applicability is classified only from explicit Platform Cont
     assert.equal(coverage.documentation.unclassifiedRepositories, 1);
     assert.equal(coverage.documentation.applicationRepositories, 1);
     assert.equal(coverage.documentation.serviceRepositories, 1);
+    assert.equal(coverage.platformDeclarations.fullValidationPerformed, false);
+    assert.equal(coverage.platformDeclarations.interpretation, "declaration-only");
+    assert.equal(coverage.platformDeclarations.observedRepositories, 2);
+    assert.equal(coverage.platformDeclarations.absentRepositories, 0);
+    assert.equal(coverage.platformDeclarations.unavailableRepositories, 1);
+    assert.equal(coverage.platformDeclarations.contract2DeclaredRepositories, 2);
+    assert.equal(coverage.repositories.find((item) => item.name === "app").platformDeclaration.declaration.schemaVersion, "2.0");
     assert.equal(coverage.documentation.applicableRepositoriesWithAllObservedFiles, 1);
     assert.equal(coverage.documentation.applicableRepositoriesWithObservedGaps, 1);
 

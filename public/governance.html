@@ -28,6 +28,7 @@
           <a class="nav-item is-active" href="#summary" aria-current="page">Governance</a>
           <a class="nav-item" href="#baseline-files">Baseline files</a>
           <a class="nav-item" href="#documentation">Required files</a>
+          <a class="nav-item" href="#platform-declarations">Platform declarations</a>
           <a class="nav-item" href="#classic-protection">Classic protection</a>
           <a class="nav-item" href="#rulesets">Rulesets</a>
           <a class="nav-item" href="#required-workflows">Required workflows</a>
@@ -106,6 +107,16 @@
             <span class="stat-caption">No safe application/service declaration</span>
           </article>
           <article class="stat-card panel">
+            <span class="stat-label">Platform manifests</span>
+            <strong class="stat-value" id="stat-platform-manifests">—</strong>
+            <span class="stat-caption">Readable bounded declaration evidence</span>
+          </article>
+          <article class="stat-card panel">
+            <span class="stat-label">Contract 2.0</span>
+            <strong class="stat-value" id="stat-platform-contract-2">—</strong>
+            <span class="stat-caption">Repositories declaring 2.0 in bounded fields</span>
+          </article>
+          <article class="stat-card panel">
             <span class="stat-label">Classic protected</span>
             <strong class="stat-value" id="stat-classic-protected">—</strong>
             <span class="stat-caption">Default branch has a matching classic rule</span>
@@ -155,6 +166,22 @@
           </p>
           <div id="documentation-list" class="content-grid" aria-live="polite">
             <div class="empty-state">Refresh to inspect the current application/service repository baseline evidence.</div>
+          </div>
+        </section>
+
+        <section id="platform-declarations" class="panel section-panel repository-section" aria-labelledby="platform-declarations-heading">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Bounded manifest declaration evidence</p>
+              <h2 id="platform-declarations-heading">Platform Contract declarations</h2>
+            </div>
+            <span class="section-count" id="platform-declarations-count">0</span>
+          </div>
+          <p class="item-meta">
+            Normalized declaration fields only. This view does not perform full manifest schema validation or compute peer repository conformance.
+          </p>
+          <div id="platform-declarations-list" class="card-list" aria-live="polite">
+            <div class="empty-state">Refresh to inspect bounded Platform Contract declaration evidence.</div>
           </div>
         </section>
 
@@ -240,6 +267,7 @@
       <nav class="mobile-nav" aria-label="Mobile navigation">
         <a href="/">Dashboard</a>
         <a href="#documentation">Files</a>
+        <a href="#platform-declarations">Platform</a>
         <a href="#rulesets">Rulesets</a>
         <a href="#repositories">Repos</a>
       </nav>

@@ -115,6 +115,9 @@ if (!failures.length) {
 
   for (const marker of [
     'baselineModel: "application-service-fourteen-file-repository-baseline"',
+    'scope: "platform-contract-declaration-evidence"',
+    'interpretation: "declaration-only"',
+    "parsePlatformDeclaration",
     "implementedFeatures",
     "plannedFeatures",
     "changelogs",
@@ -150,6 +153,7 @@ if (!failures.length) {
     if (!rulesetsSource.includes(marker)) failures.push(`Governance ruleset source missing invariant: ${marker}`);
   }
   if (!governancePage.includes("All 14 required repository paths present")) failures.push("Governance page must expose the current fourteen-file application/service baseline.");
+  if (!governancePage.includes('id="platform-declarations"')) failures.push("Governance page must expose bounded Platform Contract declaration evidence.");
   if (!governancePage.includes('id="classic-protection"') || !governancePage.includes('id="stat-classic-protected"')) {
     failures.push("Governance page must expose the classic default-branch protection surface.");
   }

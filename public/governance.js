@@ -190,6 +190,70 @@ function renderDocumentation(documentation = {}) {
     : `${classifiedText}. Presence or absence is evidence only; the declaration is not full manifest validation or policy satisfaction.`;
 }
 
+function platformDeclarationReasonLabel(reason) {
+  const labels = {
+    "file-observation-unavailable": "file observation unavailable",
+    "platform-contract-absent": "manifest absent",
+    "platform-contract-too-large": "manifest exceeds interpretation bound",
+    "platform-contract-text-unavailable": "manifest text unavailable",
+    "bounded-declaration-observed": "bounded declaration observed",
+    "declaration-partial-or-unrecognized": "manifest readable; declaration fields partial or unrecognized",
+  };
+  return labels[reason] || "declaration state unknown";
+}
+
+function platformDeclarationDetail(item = {}) {
+  const declaration = item.declaration || {};
+  return [
+    declaration.schemaVersion ? "schema " + declaration.schemaVersion : null,
+    declaration.componentType || null,
+    declaration.lifecycle ? "lifecycle " + declaration.lifecycle : null,
+    declaration.platformContract ? "compatibility " + declaration.platformContract : null,
+    declaration.glazeUiRequired ? "Glaze " + declaration.glazeUiRequired : null,
+    declaration.declaredConformance ? "declared " + declaration.declaredConformance : null,
+  ].filter(Boolean).join(" · ");
+}
+
+function renderPlatformDeclarations(summary = {}, repositories = []) {
+  const container = byId("platform-declarations-list");
+  clear(container);
+  setText("platform-declarations-count", summary.observedRepositories ?? 0);
+
+  const rows = repositories.filter((repository) => repository.platformDeclaration);
+  if (!rows.length) {
+    container?.append(emptyState("No Platform Contract declaration evidence was returned."));
+    return;
+  }
+
+  for (const repository of rows) {
+    const item = repository.platformDeclaration || {};
+    const card = document.createElement("article");
+    card.className = "list-card";
+    const header = document.createElement("div");
+    header.className = "list-card-header";
+    const title = document.createElement("h3");
+    title.className = "item-title";
+    if (repository.url) title.append(createLink(repository.url, repository.name));
+    else title.textContent = repository.name;
+
+    const badgeLabel = item.status === "observed" ? "Manifest observed" : item.status === "absent" ? "Manifest absent" : "Unavailable";
+    header.append(title, createBadge(badgeLabel, item.status === "observed" ? "success" : "private"));
+
+    const description = document.createElement("p");
+    description.className = "item-description";
+    description.textContent = item.status === "observed"
+      ? (platformDeclarationDetail(item) || "Manifest text was readable, but no supported declaration fields were normalized.")
+      : platformDeclarationReasonLabel(item.reason);
+
+    const meta = document.createElement("p");
+    meta.className = "item-meta";
+    meta.textContent = "Declaration only · no full schema validation or computed conformance is performed by this view.";
+
+    card.append(header, description, meta);
+    container?.append(card);
+  }
+}
+
 function protectionControlLabels(rules = []) {
   const labels = [];
   if (rules.some((rule) => rule.requiresApprovingReviews)) labels.push("approving reviews");
@@ -554,6 +618,7 @@ function renderGovernance(data) {
   const summary = data.summary || {};
   const governance = data.governance || {};
   const documentation = governance.documentation || {};
+  const platformDeclarations = governance.platformDeclarations || {};
   const classicProtection = governance.classicBranchProtection || {};
   const rulesets = data.rulesets || {};
   const rulesetByRepository = rulesetObservationMap(rulesets);
@@ -565,6 +630,8 @@ function renderGovernance(data) {
   setText("stat-documentation-gaps", summary.repositoriesWithObservedDocumentationGaps ?? 0);
   setText("stat-documentation-applicable", summary.documentationClassifiedRepositories ?? 0);
   setText("stat-documentation-unclassified", summary.documentationUnclassifiedRepositories ?? 0);
+  setText("stat-platform-manifests", summary.platformManifestObservedRepositories ?? 0);
+  setText("stat-platform-contract-2", summary.platformContract2DeclaredRepositories ?? 0);
   setText("stat-classic-protected", summary.classicProtectedRepositories ?? 0);
   setText("stat-rulesets-active", summary.repositoriesWithActiveRulesets ?? 0);
   setText("stat-required-workflows", summary.repositoriesWithRequiredWorkflowRules ?? 0);
@@ -581,11 +648,12 @@ function renderGovernance(data) {
   setPill("coverage-state", coverageText, overallStatus === "complete");
   setText(
     "sidebar-status",
-    `${summary.checkedRepositories ?? 0} baseline · ${summary.documentationCheckedRepositories ?? 0} docs · ${summary.documentationClassifiedRepositories ?? 0} applicable · ${summary.classicProtectionCheckedRepositories ?? 0} classic · ${summary.rulesetCheckedRepositories ?? 0} ruleset observations`,
+    `${summary.checkedRepositories ?? 0} baseline · ${summary.documentationCheckedRepositories ?? 0} files · ${summary.platformManifestObservedRepositories ?? 0} manifests · ${summary.classicProtectionCheckedRepositories ?? 0} classic · ${summary.rulesetCheckedRepositories ?? 0} ruleset observations`,
   );
 
   renderProbes(governance.probes || []);
   renderDocumentation(documentation);
+  renderPlatformDeclarations(platformDeclarations, governance.repositories || []);
   renderClassicProtection(classicProtection);
   renderRulesets(rulesets);
   renderRequiredWorkflows(rulesets);
