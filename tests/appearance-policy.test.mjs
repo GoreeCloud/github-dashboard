@@ -65,12 +65,12 @@ test("dashboard renderer no longer carries the superseded binary theme implement
   assert.doesNotMatch(app, /function applyTheme\(/);
   assert.doesNotMatch(app, /function toggleTheme\(/);
   assert.doesNotMatch(app, /function initializeTheme\(/);
-  assert.doesNotMatch(app, /matchMedia\("\(prefers-color-scheme: dark\)"\)/);
+  assert.doesNotMatch(app, /matchMedia\("\(prefers-color-scheme: dark\)"/);
   assert.doesNotMatch(app, /theme-toggle.*toggleTheme/);
 });
 
-test("V1.1 appearance CSS includes system dark, explicit Deep Dark, and solid color-mix fallback", () => {
-  const css = read("public/glaze-v1.1.css");
+test("V1.6 appearance CSS includes system dark, explicit Deep Dark, and solid color-mix fallback", () => {
+  const css = read("public/glaze-v1.6.css");
 
   assert.match(css, /@media \(prefers-color-scheme: dark\)/);
   assert.match(css, /:root:not\(\[data-theme\]\)/);
