@@ -31,7 +31,7 @@ Former PF-001 (current fourteen-file application/service repository baseline obs
 | PF-013 | Complete Wardveil Security integration/acceptance. | High | Blocked. |
 | PF-014 | Complete Everkeep-compatible deployment/configuration backup, clean restore, and rollback acceptance. | High | Blocked. |
 | PF-015 | Add governed security/dependency automation interpretation without converting absent evidence into a pass. | Medium | Policy mapping required. |
-| PF-016 | Add bounded version-aware peer Platform Contract validation/conformance interpretation. | Medium | Producer authority must remain intact. |
+| PF-016 | Add full version-aware peer Platform Contract schema validation and computed-conformance interpretation beyond the implemented declaration-only evidence. | Medium | Producer authority, API budgets, evaluator-version provenance, and exact-revision semantics must remain intact. |
 | PF-017 | Verify authenticated Cloudflare deployment, secrets, security headers, monitoring, and rollback. | High | Production deployment not approved. |
 | PF-018 | Complete Weave integration/hardening gates before considering Seal. | High | Current lifecycle is Forge. |
 | PF-019 | Establish exact candidate, qualification, release evidence, and explicit approval before Anchor. | High | Seal/Anchor gates not started. |

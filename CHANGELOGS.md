@@ -1,5 +1,25 @@
 # Changelogs
 
+## 0.3.0-dev — continued 2026-09-27 — Platform Contract declaration evidence
+
+### Added
+
+- Bounded declaration-only Platform Contract evidence derived from the existing `goreecloud.platform.yaml` GraphQL blob read.
+- Normalized schema version, application/service/shared-library component type, lifecycle, Platform Contract compatibility, Glaze UI requirement, and declared conformance when safely recognizable.
+- Governance UI summary and per-repository cards for observed/absent/unavailable manifests and Contract 2.0 declarations.
+- Tests preserving raw-manifest non-disclosure and the boundary between declaration evidence and full validation.
+- Implemented-feature record IF-024.
+
+### Security and truthfulness
+
+- No new GitHub endpoint, request fan-out, credential permission, or browser exposure of raw manifest text is introduced.
+- Declaration evidence never becomes proof of full manifest validity, computed conformance, policy satisfaction, release eligibility, Seal qualification, or Anchor status.
+- Full peer Platform Contract schema validation and computed-conformance interpretation remains planned as PF-016.
+
+### Validation boundary
+
+- Foundation run #118 passed on source head `c726b501e3166792da5f87239578e3462f115552`; the documentation synchronization in this commit requires fresh exact-head validation before it becomes current evidence.
+
 ## 0.3.0-dev — continued 2026-09-27 — current repository baseline observation
 
 ### Added

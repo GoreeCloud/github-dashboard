@@ -3,7 +3,7 @@
 ## Status
 
 - Product: GoreeCloud GitHub Dashboard
-- Lifecycle: Development
+- Lifecycle: Forge
 - Surface: `/governance.html`
 - API: `/api/governance`
 - Mode: read-only
@@ -14,12 +14,13 @@
 
 The governance control-plane view provides a compact observation of repository-governance evidence across repositories accessible to the configured GoreeCloud GitHub credential.
 
-The current Development slice observes four independent source channels:
+The current Forge slice observes five independent source channels:
 
 1. exact default-branch presence of four baseline files, including `goreecloud.platform.yaml`;
 2. exact default-branch presence of the fourteen required application/service repository paths, with bounded application/service applicability evidence when the Platform Contract explicitly declares `component.type`;
-3. classic GitHub branch-protection rules that GitHub reports as matching the exact default branch; and
-4. active GitHub ruleset rules that GitHub reports as applying to the exact default branch, including bounded required-workflow references when an active workflow rule is returned.
+3. bounded declaration-only evidence from the already-read `goreecloud.platform.yaml` manifest text;
+4. classic GitHub branch-protection rules that GitHub reports as matching the exact default branch; and
+5. active GitHub ruleset rules that GitHub reports as applying to the exact default branch, including bounded required-workflow references when an active workflow rule is returned.
 
 This remains an observation surface, not a compliance engine. Presence, absence, a declared component type, matching rules, returned ruleset rules, or required-workflow references do not by themselves establish policy correctness, manifest validity, release eligibility, platform conformance, security acceptance, or Stable qualification.
 
@@ -75,6 +76,23 @@ Those cases remain `unclassified`. Raw Platform Contract text is used only serve
 Portfolio documentation summaries expose the applicability model `platform-contract-component-type-declaration`, counts for classified and unclassified repositories, application/service counts, and raw fourteen-path presence evidence. Per-repository documentation evidence exposes the normalized applicability status and declared component type when safely available.
 
 `Docs complete` means only that all fourteen paths were present for the observed repository. `Docs gaps` means only that at least one path was absent from the successfully observed default branch. For an explicitly classified application/service repository, the declaration establishes that the fourteen-path policy category is applicable; it still does **not** establish compliance, release eligibility, or Stable qualification. For an unclassified repository, presence/absence remains evidence without a policy-applicability conclusion.
+
+## Platform Contract declaration evidence
+
+The same bounded Platform Contract blob text already fetched for application/service applicability is normalized into a separate declaration-only evidence channel. No additional GitHub endpoint, repository fan-out, credential permission, or raw manifest browser payload is introduced.
+
+When the manifest is safely readable and within the 32 KiB interpretation bound, the dashboard may normalize only these explicit fields when they are expressed as simple direct scalar declarations:
+
+- `schema_version`;
+- `component.type` for `application`, `service`, or `shared-library`;
+- top-level `lifecycle`;
+- `compatibility.platform_contract`;
+- `compatibility.glaze_ui_required`; and
+- `conformance.status` when it is `conformant`, `nonconformant`, or `unverified`.
+
+The parser is intentionally not a YAML validator. It does not infer missing fields, follow aliases, interpret arbitrary YAML forms, evaluate structured evidence, verify lifecycle gates, or compute peer-repository conformance. Raw manifest text is never returned to the browser.
+
+A readable manifest can therefore be reported as `observed` even when one or more normalized declaration fields are absent or unrecognized. A `Contract 2.0` summary means only that a bounded recognized declaration field states `2.0`; it is not proof that the complete manifest validates under Contract 2.0.
 
 ## Classic default-branch protection
 
@@ -139,7 +157,7 @@ Those are separate policy, source-validation, and runtime-evidence questions.
 
 ## Independent fail-soft channels
 
-Baseline/documentation file observation, classic protection, and rulesets are intentionally independent channels. Baseline and documentation evidence share one GitHub GraphQL request channel, but they are normalized separately after a successful response.
+Baseline/documentation file observation, Platform Contract declaration evidence, classic protection, and rulesets are intentionally independent channels. Baseline and documentation evidence share one GitHub GraphQL request channel, but they are normalized separately after a successful response.
 
 Failure of one upstream channel does not erase successful evidence from the others. The aggregate page status is:
 
@@ -195,7 +213,7 @@ GoreeCloud Manager or GoreeCloud Mesh may later present accepted governance stat
 The current slice still does not determine:
 
 - repository role/type when no bounded readable Platform Contract explicitly declares `application` or `service`;
-- full Platform Contract validity or computed conformance for peer repositories;
+- full Platform Contract validity or computed conformance for peer repositories beyond the bounded declaration-only fields;
 - whether an unclassified repository is subject to the fourteen-file application/service repository baseline through another governed authority;
 - which observed workflow references are required by GoreeCloud policy for a repository role/type;
 - whether an observed required workflow reference points to an approved governed workflow revision;
@@ -209,7 +227,7 @@ The current slice still does not determine:
 
 ## Acceptance boundary
 
-Automated source tests validate bounded batching/concurrency, exact default-branch targeting, baseline and application/service repository-baseline file-presence normalization, bounded Platform Contract blob-text requesting, strict application/service component-type parsing, classified/unclassified applicability counts, unavailable/unreadable declaration handling, classic matching-ref behavior, active-ruleset source/type normalization, bounded required-workflow reference normalization, local repository-id resolution, unavailable-evidence handling, channel independence, credential non-disclosure, no-store responses, page structure, bootstrap order, and conservative terminology.
+Automated source tests validate bounded batching/concurrency, exact default-branch targeting, baseline and application/service repository-baseline file-presence normalization, bounded Platform Contract blob-text requesting, declaration-only Platform Contract normalization, strict application/service component-type parsing, classified/unclassified applicability counts, unavailable/unreadable declaration handling, classic matching-ref behavior, active-ruleset source/type normalization, bounded required-workflow reference normalization, local repository-id resolution, unavailable-evidence handling, channel independence, credential non-disclosure, no-store responses, page structure, bootstrap order, and conservative terminology.
 
 Exact-head CI remains mandatory for the current pull-request head. A passing result for an earlier revision is historical evidence only and must not be treated as validation of a newer head. The dashboard foundation workflow and independent Platform Contract 2.0 workflow must both validate the exact candidate revision before their results are cited as current.
 
