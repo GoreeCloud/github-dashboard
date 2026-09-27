@@ -6,9 +6,9 @@ First-party GoreeCloud repository command center for recent changes, changelogs,
 
 ## Status
 
-**Release lifecycle: Development.** Source is not production-approved and no production deployment is implied by this repository.
+**Lifecycle: Forge. Deployment state: Development.** Source is not production-approved and no production deployment is implied by this repository.
 
-The application is deliberately text-first while its unique canonical product icon/service mark remains unapproved. Source migration now targets the current Stable **GLAZE UI V1.1 / 1.1.0** baseline verified in the canonical Glaze UI source repository. The V1.1 source mapping is implemented as Development work, but rendered, accessibility, resilience, and form-factor acceptance remain pending. Phone, Tablet, Desktop, and Wide Desktop are the intended supported form factors; TV is explicitly unsupported in the initial project scope.
+The application is deliberately text-first while its unique canonical product icon/service mark remains unapproved. Source now targets **GLAZE UI V1.6 / 1.6.0** using the accepted shared release source recorded in `docs/GLAZE_UI_CONFORMANCE.md`. The V1.6 source mapping is implemented in Forge, but rendered, accessibility, resilience, form-factor, performance, and production acceptance remain pending. Phone, Tablet, Desktop, and Wide Desktop are the intended supported form factors; TV is explicitly unsupported in the initial project scope.
 
 ## Current features
 
@@ -30,11 +30,11 @@ The application is deliberately text-first while its unique canonical product ic
 - Documentation observation for `README.md`, `SPECIFICATIONS.md`, `FEATURES.md`, `BENEFITS.md`, `COMPETITIVE-OBJECTIVES.md`, and `BRANDING.md`, with repository role/type applicability explicitly left unclassified.
 - Four-state appearance control: System, Light, Dark, and explicit Deep Dark. System follows the operating-system preference; Deep Dark is opt-in.
 - Shared native appearance controller used by both dashboard and governance views; the superseded binary Light/Dark renderer listener has been removed.
-- Development-stage GLAZE UI V1.1 source mapping with solid durable data surfaces, navigation-only Glaze material, 48 px touch targets, purpose-built Tablet navigation, Reduced Transparency fallback, and a solid fallback before optional `color-mix()` enhancement.
+- Forge-stage GLAZE UI V1.6 source mapping with solid durable data surfaces, bounded navigation Glaze material, 48 px touch targets, purpose-built Tablet navigation, Reduced Transparency fallback, and a solid fallback before optional `color-mix()` enhancement.
 - Visible focus, Reduced Motion, Increased Contrast, and Forced Colors resilience.
 - Fail-closed private-data gate for Cloudflare Pages deployments.
 - Public-source safety validation for credential, private-key, browser-authentication, example-configuration, and exported-data boundaries.
-- GoreeCloud Platform Contract v0.2 root declaration with exact-head Development conformance validation.
+- GoreeCloud Platform Contract 2.0 root declaration with exact-head Forge conformance validation and fail-closed Anchor eligibility.
 - Repository-policy validation for the six mandatory application/service root documentation records.
 
 See [SPECIFICATIONS.md](SPECIFICATIONS.md) for the version-coupled product specification and [FEATURES.md](FEATURES.md) for the explicit implemented/partial/not-approved capability boundary.
@@ -75,19 +75,19 @@ See [docs/GOVERNANCE_CONTROL_PLANE.md](docs/GOVERNANCE_CONTROL_PLANE.md) for the
 
 ## Operational health and readiness
 
-`/api/health` reports only process-level liveness and safe Development metadata. `/api/ready` reports configuration readiness only after the server-side GitHub credential exists and the external private-access layer has been verified and represented by `ACCESS_GATE_CONFIRMED=true`. It does not identify which prerequisite is missing and does not probe GitHub.
+`/api/health` reports only process-level liveness and safe lifecycle/deployment-state metadata. `/api/ready` reports configuration readiness only after the server-side GitHub credential exists and the external private-access layer has been verified and represented by `ACCESS_GATE_CONFIRMED=true`. It does not identify which prerequisite is missing and does not probe GitHub.
 
 See [docs/OPERATIONAL_HEALTH.md](docs/OPERATIONAL_HEALTH.md) for exact semantics. Neither endpoint establishes upstream availability, authenticated-user acceptance, production readiness, or Stable status by itself.
 
 ## GLAZE UI migration
 
-The application-specific source mapping is documented in [docs/GLAZE_UI_CONFORMANCE.md](docs/GLAZE_UI_CONFORMANCE.md). It targets GLAZE UI V1.1 / 1.1.0 and deliberately records rendered and production acceptance as pending. The migration layer is loaded before the appearance controller, refresh guard, and application renderer so the active UI exposes the current source target rather than a superseded historical label.
+The application-specific source mapping is documented in [docs/GLAZE_UI_CONFORMANCE.md](docs/GLAZE_UI_CONFORMANCE.md). It targets GLAZE UI V1.6 / 1.6.0 and deliberately records rendered and production acceptance as pending. The migration layer is loaded before the appearance controller, refresh guard, and application renderer so the active UI exposes the current source target rather than a superseded historical label.
 
 Appearance cycles `System → Light → Dark → Deep Dark → System`. The System state keeps operating-system Light/Dark behavior, while Deep Dark remains an explicit near-black mode. A shared appearance controller now owns initialization, persistence, accessible current/next-mode labeling, and the appearance button on both dashboard and governance pages. The prior binary renderer listener and capture-phase migration workaround have been removed.
 
 ## Platform conformance
 
-The repository-root [goreecloud.platform.yaml](goreecloud.platform.yaml) declares GoreeCloud Platform Contract v0.2 state, including `/api/health` and `/api/ready`. All seven GoreeCloud Platform Systems and their current implementation status are explained in [docs/PLATFORM_CONFORMANCE.md](docs/PLATFORM_CONFORMANCE.md). The manifest is deliberately `nonconformant`, and the dashboard remains Development while applicable Identity, Mesh, Wardveil, Privacy Shield, Everkeep, Manager, and Glaze acceptance gates remain incomplete.
+The repository-root [goreecloud.platform.yaml](goreecloud.platform.yaml) declares GoreeCloud Platform Contract 2.0 state, including `/api/health` and `/api/ready`. All nine Integral Platform Systems and their current implementation status are explained in [docs/PLATFORM_CONFORMANCE.md](docs/PLATFORM_CONFORMANCE.md). The manifest is deliberately `nonconformant`; the dashboard lifecycle is Forge with deployment state Development while applicable Manager, Privacy Shield, Wardveil Security, Everkeep, Glaze UI, Mesh, Identity, Policy, and Observability acceptance gates remain incomplete.
 
 The Platform Contract workflow pins the reviewed central contract implementation and validates the exact pull-request head rather than using a synthetic PR merge revision. A passing manifest check does not promote lifecycle status or establish any platform-system acceptance.
 
@@ -112,7 +112,7 @@ npm test
 npm run check
 ```
 
-Validation covers repository structure, the six-file application/service documentation baseline, public-source safety, JavaScript syntax, security invariants, dashboard health surfaces, timeout protection, refresh-guard integrity, fail-closed API contracts, deterministic GitHub aggregation, operational health/readiness, native four-state appearance-controller behavior, cache policy, data health, the current GLAZE UI V1.1 source-migration contract, repository product records, governance evidence boundaries, and local Platform Contract source invariants. GitHub Actions additionally runs the pinned central Platform Contract v0.2 validator and evaluator against the exact dashboard revision.
+Validation covers repository structure, the six-file application/service documentation baseline, public-source safety, JavaScript syntax, security invariants, dashboard health surfaces, timeout protection, refresh-guard integrity, fail-closed API contracts, deterministic GitHub aggregation, operational health/readiness, native four-state appearance-controller behavior, cache policy, data health, the current GLAZE UI V1.6 source-migration contract, repository product records, governance evidence boundaries, and local Platform Contract source invariants. GitHub Actions additionally runs the pinned central Platform Contract 2.0 validator and evaluator against the exact dashboard revision.
 
 Deterministic representative GitHub fixtures exercise the complete dashboard aggregation path without live credentials. They verify private-repository normalization and owner filtering, complete coverage, Actions permission denial, the distinction between confirmed optional `404` absence and unavailable permission-denied evidence, fail-soft rate-limit loss, and sanitized core GitHub failures. Fixture validation strengthens source confidence but does not replace live private-repository validation, rendered form-factor acceptance, or deployment acceptance.
 
@@ -125,7 +125,7 @@ Deterministic representative GitHub fixtures exercise the complete dashboard agg
 - [BRANDING.md](BRANDING.md) — current canonical identity boundary.
 - [docs/GOVERNANCE_CONTROL_PLANE.md](docs/GOVERNANCE_CONTROL_PLANE.md) — governance evidence model and interpretation boundaries.
 - [docs/PUBLIC_SOURCE_BOUNDARY.md](docs/PUBLIC_SOURCE_BOUNDARY.md) — public/open-source source contract and private authenticated deployment boundary.
-- [goreecloud.platform.yaml](goreecloud.platform.yaml) — machine-readable Platform Contract v0.2 declaration.
+- [goreecloud.platform.yaml](goreecloud.platform.yaml) — machine-readable Platform Contract 2.0 declaration.
 
 ## Deployment
 
