@@ -1,7 +1,7 @@
 const API_ROOT = "https://api.github.com";
 const API_VERSION = "2022-11-28";
 const CLIENT_VERSION = "0.3.0-dev";
-const CHANGELOG_PATHS = ["CHANGELOG.md", "docs/CHANGELOG.md", "changelog.md"];
+const CHANGELOG_PATHS = ["CHANGELOGS.md", "CHANGELOG.md", "docs/CHANGELOG.md", "changelog.md"];
 const FAILURE_CONCLUSIONS = new Set(["failure", "cancelled", "timed_out", "action_required", "startup_failure", "stale"]);
 const DEFAULT_REQUEST_TIMEOUT_MS = 8_000;
 const MIN_REQUEST_TIMEOUT_MS = 250;

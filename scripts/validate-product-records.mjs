@@ -3,7 +3,13 @@ import fs from "node:fs";
 const requiredFiles = [
   "COMPETITIVE-OBJECTIVES.md",
   "FEATURES.md",
+  "IMPLEMENTED-FEATURES.md",
+  "PLANNED-FEATURES.md",
+  "CHANGELOGS.md",
   "BENEFITS.md",
+  "USER-MANUAL.md",
+  "PRIVACY POLICY.md",
+  "NOTES.md",
   "goreecloud.platform.yaml",
   "docs/GLAZE_UI_CONFORMANCE.md",
   "docs/PLATFORM_CONFORMANCE.md",
@@ -45,6 +51,7 @@ if (!failures.length) {
   const governanceRenderer = fs.readFileSync("public/governance.js", "utf8");
   const governanceSource = fs.readFileSync("functions/lib/governance.js", "utf8");
   const rulesetsSource = fs.readFileSync("functions/lib/rulesets.js", "utf8");
+  const githubSource = fs.readFileSync("functions/lib/github.js", "utf8");
   const governanceDocs = fs.readFileSync("docs/GOVERNANCE_CONTROL_PLANE.md", "utf8");
   const glazeRuntime = fs.readFileSync("public/glaze-ui.js", "utf8");
   const glazeMapping = fs.readFileSync("docs/GLAZE_UI_CONFORMANCE.md", "utf8");
@@ -59,8 +66,12 @@ if (!failures.length) {
   const publicSourceBoundary = fs.readFileSync("docs/PUBLIC_SOURCE_BOUNDARY.md", "utf8");
   const publicSourceValidator = fs.readFileSync("scripts/validate-public-source.mjs", "utf8");
 
-  for (const record of ["COMPETITIVE-OBJECTIVES.md", "FEATURES.md", "BENEFITS.md"]) {
+  for (const record of ["COMPETITIVE-OBJECTIVES.md", "FEATURES.md", "IMPLEMENTED-FEATURES.md", "PLANNED-FEATURES.md", "CHANGELOGS.md", "BENEFITS.md", "USER-MANUAL.md", "PRIVACY POLICY.md", "NOTES.md"]) {
     if (!readme.includes(record)) failures.push(`README must link ${record}`);
+  }
+
+  if (!githubSource.includes('const CHANGELOG_PATHS = ["CHANGELOGS.md", "CHANGELOG.md", "docs/CHANGELOG.md", "changelog.md"];')) {
+    failures.push("GitHub aggregation must prefer current GoreeCloud CHANGELOGS.md while retaining legacy fallback paths.");
   }
 
   if (!/public(?:\s*\/\s*|\s+and\s+)open[- ]source/i.test(readme)) {

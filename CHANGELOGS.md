@@ -1,6 +1,26 @@
-# Changelog
+# Changelogs
 
-All notable source changes to GoreeCloud GitHub Dashboard are recorded here. Git history remains authoritative for exact commits and pull requests.
+All notable source changes to GoreeCloud GitHub Dashboard are recorded here. Git history remains authoritative for exact commits and pull requests. Historical dated entries retain the terminology and validation boundary that applied when recorded.
+
+## 0.3.0-dev — continued 2026-09-27
+
+### Added
+
+- Current fourteen-file application/service repository baseline records: `IMPLEMENTED-FEATURES.md`, `PLANNED-FEATURES.md`, `CHANGELOGS.md`, `USER-MANUAL.md`, `PRIVACY POLICY.md`, and `NOTES.md`.
+- Migrated retired Feature Roadmap controls FR-001 through FR-003 into `PLANNED-FEATURES.md`.
+- GoreeCloud-native `CHANGELOGS.md` discovery preference while retaining legacy changelog fallback paths for peer repositories.
+
+### Changed
+
+- Repository validation now requires `CHANGELOGS.md` instead of the legacy singular changelog.
+- Repository-policy validation enforces the current fourteen-file baseline and rejects retired duplicate roadmap/changelog authorities.
+- README product-record navigation now exposes the implementation, planning, changelog, user-manual, privacy-policy, notes, and security records.
+
+### Validation boundary
+
+- Preceding head `9fc55054fcf29c7daffd76572a25b3d6740a52b7` passed foundation run #112 / `36338512355` and Platform Contract 2.0 run #75 / `36338512257`.
+- This baseline migration requires fresh exact-head validation before it is treated as accepted source evidence.
+- Passing source CI does not establish live private-data, rendered, platform-system, deployment, Seal, Anchor, or production acceptance.
 
 ## 0.3.0-dev — continued 2026-09-06
 

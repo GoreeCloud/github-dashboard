@@ -112,11 +112,19 @@ npm test
 npm run check
 ```
 
-Validation covers repository structure, the six-file application/service documentation baseline, public-source safety, JavaScript syntax, security invariants, dashboard health surfaces, timeout protection, refresh-guard integrity, fail-closed API contracts, deterministic GitHub aggregation, operational health/readiness, native four-state appearance-controller behavior, cache policy, data health, the current GLAZE UI V1.6 source-migration contract, repository product records, governance evidence boundaries, and local Platform Contract source invariants. GitHub Actions additionally runs the pinned central Platform Contract 2.0 validator and evaluator against the exact dashboard revision.
+Validation covers repository structure, the current fourteen-file application/service repository baseline, public-source safety, JavaScript syntax, security invariants, dashboard health surfaces, timeout protection, refresh-guard integrity, fail-closed API contracts, deterministic GitHub aggregation, operational health/readiness, native four-state appearance-controller behavior, cache policy, data health, the current GLAZE UI V1.6 source-migration contract, repository product records, governance evidence boundaries, and local Platform Contract source invariants. GitHub Actions additionally runs the pinned central Platform Contract 2.0 validator and evaluator against the exact dashboard revision.
 
 Deterministic representative GitHub fixtures exercise the complete dashboard aggregation path without live credentials. They verify private-repository normalization and owner filtering, complete coverage, Actions permission denial, the distinction between confirmed optional `404` absence and unavailable permission-denied evidence, fail-soft rate-limit loss, and sanitized core GitHub failures. Fixture validation strengthens source confidence but does not replace live private-repository validation, rendered form-factor acceptance, or deployment acceptance.
 
 ## Product records
+
+- [IMPLEMENTED-FEATURES.md](IMPLEMENTED-FEATURES.md) — implemented source capabilities.
+- [PLANNED-FEATURES.md](PLANNED-FEATURES.md) — planned, blocked, deferred, and acceptance-gated work.
+- [CHANGELOGS.md](CHANGELOGS.md) — repository-local change history.
+- [USER-MANUAL.md](USER-MANUAL.md) — current user workflows and interpretation guidance.
+- [PRIVACY POLICY.md](PRIVACY%20POLICY.md) — repository-safe privacy boundary.
+- [NOTES.md](NOTES.md) — current development and operational notes.
+- [SECURITY.md](SECURITY.md) — security guidance and vulnerability-reporting boundary.
 
 - [SPECIFICATIONS.md](SPECIFICATIONS.md) — version-coupled product specification and acceptance boundary.
 - [COMPETITIVE-OBJECTIVES.md](COMPETITIVE-OBJECTIVES.md) — benchmark goals and deliberate product differences.

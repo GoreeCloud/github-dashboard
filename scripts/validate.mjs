@@ -7,7 +7,7 @@ const requiredFiles = [
   "LICENSE",
   ".gitignore",
   ".env.example",
-  "CHANGELOG.md",
+  "CHANGELOGS.md",
   "SECURITY.md",
   "public/index.html",
   "public/styles.css",
