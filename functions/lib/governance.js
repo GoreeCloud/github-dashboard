@@ -441,21 +441,7 @@ export function buildGovernanceCoverage(repositories, observations = [], protect
         presentChecks: documentationPresentChecks,
         missingChecks: documentationMissingChecks,
       },
-      platformDeclarations: {
-      status: platformDeclarationStatus,
-      scope: "platform-contract-declaration-evidence",
-      interpretation: "declaration-only",
-      fullValidationPerformed: false,
-      checkedRepositories: platformDeclarationCheckedRepositories,
-      observedRepositories: platformDeclarationObservedRows.length,
-      absentRepositories: platformDeclarationAbsentRepositories,
-      unavailableRepositories: platformDeclarationUnavailableRepositories,
-      contract2DeclaredRepositories: platformContract2DeclaredRepositories,
-      applicationRepositories: platformApplicationRepositories,
-      serviceRepositories: platformServiceRepositories,
-      sharedLibraryRepositories: platformSharedLibraryRepositories,
-    },
-    classicBranchProtection: {
+      classicBranchProtection: {
         available: protectionAvailable,
         defaultBranchProtected: protectionAvailable ? protection.defaultBranchProtected === true : null,
         matchingRules: protectionAvailable && Array.isArray(protection.matchingRules) ? protection.matchingRules : [],
@@ -589,6 +575,20 @@ export function buildGovernanceCoverage(repositories, observations = [], protect
       repositoriesWithObservedGaps: rows.filter((row) => row.documentation.status === "gaps").length,
       probes: documentationProbes,
     },
+    platformDeclarations: {
+      status: platformDeclarationStatus,
+      scope: "platform-contract-declaration-evidence",
+      interpretation: "declaration-only",
+      fullValidationPerformed: false,
+      checkedRepositories: platformDeclarationCheckedRepositories,
+      observedRepositories: platformDeclarationObservedRows.length,
+      absentRepositories: platformDeclarationAbsentRepositories,
+      unavailableRepositories: platformDeclarationUnavailableRepositories,
+      contract2DeclaredRepositories: platformContract2DeclaredRepositories,
+      applicationRepositories: platformApplicationRepositories,
+      serviceRepositories: platformServiceRepositories,
+      sharedLibraryRepositories: platformSharedLibraryRepositories,
+    },
     classicBranchProtection: {
       status: protectionStatus,
       checkedRepositories: protectionCheckedRepositories,
@@ -621,7 +621,6 @@ async function fetchGovernanceBatch(env, owner, repositories) {
         available: false,
         presence: {},
         documentationApplicability: platformRoleObservation(null, false),
-    platformDeclaration: platformDeclarationObservation(null, false),
         platformDeclaration: platformDeclarationObservation(null, false),
       };
     }
