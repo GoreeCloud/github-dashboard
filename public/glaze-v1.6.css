@@ -1,5 +1,5 @@
-/* GoreeCloud GitHub Dashboard — GLAZE UI V1.1 application mapping.
- * Current Stable target: GLAZE UI 1.1.0.
+/* GoreeCloud GitHub Dashboard — GLAZE UI V1.6 application mapping.
+ * Current Stable target: GLAZE UI 1.6.0.
  * This source mapping does not establish rendered or production acceptance.
  */
 
@@ -57,7 +57,7 @@
   }
 }
 
-/* Deep Dark is an explicit, near-black V1.1 appearance. It is intentionally
+/* Deep Dark is an explicit, near-black V1.6 appearance. It is intentionally
  * distinct from ordinary Dark and never inferred from the system setting.
  */
 :root[data-theme="deep-dark"] {
@@ -96,7 +96,7 @@ body {
     linear-gradient(145deg, var(--canvas), var(--canvas-deep));
 }
 
-/* V1.1 material budget: durable reading/data surfaces are solid. Navigation
+/* V1.6 material budget: durable reading/data surfaces are solid. Navigation
  * chrome may retain one dominant Glaze surface for the active form factor.
  */
 .panel,

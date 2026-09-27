@@ -1,12 +1,23 @@
-schema_version: "0.2"
+schema_version: "2.0"
 
 component:
   type: application
   id: github-dashboard
   product_name: GoreeCloud GitHub Dashboard
-  repository: GoreeCloud/goreecloud-github-dashboard
+  repository: GoreeCloud/github-dashboard
 
-lifecycle: development
+lifecycle: forge
+lifecycle_metadata:
+  flags:
+    - blocked
+    - migration-required
+  deployment_state: development
+  qualification_state: not-started
+  next_gate: weave
+  candidate_identity: null
+  last_transition: null
+  evidence:
+    - docs/PLATFORM_CONFORMANCE.md
 version: 0.3.0-dev
 
 supported_platforms:
@@ -20,7 +31,7 @@ api:
       purpose: Read-only normalized GitHub portfolio data for the private dashboard interface.
     - name: governance-api
       url: /api/governance
-      purpose: Read-only observation of baseline governance files, classic default-branch protection, active default-branch ruleset rules, and bounded required-workflow references across accessible owned repositories.
+      purpose: Read-only observation of baseline governance files, documentation evidence, classic default-branch protection, active default-branch ruleset rules, and bounded required-workflow references across accessible owned repositories.
     - name: health
       url: /api/health
       purpose: Safe process-level liveness for the dashboard function runtime.
@@ -58,11 +69,11 @@ platform_systems:
     notes: Git history and deployment recovery documentation exist, but Everkeep-managed backup/restore acceptance is not established.
   glaze_ui:
     result: applicable-nonconformant
-    version: "1.1.0"
+    version: "1.6.0"
     evidence:
       - docs/GLAZE_UI_CONFORMANCE.md
       - tests/glaze-ui-conformance.test.mjs
-    notes: Source migration targets current Stable 1.1.0; rendered, accessibility, resilience, form-factor, and production acceptance remain pending.
+    notes: Application source targets current approved Glaze UI 1.6.0; repository-local rendered, accessibility, resilience, form-factor, performance, and production acceptance remain pending.
   mesh:
     result: applicable-blocked
     version: null
@@ -80,6 +91,20 @@ platform_systems:
       - docs/PLATFORM_CONFORMANCE.md
       - docs/DEPLOYMENT.md
     notes: Authenticated private access is required for deployment, but no GoreeCloud Identity authentication or authorization integration is implemented or accepted.
+  policy:
+    result: applicable-blocked
+    version: null
+    evidence:
+      - docs/PLATFORM_CONFORMANCE.md
+      - docs/GOVERNANCE_CONTROL_PLANE.md
+    notes: The dashboard presents governance evidence but does not consume or evaluate an accepted GoreeCloud Policy decision contract, policy version/freshness state, or enforcement result.
+  observability:
+    result: applicable-blocked
+    version: null
+    evidence:
+      - docs/PLATFORM_CONFORMANCE.md
+      - docs/OPERATIONAL_HEALTH.md
+    notes: Health/readiness and bounded GitHub API-budget visibility exist, but accepted GoreeCloud Observability signal, correlation, freshness, telemetry, and evidence integration is not established.
 
 health:
   health_endpoint: /api/health
@@ -89,11 +114,11 @@ continuity:
   backup:
     required: true
     requirements:
-      - Preserve deployable source in Git and define Everkeep-compatible recovery for non-secret deployment configuration before Stable acceptance.
+      - Preserve deployable source in Git and define Everkeep-compatible recovery for non-secret deployment configuration before Anchor acceptance.
   restore:
     required: true
     requirements:
-      - Validate clean reconstruction and rollback of the dashboard deployment before Stable acceptance.
+      - Validate clean reconstruction and rollback of the dashboard deployment before Anchor acceptance.
   export:
     required: false
     requirements:
@@ -101,7 +126,7 @@ continuity:
   portability:
     required: true
     requirements:
-      - Keep the static interface and server-side aggregation reproducible from repository source without provider-specific client dependencies.
+      - Keep the static interface and server-side aggregation reproducible from repository source without provider-specific browser dependencies.
 
 external_dependencies:
   - name: GitHub REST API
@@ -122,11 +147,11 @@ external_dependencies:
     version_constraint: null
 
 compatibility:
-  platform_contract: "0.2"
-  glaze_ui_required: "1.1.0"
+  platform_contract: "2.0"
+  glaze_ui_required: "1.6.0"
   requires:
-    - goreecloud-platform-contract==0.2
-    - glaze-ui==1.1.0
+    - goreecloud-platform-contract==2.0
+    - glaze-ui==1.6.0
     - github-rest-api
     - github-graphql-api
     - authenticated-private-access-layer
@@ -153,9 +178,11 @@ conformance:
     - Privacy Shield integration and acceptance remain blocked.
     - Wardveil Security integration and acceptance remain blocked.
     - Everkeep backup, restore, and recovery acceptance remain blocked.
-    - GLAZE UI V1.1 rendered, accessibility, resilience, form-factor, and production acceptance remain incomplete.
+    - Glaze UI 1.6.0 repository-local rendered, accessibility, resilience, form-factor, performance, and production acceptance remain incomplete.
     - GoreeCloud Mesh integration and acceptance remain blocked.
     - GoreeCloud Identity integration and authenticated runtime acceptance remain blocked.
+    - GoreeCloud Policy integration, decision/freshness evidence, and enforcement acceptance remain blocked.
+    - GoreeCloud Observability signal, correlation, freshness, telemetry, and evidence acceptance remain blocked.
     - Authenticated private-access deployment, least-privilege live credential validation, and representative live GitHub validation remain incomplete.
-    - Governance control-plane source observes baseline files, classic protection, active rulesets, and required-workflow references, but repository-role applicability, governed-workflow policy satisfaction, workflow-revision acceptance, representative live REST/GraphQL validation, and production acceptance remain incomplete.
     - Cloudflare Pages deployment, monitoring, rollback, and explicit production approval remain incomplete.
+    - Forge has not completed the evidence-backed transition to Weave, Seal, or Anchor qualification.

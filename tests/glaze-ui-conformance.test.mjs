@@ -6,20 +6,20 @@ function read(path) {
   return fs.readFileSync(new URL(`../${path}`, import.meta.url), "utf8");
 }
 
-test("GLAZE UI V1.1 migration is explicit and acceptance remains pending", () => {
+test("GLAZE UI V1.6 migration is explicit and acceptance remains pending", () => {
   const runtime = read("public/glaze-ui.js");
   const mapping = read("docs/GLAZE_UI_CONFORMANCE.md");
 
-  assert.match(runtime, /GLAZE_UI_VERSION = "1\.1\.0"/);
+  assert.match(runtime, /GLAZE_UI_VERSION = "1\.6\.0"/);
   assert.match(runtime, /GLAZE_UI_ACCEPTANCE = "pending"/);
-  assert.match(mapping, /v1\.1\.0/);
-  assert.match(mapping, /15cc76d2bcd4065552dc31c77145b63f34d9e7b2/);
+  assert.match(mapping, /v1\.6\.0/);
+  assert.match(mapping, /a7180679ea851389e0f3004515f9a25f420e716d/);
   assert.match(mapping, /rendered and production acceptance pending/i);
   assert.doesNotMatch(mapping, /fully conformant/i);
 });
 
-test("GLAZE UI migration layer preserves the V1.1 material and touch boundaries", () => {
-  const css = read("public/glaze-v1.1.css");
+test("GLAZE UI migration layer preserves the V1.6 material and touch boundaries", () => {
+  const css = read("public/glaze-v1.6.css");
 
   assert.match(css, /--accent: #0f6f6a/);
   assert.match(css, /--aura-warm:/);
@@ -62,6 +62,8 @@ test("required product truth records distinguish current capability from pending
     "Glaze UI",
     "GoreeCloud Mesh",
     "GoreeCloud Identity",
+    "GoreeCloud Policy",
+    "GoreeCloud Observability",
   ]) {
     assert.match(platform, new RegExp(system));
   }

@@ -1,4 +1,4 @@
-name: Validate GoreeCloud Platform Contract v0.2
+name: Validate GoreeCloud Platform Contract 2.0
 
 on:
   push:
@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     env:
-      PLATFORM_CONTRACT_REVISION: 4a0ebf20ffb669e3d5680ab6c8d34583f1712966
+      PLATFORM_CONTRACT_REVISION: 32cfe6395f6e4bc4872a99e8d0c666ea0b1ed7b8
       EXPECTED_SHA: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
     steps:
       - name: Check out exact dashboard source revision
@@ -68,7 +68,7 @@ jobs:
           print('platform-conformance-result: schema validated')
           PY
 
-      - name: Confirm Development remains fail-closed
+      - name: Confirm Forge remains fail-closed
         run: |
           python3 - <<'PY'
           import json
@@ -78,9 +78,10 @@ jobs:
           result = json.loads(Path('goreecloud.conformance-result.json').read_text())
           assert result['evaluated_revision'] == os.environ['EXPECTED_SHA']
           assert result['evaluator_revision'] == os.environ['PLATFORM_CONTRACT_REVISION']
-          assert result['lifecycle'] == 'development'
+          assert result['lifecycle'] == 'forge'
+          assert result['deployment_state'] == 'development'
           assert result['declared_conformance'] == 'nonconformant'
           assert result['computed_conformance'] == 'nonconformant'
-          assert result['stable_eligible'] is False
-          print('platform-conformance-result: Development remains nonconformant and not Stable-eligible')
+          assert result['anchor_eligible'] is False
+          print('platform-conformance-result: Forge remains nonconformant and not Anchor-eligible')
           PY

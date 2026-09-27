@@ -11,7 +11,7 @@ const requiredFiles = [
   "docs/PUBLIC_SOURCE_BOUNDARY.md",
   "docs/GOVERNANCE_CONTROL_PLANE.md",
   "public/glaze-ui.js",
-  "public/glaze-v1.1.css",
+  "public/glaze-v1.6.css",
   "public/theme-policy.js",
   "public/appearance-controller.js",
   "public/governance.html",
@@ -48,7 +48,7 @@ if (!failures.length) {
   const governanceDocs = fs.readFileSync("docs/GOVERNANCE_CONTROL_PLANE.md", "utf8");
   const glazeRuntime = fs.readFileSync("public/glaze-ui.js", "utf8");
   const glazeMapping = fs.readFileSync("docs/GLAZE_UI_CONFORMANCE.md", "utf8");
-  const glazeCss = fs.readFileSync("public/glaze-v1.1.css", "utf8");
+  const glazeCss = fs.readFileSync("public/glaze-v1.6.css", "utf8");
   const themePolicy = fs.readFileSync("public/theme-policy.js", "utf8");
   const appearanceController = fs.readFileSync("public/appearance-controller.js", "utf8");
   const platform = fs.readFileSync("docs/PLATFORM_CONFORMANCE.md", "utf8");
@@ -163,15 +163,15 @@ if (!failures.length) {
     failures.push("Governance renderer must remain observational and must not classify repositories as compliant/noncompliant.");
   }
 
-  if (!glazeRuntime.includes('GLAZE_UI_VERSION = "1.1.0"')) {
-    failures.push("Dashboard must target current Stable GLAZE UI 1.1.0.");
+  if (!glazeRuntime.includes('GLAZE_UI_VERSION = "1.6.0"')) {
+    failures.push("Dashboard must target current approved GLAZE UI 1.6.0.");
   }
 
   if (!glazeRuntime.includes('GLAZE_UI_ACCEPTANCE = "pending"')) {
     failures.push("GLAZE UI acceptance must remain fail-closed while rendered evidence is pending.");
   }
 
-  if (!glazeMapping.includes("15cc76d2bcd4065552dc31c77145b63f34d9e7b2")) {
+  if (!glazeMapping.includes("a7180679ea851389e0f3004515f9a25f420e716d")) {
     failures.push("GLAZE UI mapping must retain the exact Stable source anchor.");
   }
 
@@ -211,17 +211,19 @@ if (!failures.length) {
     "Glaze UI",
     "GoreeCloud Mesh",
     "GoreeCloud Identity",
+    "GoreeCloud Policy",
+    "GoreeCloud Observability",
   ]) {
     if (!platform.includes(system)) failures.push(`Platform conformance must evaluate ${system}.`);
   }
 
   for (const marker of [
-    'schema_version: "0.2"',
+    'schema_version: "2.0"',
     "component:\n  type: application\n  id: github-dashboard",
-    "repository: GoreeCloud/goreecloud-github-dashboard",
-    "lifecycle: development",
+    "repository: GoreeCloud/github-dashboard",
+    "lifecycle: forge",
     "version: 0.3.0-dev",
-    'glaze_ui_required: "1.1.0"',
+    'glaze_ui_required: "1.6.0"',
     "health_endpoint: /api/health",
     "readiness_endpoint: /api/ready",
     "status: nonconformant",
@@ -230,7 +232,7 @@ if (!failures.length) {
   }
 
   if (manifest.includes("result: applicable-conformant")) {
-    failures.push("Development manifest must not claim an accepted platform-system integration without evidence.");
+    failures.push("Forge manifest must not claim an accepted platform-system integration without evidence.");
   }
 
   for (const source of [health, ready]) {
@@ -248,13 +250,13 @@ if (!failures.length) {
     failures.push("Readiness must retain a generic not-ready response code.");
   }
 
-  if (!platformWorkflow.includes("4a0ebf20ffb669e3d5680ab6c8d34583f1712966")) {
+  if (!platformWorkflow.includes("32cfe6395f6e4bc4872a99e8d0c666ea0b1ed7b8")) {
     failures.push("Platform Contract validation must pin the reviewed central implementation revision.");
   }
   if (!platformWorkflow.includes("github.event.pull_request.head.sha")) {
     failures.push("Platform Contract validation must resolve pull requests to the exact head SHA.");
   }
-  if (!platformWorkflow.includes("result['stable_eligible'] is False")) {
+  if (!platformWorkflow.includes("result['anchor_eligible'] is False")) {
     failures.push("Platform Contract workflow must verify Development is not Stable-eligible.");
   }
 }

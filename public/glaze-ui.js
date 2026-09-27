@@ -1,12 +1,14 @@
-export const GLAZE_UI_VERSION = "1.1.0";
+export const GLAZE_UI_VERSION = "1.6.0";
 export const GLAZE_UI_ACCEPTANCE = "pending";
+export const GLAZE_UI_RELEASE_SOURCE = "a7180679ea851389e0f3004515f9a25f420e716d";
+export const GLAZE_UI_RUNTIME_ENTRYPOINT = "js/glaze-v1.6.0.mjs";
 
 function installGlazeStyle() {
-  if (document.querySelector('link[data-glaze-ui-version="1.1.0"]')) return;
+  if (document.querySelector('link[data-glaze-ui-version="1.6.0"]')) return;
 
   const link = document.createElement("link");
   link.rel = "stylesheet";
-  link.href = "/glaze-v1.1.css";
+  link.href = "/glaze-v1.6.css";
   link.dataset.glazeUiVersion = GLAZE_UI_VERSION;
   document.head.append(link);
 }
@@ -35,6 +37,7 @@ function installGovernanceNavigation() {
 function synchronizeGlazeStatus() {
   document.documentElement.dataset.glazeUiVersion = GLAZE_UI_VERSION;
   document.documentElement.dataset.glazeUiAcceptance = GLAZE_UI_ACCEPTANCE;
+  document.documentElement.dataset.glazeUiReleaseSource = GLAZE_UI_RELEASE_SOURCE;
 
   const footerItems = document.querySelectorAll(".page-footer span");
   if (footerItems.length >= 2) {
