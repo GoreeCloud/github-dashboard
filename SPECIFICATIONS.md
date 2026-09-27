@@ -3,9 +3,10 @@
 ## Status
 
 - Product: GoreeCloud GitHub Dashboard
-- Repository: `GoreeCloud/goreecloud-github-dashboard`
+- Repository: `GoreeCloud/github-dashboard`
 - Source version: `0.3.0-dev`
-- Lifecycle: Development
+- Lifecycle: Forge
+- Deployment state: Development
 - Development model: original GoreeCloud-owned application
 - Repository visibility: public / open source
 - Operational deployment: private and authenticated when non-public repository data is available
@@ -13,7 +14,7 @@
 - Production approval: not established
 - License: MIT
 
-This repository-local specification is version-coupled to the Development source. GitHub remains authoritative for source state and repository history. GoreeCloud governance records remain authoritative for portfolio policy and lifecycle decisions.
+This repository-local specification is version-coupled to the Forge source. GitHub remains authoritative for source state and repository history. GoreeCloud governance records remain authoritative for portfolio policy and lifecycle decisions.
 
 ## Purpose
 
@@ -39,7 +40,7 @@ Private dashboard and governance API responses use `private, no-store, max-age=0
 
 ## Core dashboard capabilities
 
-Development source currently includes:
+Forge source currently includes:
 
 - recent commit aggregation;
 - operational Top 10 repository ranking;
@@ -107,7 +108,7 @@ The operational deployment is private whenever it can expose non-public GoreeClo
 
 ## User interface and accessibility
 
-The current verified Glaze UI source target in the canonical `GoreeCloud/goreecloud-glaze-ui` repository is **GLAZE UI V1.1 / 1.1.0**. This application therefore keeps its source target at `1.1.0` until a later Stable Glaze release is verified in source and adopted through an application-specific migration.
+The current application source target is **GLAZE UI V1.6 / 1.6.0** from the canonical `GoreeCloud/glaze-ui` authority, with the accepted release source recorded in `docs/GLAZE_UI_CONFORMANCE.md`. Shared-library qualification does not replace repository-local rendered, accessibility, resilience, form-factor, performance, or production acceptance.
 
 Rendered acceptance remains pending. Source-level requirements include:
 
@@ -127,9 +128,9 @@ TV is not part of the initial supported scope.
 
 ## Platform contract
 
-The root `goreecloud.platform.yaml` adopts GoreeCloud Platform Contract v0.2. The project remains `development` and deliberately `nonconformant` while required platform-system integrations and acceptance evidence are incomplete.
+The root `goreecloud.platform.yaml` adopts GoreeCloud Platform Contract 2.0. The project lifecycle is `forge`, deployment state is `development`, and conformance deliberately remains `nonconformant` while required platform-system integrations and acceptance evidence are incomplete.
 
-All seven GoreeCloud Platform Systems remain independently governed:
+All nine Integral Platform Systems remain independently governed:
 
 - GoreeCloud Manager
 - Privacy Shield
@@ -138,6 +139,8 @@ All seven GoreeCloud Platform Systems remain independently governed:
 - Glaze UI
 - GoreeCloud Mesh
 - GoreeCloud Identity
+- GoreeCloud Policy
+- GoreeCloud Observability
 
 Source-level controls must not be presented as accepted platform-system integration without the required evidence.
 
@@ -145,7 +148,7 @@ Source-level controls must not be presented as accepted platform-system integrat
 
 Repository validation includes unit and contract tests, deterministic GitHub fixtures, public-source safety checks, product/conformance checks, JavaScript syntax validation, and exact-head Platform Contract validation in GitHub Actions.
 
-Passing CI proves only the checks executed on that exact source revision. It does not establish rendered acceptance, authenticated deployment acceptance, production approval, or Stable qualification.
+Passing CI proves only the checks executed on that exact source revision. It does not establish rendered acceptance, authenticated deployment acceptance, production approval, or Anchor qualification.
 
 ## Current acceptance gates
 
@@ -174,4 +177,4 @@ The dashboard is not:
 - a secrets store;
 - a replacement for GoreeCloud Manager or GoreeCloud Mesh;
 - a policy authority; or
-- a mechanism for promoting itself to Stable from observational evidence.
+- a mechanism for promoting itself to Anchor from observational evidence.
