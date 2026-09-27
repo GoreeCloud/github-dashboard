@@ -2,7 +2,7 @@
 
 This record distinguishes verified source functionality from work that is partial, acceptance-gated, or not yet implemented. GitHub and exact repository history remain authoritative for source state.
 
-## Implemented in Development source
+## Implemented in Forge source
 
 - Read-only Cloudflare Pages Function aggregation of GoreeCloud GitHub repository data.
 - Server-side GitHub credential boundary; reusable credentials are not shipped to the browser.
@@ -35,7 +35,7 @@ This record distinguishes verified source functionality from work that is partia
 - Separate policy-defined documentation evidence for root `README.md`, `SPECIFICATIONS.md`, `FEATURES.md`, `BENEFITS.md`, `COMPETITIVE-OBJECTIVES.md`, and `BRANDING.md`.
 - Documentation evidence reuses the existing bounded GraphQL batch, adding no GitHub endpoint, permission, or repository fan-out.
 - Documentation presence/absence is normalized independently from the four-file baseline and remains evidence rather than a policy-satisfaction classification.
-- Bounded documentation applicability classification from exact-default-branch Platform Contract v0.2 declarations: only an explicit `component.type: application` or `component.type: service` inside the `component` mapping is recognized.
+- Bounded documentation applicability classification from exact-default-branch Platform Contract 2.0 declarations: only an explicit `component.type: application` or `component.type: service` inside the `component` mapping is recognized.
 - Platform Contract applicability interpretation is bounded to 32 KiB; absent manifests, unavailable file evidence, unreadable/oversized blobs, malformed declarations, and unknown types remain unclassified rather than being guessed from repository names or descriptions.
 - Raw Platform Contract text used for applicability interpretation remains server-side and is not returned to the browser.
 - Governance API summaries expose the applicability model, classified/unclassified counts, application/service counts, and applicable documentation complete/gap counts.
@@ -49,21 +49,21 @@ This record distinguishes verified source functionality from work that is partia
 - Required-workflow references are deduplicated and bounded to 20 per workflow rule and 40 per observed repository; unknown repository ids remain unresolved rather than receiving invented names.
 - Required-workflow observation reuses the existing active-ruleset response and adds no GitHub endpoint, permission, or repository fan-out.
 - Baseline/documentation files, classic protection, and active rulesets are independent upstream evidence channels so an unavailable channel does not erase successful peer evidence; workflow-reference availability follows the active-ruleset channel.
-- Governance terminology is deliberately observational: file presence, documentation evidence, declared application/service applicability, matching classic rules, active ruleset rules, and workflow references do not establish full manifest validity, policy satisfaction, lifecycle eligibility, computed conformance, or Stable qualification.
+- Governance terminology is deliberately observational: file presence, documentation evidence, declared application/service applicability, matching classic rules, active ruleset rules, and workflow references do not establish full manifest validity, policy satisfaction, lifecycle eligibility, computed conformance, or Anchor qualification.
 - Four-state appearance policy: System, Light, Dark, and explicit Deep Dark, with an accessible deterministic cycle and persisted user selection.
 - Shared native appearance controller for both dashboard and governance views, including idempotent control installation and fail-soft browser-storage handling.
 - Superseded renderer-local binary Light/Dark logic and its capture-phase migration guard have been removed.
 - System appearance follows operating-system Light/Dark preference; Deep Dark remains an explicit opt-in rather than being inferred automatically.
 - Light/dark/deep-dark appearance support, visible focus, Reduced Motion, Increased Contrast, Forced Colors, Reduced Transparency fallback, and solid-surface/color-mix resilience.
-- Current-Stable GLAZE UI V1.1 / 1.1.0 source migration layer with 48 px touch targets, solid durable data surfaces, navigation-only Glaze material, and improved tablet navigation.
-- GoreeCloud Platform Contract v0.2 root manifest declaring all seven Platform Systems, Development lifecycle, health/readiness interfaces, governance endpoint/dependency metadata, and nonconformant status.
-- Exact-head Platform Contract CI wrapper pinned to the reviewed central contract implementation, including computed-result schema validation and a fail-closed Stable-eligibility assertion.
+- GLAZE UI V1.6 / 1.6.0 source migration layer with 48 px touch targets, solid durable data surfaces, navigation-only Glaze material, and improved tablet navigation.
+- GoreeCloud Platform Contract 2.0 root manifest declaring all nine Integral Platform Systems, Forge lifecycle with Development deployment state, health/readiness interfaces, governance endpoint/dependency metadata, and nonconformant status.
+- Exact-head Platform Contract CI wrapper pinned to the reviewed central contract implementation, including computed-result schema validation and a fail-closed Anchor-eligibility assertion.
 - Deterministic unit, contract, representative aggregation, edge, bounded-collection, request-header, cache-policy, data-health, refresh-policy, appearance-policy, operational-health, governance-observation, Platform Contract applicability, active-ruleset/required-workflow-observation, public-source-policy, Glaze-migration, repository-policy, and product/conformance source tests.
 
 ## Partial or acceptance-gated
 
-- **GLAZE UI V1.1:** source migration includes System, Light, Dark, and Deep Dark appearance states plus the shared native controller; rendered, accessibility, resilience, optical-quality, and form-factor acceptance remain pending.
-- **Platform Contract v0.2:** declaration and source/CI validation are implemented; the computed result is intentionally nonconformant because required platform-system integrations and acceptance evidence remain incomplete.
+- **GLAZE UI V1.6:** source migration includes System, Light, Dark, and Deep Dark appearance states plus the shared native controller; rendered, accessibility, resilience, optical-quality, and form-factor acceptance remain pending.
+- **Platform Contract 2.0:** declaration and source/CI validation are implemented; the computed result is intentionally nonconformant because required platform-system integrations and acceptance evidence remain incomplete.
 - **Operational health/readiness:** source endpoints and contract tests exist; deployed runtime and monitoring acceptance remain pending.
 - **Public-source safety:** repository-local detection and source contracts are implemented, but hosted secret scanning, dependency/security automation, branch/ruleset enforcement, signed release provenance, and production deployment security validation remain separate acceptance work.
 - **Governance control plane:** baseline-file, documentation-path, bounded application/service applicability declaration, classic default-branch protection, active default-branch ruleset, and required-workflow reference observation are implemented; full peer-manifest validation, broader governed repository taxonomy, governed-workflow policy evaluation, security/dependency automation interpretation, release eligibility, and platform-system integration state remain pending.
@@ -75,7 +75,7 @@ This record distinguishes verified source functionality from work that is partia
 - **Private deployment:** source contains the deployment boundary, but an authenticated private-access layer and production runtime have not been accepted.
 - **Live GitHub validation:** deterministic fixtures exist; representative live public/private repository validation remains required.
 - **Product identity:** text-first presentation is intentional until a unique canonical dashboard identity is approved.
-- **Platform-system conformance:** source-level privacy/security/continuity controls exist, but all seven GoreeCloud Platform Systems remain subject to the blocked/nonconformant statuses in `docs/PLATFORM_CONFORMANCE.md`.
+- **Platform-system conformance:** source-level privacy/security/continuity controls exist, but all nine Integral Platform Systems remain subject to the blocked/nonconformant statuses in `docs/PLATFORM_CONFORMANCE.md`.
 
 ## Not currently implemented or approved
 
@@ -93,9 +93,11 @@ This record distinguishes verified source functionality from work that is partia
 - Accepted Privacy Shield integration.
 - Accepted Everkeep backup/restore integration.
 - Accepted GoreeCloud Manager integration.
+- Accepted GoreeCloud Policy integration.
+- Accepted GoreeCloud Observability integration.
 - Production Cloudflare Pages deployment approval.
 - Authorization-aware private-data shared caching.
 - TV/far-view support.
-- Stable lifecycle promotion.
+- Seal candidate qualification or Anchor lifecycle promotion.
 
 Features must move between these sections only when implementation and applicable validation evidence support the change.
