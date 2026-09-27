@@ -51,7 +51,7 @@ The dashboard observes those paths on the exact default branch using the same Gr
 
 The evidence is deliberately normalized into its own `documentation` channel. It does not alter the historical four-file baseline result.
 
-GoreeCloud Platform Contract v0.2 defines `component.type` as either `application` or `service`. The existing GraphQL file observation therefore also requests bounded text and byte-size metadata for the already-probed `goreecloud.platform.yaml` blob. The dashboard recognizes documentation applicability only when the exact default-branch manifest contains an explicit `component.type: application` or `component.type: service` declaration inside the `component` mapping.
+GoreeCloud Platform Contract 2.0 is the current manifest authority. The existing GraphQL file observation requests bounded text and byte-size metadata for the already-probed `goreecloud.platform.yaml` blob. For this documentation-applicability model, the dashboard deliberately recognizes only an explicit `component.type: application` or `component.type: service` declaration inside the `component` mapping; other values remain outside this bounded classifier.
 
 This is declaration evidence, not full manifest validation. The dashboard does **not** infer repository role from repository names, descriptions, visibility, topics, or neighboring projects. It also does not classify role when:
 
@@ -60,7 +60,7 @@ This is declaration evidence, not full manifest validation. The dashboard does *
 - the blob text is unavailable;
 - the blob exceeds the 32 KiB interpretation bound;
 - the component declaration is malformed or outside the expected mapping; or
-- the component type is not one of the two v0.2 values.
+- the component type is not one of the two values recognized by this bounded application/service classifier.
 
 Those cases remain `unclassified`. Raw Platform Contract text is used only server-side for this bounded declaration read and is not returned to the browser.
 
@@ -176,7 +176,7 @@ Because the governance view can expose private repository identities and governa
 
 ## Authority boundary
 
-GitHub remains authoritative for repository state. The central Platform Contract schema remains authoritative for the permitted v0.2 component-type values. Applicable GoreeCloud policies, canonical project specifications, repository-local validated manifests, source-control governance, and platform-system evidence remain authoritative for interpretation.
+GitHub remains authoritative for repository state. The current central Platform Contract schema remains authoritative for permitted component-type values. Applicable GoreeCloud policies, canonical project specifications, repository-local validated manifests, source-control governance, and platform-system evidence remain authoritative for interpretation.
 
 The dashboard's component-type parser is deliberately narrower than full Platform Contract validation. A recognized declaration is applicability evidence only; it must not be presented as proof that the complete manifest validates or that computed conformance is positive.
 
@@ -203,6 +203,6 @@ The current slice still does not determine:
 
 Automated source tests validate bounded batching/concurrency, exact default-branch targeting, baseline and documentation file-presence normalization, bounded Platform Contract blob-text requesting, strict application/service component-type parsing, classified/unclassified applicability counts, unavailable/unreadable declaration handling, classic matching-ref behavior, active-ruleset source/type normalization, bounded required-workflow reference normalization, local repository-id resolution, unavailable-evidence handling, channel independence, credential non-disclosure, no-store responses, page structure, bootstrap order, and conservative terminology.
 
-The exact-head Development validation for this increment passed 93/93 tests in `Validate GitHub dashboard foundation` run #102 / `34035215792`; the independent `Validate GoreeCloud Platform Contract v0.2` run #65 / `34035215793` also passed on the same source revision `0a6d1b4bca6eb8410d5c0e76ef862e15c2d96f3c`.
+Exact-head CI remains mandatory for the current pull-request head. A passing result for an earlier revision is historical evidence only and must not be treated as validation of a newer head. The dashboard foundation workflow and independent Platform Contract 2.0 workflow must both validate the exact candidate revision before their results are cited as current.
 
 These tests do not replace representative live private-repository validation, rendered form-factor review, accessibility acceptance, Cloudflare Pages deployment validation, authenticated private-access verification, production monitoring, rollback/recovery validation, or explicit production approval.
