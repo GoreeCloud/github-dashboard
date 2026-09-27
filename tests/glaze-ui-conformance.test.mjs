@@ -48,7 +48,7 @@ test("required product truth records distinguish current capability from pending
   const objectives = read("COMPETITIVE-OBJECTIVES.md");
   const platform = read("docs/PLATFORM_CONFORMANCE.md");
 
-  assert.match(features, /Implemented in Development source/);
+  assert.match(features, /Implemented in Forge source/);
   assert.match(features, /Partial or acceptance-gated/);
   assert.match(features, /Not currently implemented or approved/);
   assert.match(benefits, /Benefits not yet claimed/);
