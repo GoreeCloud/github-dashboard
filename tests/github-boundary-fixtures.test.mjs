@@ -155,6 +155,9 @@ test("mixed changelog coverage preserves fallback discovery without turning 404 
     const url = new URL(String(input));
     const path = decodeURIComponent(url.pathname);
 
+    if (path.includes("/changelog-fallback/contents/CHANGELOGS.md")) {
+      return jsonResponse({ message: "Not Found" }, 404);
+    }
     if (path.includes("/changelog-fallback/contents/CHANGELOG.md")) {
       return jsonResponse({ message: "Not Found" }, 404);
     }
