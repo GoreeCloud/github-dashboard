@@ -23,3 +23,22 @@ test("URLs are HTTPS and owned by GoreeCloud",()=>{
  assert.equal(allowedRepositoryUrl("http://github.com/GoreeCloud/test"),null);
  assert.equal(allowedRepositoryUrl("https://github.com.evil.test/GoreeCloud/test"),null);
 });
+
+test("repository links accept only exact canonical GoreeCloud repositories",()=>{
+ for(const unsafe of [
+  "https://github.com/GoreeCloud/repo/issues",
+  "https://github.com/GoreeCloud/repo?tab=activity",
+  "https://github.com/GoreeCloud/repo#readme",
+  "https://github.com/GoreeCloud/../Other/repo",
+  "https://evil.test/GoreeCloud/repo",
+  "https://github.com@evil.test/GoreeCloud/repo",
+  "javascript:alert(1)"
+ ]) assert.equal(allowedRepositoryUrl(unsafe),null,unsafe);
+ assert.equal(allowedRepositoryUrl("https://github.com/GoreeCloud/repo/"),"https://github.com/GoreeCloud/repo");
+});
+test("untrusted API strings are length bounded and sanitized for display",()=>{
+ const item=normalizeAttention({repository:"r".repeat(130),reasons:["x".repeat(350),42,"  valid  "]});
+ assert.equal(item.repository.length,100);
+ assert.deepEqual(item.reasons.map(x=>x.length),[280,5]);
+ assert.deepEqual(attentionCounts([null,{},item]),{critical:0,warning:0,info:1,total:1});
+});
