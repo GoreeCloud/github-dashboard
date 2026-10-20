@@ -1,1 +1,5 @@
-body{margin:0;background:var(--gc-canvas)}
+body{margin:0;background:var(--gc-canvas);color:var(--gc-text);font:16px/1.5 var(--gc-font)}
+.workspace{max-width:1180px;margin:auto;padding:16px}
+.topbar,.intro,.panel-heading,.queue-title{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:16px}
+.summary-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.summary-card,.queue-panel,.queue-item{border:1px solid var(--gc-outline);border-radius:18px;padding:16px;background:var(--gc-surface);margin:12px 0}
