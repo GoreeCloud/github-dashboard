@@ -47,3 +47,5 @@ test("appearance follows persisted four-state dashboard mode without legacy runt
  assert.ok(read("public/attention-tokens.css").includes('[data-mode="deep-dark"]'));
  assert.doesNotMatch(appearance,/glaze/i);
 });
+
+test("narrow reflow CSS regression",()=>{const css=read("public/attention.css");assert.ok(css.includes("@media(max-width:520px){.summary-grid{grid-template-columns:1fr}"));assert.ok(css.includes("overflow-wrap:anywhere"));});
