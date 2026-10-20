@@ -1,0 +1,65 @@
+/* Transitional GC UI adapter for existing dashboard and governance layouts.
+ * Source of semantic tokens: public/gc-ui-foundations.css, GoreeCloud/gc-ui.
+ * Only presentation changes. Legacy functional shell remains until cutover.
+ */
+:root,:root[data-mode] {
+  --canvas:var(--gc-canvas);
+  --canvas-deep:var(--gc-canvas-alt);
+  --surface:var(--gc-surface);
+  --surface-solid:var(--gc-surface);
+  --surface-raised:var(--gc-surface-raised);
+  --text:var(--gc-text);
+  --text-muted:var(--gc-text-soft);
+  --border:var(--gc-outline);
+  --border-strong:var(--gc-text-soft);
+  --accent:var(--gc-brand);
+  --accent-strong:var(--gc-brand);
+  --accent-soft:var(--gc-brand-container);
+  --success:var(--gc-positive);
+  --success-soft:var(--gc-positive-container);
+  --danger:var(--gc-negative);
+  --danger-soft:var(--gc-negative-container);
+  --radius-sm:var(--gc-radius-sm);
+  --radius-md:var(--gc-radius-md);
+  --radius-lg:var(--gc-radius-lg);
+  --shadow-soft:var(--gc-shadow-card);
+  --shadow-raised:var(--gc-shadow-floating);
+  --transition-fast:var(--gc-duration-fast) var(--gc-ease-standard);
+  --transition-standard:var(--gc-duration-base) var(--gc-ease-standard);
+  font-family:var(--gc-font);
+}
+:root[data-mode="deep-dark"] {
+  color-scheme:dark;
+  --gc-canvas:#080b12;--gc-canvas-alt:#0c111c;
+  --gc-surface:#111624;--gc-surface-raised:#192030;
+  --gc-surface-tonal:#222a3b;--gc-text:#f2f2fa;
+  --gc-text-soft:#adb2c5;--gc-outline:#303749;
+  --gc-divider:#303749;--gc-positive:#93ddb1;
+  --gc-positive-container:#1c4e38;--gc-negative:#ffacb1;
+  --gc-negative-container:#562d38;--gc-brand:#89e1e9;
+  --gc-on-brand:#003b43;--gc-brand-container:#1c4d57;
+  --gc-on-brand-container:#c8fcff;
+}
+body{color:var(--gc-text);background:var(--gc-canvas);font-family:var(--gc-font)}
+.sidebar,.panel,.section-panel,.stat-card,.list-card,.ranking-item{
+  background:var(--gc-surface);border-color:var(--gc-outline);
+  backdrop-filter:none;-webkit-backdrop-filter:none;
+}
+.sidebar{box-shadow:var(--gc-shadow-card)}
+.hero{background:var(--gc-surface-tonal);border-color:var(--gc-outline)}
+.hero h2,.hero p{color:var(--gc-text)}
+.nav-item.is-active,.nav-item:hover{background:var(--gc-brand-container);color:var(--gc-on-brand-container)}
+.button-primary{background:var(--gc-brand);color:var(--gc-on-brand)}
+.mobile-nav{background:var(--gc-surface-raised);border-color:var(--gc-outline)}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{
+  outline:var(--gc-outline-width) solid var(--gc-brand);outline-offset:3px;
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media(forced-colors:active){.sidebar,.panel,.hero,.mobile-nav{border:1px solid CanvasText;background:Canvas;color:CanvasText}}
+
+/* Governance header needs its actions to reflow at narrow mobile widths. */
+@media(max-width:420px){.topbar{flex-wrap:wrap;align-items:flex-start;gap:12px}.topbar>div:first-child{min-width:0;max-width:100%}.topbar-actions{flex-wrap:wrap;max-width:100%}.table-wrap{max-width:100%;min-width:0}}
+
+/* Enlarged text must reflow inside existing summary and table containers. */
+.content-grid,.content-grid-primary,.main-content,.section-panel,.repository-section,.content-grid>*{min-width:0;max-width:100%}
+.section-panel,.panel,.topbar,.hero,.section-heading{overflow-wrap:anywhere}
