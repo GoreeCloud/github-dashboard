@@ -59,3 +59,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{
 
 /* Governance header needs its actions to reflow at narrow mobile widths. */
 @media(max-width:420px){.topbar{flex-wrap:wrap;align-items:flex-start;gap:12px}.topbar>div:first-child{min-width:0;max-width:100%}.topbar-actions{flex-wrap:wrap;max-width:100%}.table-wrap{max-width:100%;min-width:0}}
+
+/* Enlarged text must reflow inside existing summary and table containers. */
+.content-grid,.content-grid-primary,.main-content,.section-panel,.repository-section,.content-grid>*{min-width:0;max-width:100%}
+.section-panel,.panel,.topbar,.hero,.section-heading{overflow-wrap:anywhere}
