@@ -27,3 +27,5 @@ main{padding:34px 0}h1{font-size:clamp(2.2rem,5vw,3.8rem);line-height:1.1;margin
 @media(forced-colors:active){.summary-card,.queue-panel,.queue-item{border:1px solid CanvasText}.primary-button{border:1px solid ButtonText}}
 
 .queue-title{margin:0;line-height:1.4;font-size:1.125rem}.queue-item{min-width:0;margin:0}.queue-panel{min-width:0}.item-meta{overflow-wrap:anywhere}.filters input:focus-visible,.filters select:focus-visible{border-color:var(--gc-brand)}.queue-title a{overflow-wrap:anywhere}
+
+.intro-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.appearance-button{display:grid;place-items:center;width:46px;height:46px;background:var(--gc-surface-raised);color:var(--gc-text);border:1px solid var(--gc-outline);border-radius:999px;cursor:pointer}.appearance-button:hover{background:var(--gc-surface-tonal)}
