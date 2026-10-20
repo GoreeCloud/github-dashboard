@@ -1,5 +1,11 @@
 # Changelogs
 
+## 2026-09-27 — Source-of-truth migration preserved from main
+
+- The synchronized Google Drive feature roadmap was retired after parity verification.
+- Repository-native `IMPLEMENTED-FEATURES.md`, `PLANNED-FEATURES.md` and this `CHANGELOGS.md` remain the feature-state source records.
+- Preserving this history does not imply runtime acceptance, lifecycle promotion or a production deployment.
+
 ## 0.3.0-dev — continued 2026-09-27 — Platform Contract declaration evidence
 
 ### Added
