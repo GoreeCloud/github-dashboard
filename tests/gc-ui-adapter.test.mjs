@@ -34,3 +34,13 @@ test("shared four-state controller sends explicit semantic mode to GC UI",()=>{
  assert.ok(source.includes('addEventListener?.("change"'));
  assert.ok(source.includes('mode === "system"'));
 });
+
+test("GC UI bridge keeps semantic styles last and acceptance pending",()=>{
+ const bridge=read("public/gc-ui-bridge.js");
+ assert.ok(bridge.includes("document.head.append(adapter)"));
+ assert.ok(bridge.includes('dataset.gcUiAcceptance = "pending"'));
+ for(const p of ["public/bootstrap.js","public/governance-bootstrap.js"]){
+  const source=read(p);
+  assert.ok(source.indexOf('import "./gc-ui-bridge.js"')>source.indexOf('import "./glaze-ui.js"'));
+ }
+});
