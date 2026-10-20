@@ -2,7 +2,7 @@
  * Source of semantic tokens: public/gc-ui-foundations.css, GoreeCloud/gc-ui.
  * Only presentation changes. Legacy functional shell remains until cutover.
  */
-:root {
+:root,:root[data-mode] {
   --canvas:var(--gc-canvas);
   --canvas-deep:var(--gc-canvas-alt);
   --surface:var(--gc-surface);
