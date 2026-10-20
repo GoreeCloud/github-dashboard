@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en" data-accent="lagoon" data-mode="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#087c8d">
+<meta name="description" content="Read-only GoreeCloud repository attention queue">
+<title>Attention queue — GoreeCloud GitHub Dashboard</title>
+<link rel="stylesheet" href="/gc-ui-tokens.css">
+<link rel="stylesheet" href="/attention.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to attention queue</a>
+<div class="workspace">
+<header class="topbar">
+  <div class="brand"><span class="mark" aria-hidden="true">G</span><div><strong>GoreeCloud</strong><small>GitHub Dashboard</small></div></div>
+  <nav aria-label="Application"><a href="/">Overview</a><a href="/governance.html">Governance</a><a href="/attention.html" aria-current="page">Attention queue</a></nav>
+</header>
+<main id="main" tabindex="-1">
+  <section class="intro" aria-labelledby="page-heading">
+    <div><p class="eyebrow">Private repository operations · read-only</p><h1 id="page-heading">Attention queue</h1>
+    <p class="intro-description">Inspect the signals that need attention across the ranked GoreeCloud repositories. Signals are observations, not compliance or release decisions.</p></div>
+    <button id="reload" class="primary-button" type="button" aria-controls="queue">Refresh data</button>
+  </section>
+  <div class="status-row" role="status" aria-live="polite" id="status">Connecting to protected data…</div>
+  <section class="summary-grid" aria-label="Observed priority totals">
+    <article class="summary-card"><span>Critical</span><strong id="count-critical">—</strong></article>
+    <article class="summary-card"><span>Review</span><strong id="count-warning">—</strong></article>
+    <article class="summary-card"><span>Informational</span><strong id="count-info">—</strong></article>
+    <article class="summary-card"><span>Observed repositories</span><strong id="count-all">—</strong></article>
+  </section>
+  <section class="queue-panel" aria-labelledby="queue-title">
+    <div class="panel-heading"><div><p class="eyebrow">Actionable signals</p><h2 id="queue-title">Repositories to inspect</h2></div><span class="coverage-note" id="coverage">Coverage unknown</span></div>
+    <div class="filters">
+      <label><span>Search repositories or reasons</span><input type="search" id="query" autocomplete="off" placeholder="Filter signals"></label>
+      <label><span>Priority</span><select id="severity"><option value="all">All priorities</option><option value="critical">Critical</option><option value="warning">Review</option><option value="info">Informational</option></select></label>
+      <label><span>Sort by</span><select id="sort"><option value="priority">Highest priority</option><option value="activity">Activity score</option><option value="recent">Recently updated</option></select></label>
+    </div>
+    <p id="result-count" class="result-count" aria-live="polite">No data loaded.</p>
+    <div class="queue" id="queue" aria-live="polite"><p class="empty">Loading repository attention signals…</p></div>
+  </section>
+  <p class="footnote">Coverage is limited to attention signals produced for the API's ranked repository sample, not every repository. Protected API authorization and GitHub availability affect data completeness.</p>
+</main>
+<footer>GC UI Foundations-based development view · acceptance pending · no GitHub write operations</footer>
+</div>
+<script type="module" src="/attention.js"></script>
+</body>
+</html>
