@@ -21,11 +21,11 @@
 <section class="queue-panel" aria-labelledby="queue-title">
 <div class="panel-heading"><div><p class="eyebrow">Actionable signals</p><h2 id="queue-title">Repositories to inspect</h2></div><span class="coverage-note" id="coverage">Coverage unknown</span></div>
 <div class="filters">
-<label><span>Search repositories or reasons</span><input type="search" id="query" autocomplete="off" placeholder="Filter signals"></label>
+<label><span>Search repositories or reasons</span><input type="search" id="query" maxlength="160" autocomplete="off" placeholder="Filter signals"></label>
 <label><span>Priority</span><select id="severity"><option value="all">All priorities</option><option value="critical">Critical</option><option value="warning">Review</option><option value="info">Informational</option></select></label>
 <label><span>Sort by</span><select id="sort"><option value="priority">Highest priority</option><option value="activity">Activity score</option><option value="recent">Recently updated</option></select></label></div>
 <p id="result-count" class="result-count" aria-live="polite">No data loaded.</p>
-<div class="queue" id="queue" aria-live="polite"><p class="empty">Loading repository attention signals…</p></div></section>
+<div class="queue" id="queue"><p class="empty">Loading repository attention signals…</p></div></section>
 <p class="footnote">Coverage is limited to attention signals produced for ranked repositories, not every repository. Authorization and GitHub availability affect data completeness.</p></main>
 <footer>GC UI Foundations-based development view · acceptance pending · no GitHub write operations</footer></div>
 <script type="module" src="/attention.js"></script></body></html>
