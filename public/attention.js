@@ -1,11 +1,9 @@
+import "./attention-appearance.js";
 import {filterAttention, attentionCounts, allowedRepositoryUrl} from "./attention-model.js";
 import {SUCCESS_COOLDOWN_SECONDS, FAILURE_RETRY_SECONDS} from "./refresh-policy.js";
 
 const el = id => document.getElementById(id);
 const state = {items:[],busy:false,deadline:0,interval:null};
-const media = matchMedia("(prefers-color-scheme: dark)");
-function appearance(){document.documentElement.dataset.mode=media.matches?"dark":"light";}
-appearance();media.addEventListener?.("change",appearance);
 function text(id,value){el(id).textContent=String(value);}
 function node(tag,value,className=""){const n=document.createElement(tag);n.textContent=value;n.className=className;return n;}
 function render(){
