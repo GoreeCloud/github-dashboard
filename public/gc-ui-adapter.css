@@ -56,3 +56,6 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 @media(forced-colors:active){.sidebar,.panel,.hero,.mobile-nav{border:1px solid CanvasText;background:Canvas;color:CanvasText}}
+
+/* Governance header needs its actions to reflow at narrow mobile widths. */
+@media(max-width:420px){.topbar{flex-wrap:wrap;align-items:flex-start;gap:12px}.topbar>div:first-child{min-width:0;max-width:100%}.topbar-actions{flex-wrap:wrap;max-width:100%}.table-wrap{max-width:100%;min-width:0}}
