@@ -8,7 +8,9 @@ The dedicated `/attention.html` view is an incremental adoption of [GoreeCloud U
 - Prioritized attention observations, repository/reason search, severity filter, activity/recency sorting and read-only repository links restricted to `https://github.com/GoreeCloud/...`.
 - Coverage disclosure for the API-ranked sample, not a claim about all repositories.
 - Bounded 30-second request timeout and API-friendly success/failure cooldowns.
-- Semantic headings, labels, live status text, keyboard skip link and responsive summary controls.
+- Semantic headings, labels, bounded inputs, live status text, keyboard skip link and responsive summary controls.
+- Shared dashboard appearance preference (System, Light, Dark, Deep Dark) using local storage only; GC UI semantic surface tokens and a development-only Deep Dark fallback.
+- Canonical GoreeCloud repository link allowlisting, with bounded displayed names and reasons.
 - Navigation entry points on dashboard and governance, including mobile.
 - Existing dashboard, access gate, cache-control, GitHub API permissions, and deployment settings remain unchanged.
 
