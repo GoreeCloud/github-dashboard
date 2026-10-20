@@ -43,6 +43,8 @@ try{
    assert.equal(css.canvas,css.gc);
    assert.ok(css.scroll<=css.screen,"layout overflow "+route+" "+width+" "+JSON.stringify(css));
    assert.ok(css.nav);
+   await page.keyboard.press('Tab');
+   assert.equal(await page.evaluate(()=>document.activeElement?.getAttribute('href')),'#main');
    await page.locator("#theme-toggle").click();
    const next=await page.evaluate(()=>({mode:document.documentElement.dataset.mode,canvas:getComputedStyle(document.documentElement).getPropertyValue("--canvas").trim()}));
    assert.equal(next.mode,"light");
