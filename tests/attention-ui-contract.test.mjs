@@ -33,3 +33,17 @@ test("dashboard and governance both expose queue navigation",()=>{
  assert.ok(nav.includes(".mobile-nav"));
  assert.ok(read("public/attention-navigation.css").includes("repeat(5,minmax(0,1fr))"));
 });
+
+test("appearance follows persisted four-state dashboard mode without legacy runtime",()=>{
+ const app=read("public/attention.js");
+ const appearance=read("public/attention-appearance.js");
+ const page=read("public/attention.html");
+ assert.ok(app.includes('import "./attention-appearance.js"'));
+ assert.ok(appearance.includes("goreecloud-github-dashboard-theme"));
+ assert.ok(appearance.includes("nextAppearance(mode)"));
+ assert.ok(appearance.includes('mode === "deep-dark"'));
+ assert.ok(appearance.includes('addEventListener?.("change",render)'));
+ assert.ok(page.includes('id="appearance"'));
+ assert.ok(read("public/attention-tokens.css").includes('[data-mode="deep-dark"]'));
+ assert.doesNotMatch(appearance,/glaze/i);
+});
