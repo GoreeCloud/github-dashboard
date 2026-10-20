@@ -19,3 +19,7 @@ Synthetic fixture Chromium smoke at viewport widths 320/390/768/1280 CSS pixels 
 The older runtime shell still carries historical design-system CSS, documentation, component names, and Platform Contract references. Its current existence is a **migration debt**, not a second approved design authority or a claim of simultaneous standards. Do not declare the cutover complete until legacy runtime assets and their validation requirements are safely removed or replaced with current GC UI equivalents, and the first-party platform metadata is reconciled with the governing source.
 
 Still required before release: authenticated private API integration and fail-closed access verification, actual assistive-technology and keyboard testing, full GC UI component conformance and remaining runtime removal, representative deployment configuration and rollback verification, and all applicable GoreeCloud platform system gates. PRs remain Draft; no production deployment is asserted.
+
+## Repeatable local browser check
+
+Install Playwright Core for the local test runner only: `npm install --no-save --no-package-lock playwright-core`. Run `GC_CHROMIUM_PATH=/path/to/chromium node scripts/browser-gc-ui-smoke.mjs`. The script binds to loopback, serves repository static files with synthetic unavailable-API fixtures and checks responsive layout, appearance modes, navigation and 200% text reflow. It neither uses production data nor proves authenticated integration.
