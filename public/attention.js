@@ -14,10 +14,10 @@ function render(){
  const queue=el("queue");queue.replaceChildren();
  if(!items.length){queue.append(node("p",state.items.length?"No signals match your filters.":"No attention signals were returned.","empty"));return;}
  for(const item of items){
-  const card=node("article","","queue-item"),heading=node("div","","queue-title");
+  const card=node("article","","queue-item"),heading=node("h3","","queue-title");
   const url=allowedRepositoryUrl(item.url);
   const link=node(url?"a":"strong",item.repository);
-  if(url){link.href=url;link.target="_blank";link.rel="noopener noreferrer";}
+  if(url){link.href=url;link.target="_blank";link.rel="noopener noreferrer";link.setAttribute("aria-label",item.repository+" (opens in a new tab)");}
   const badge=node("span",item.severity==="critical"?"Critical":item.severity==="warning"?"Review":"Info","priority");
   badge.dataset.severity=item.severity;heading.append(link,badge);card.append(heading);
   if(item.reasons.length){const list=node("ul","","reasons");for(const reason of item.reasons)list.append(node("li",reason));card.append(list);}
@@ -53,7 +53,7 @@ async function refresh(){
   render();cooldown(SUCCESS_COOLDOWN_SECONDS);
  }catch(error){
   const message=error?.name==="AbortError"?"Request timed out.":error instanceof Error?error.message:"Dashboard data unavailable.";
-  setStatus(message+" Previously loaded signals remain visible.",true);cooldown(FAILURE_RETRY_SECONDS);
+  setStatus(message+(state.items.length?" Previously loaded signals remain visible.":" No signals have been loaded."),true);cooldown(FAILURE_RETRY_SECONDS);
  }finally{clearTimeout(timeout);state.busy=false;control();}
 }
 for(const id of ["query","severity","sort"])el(id).addEventListener(id==="query"?"input":"change",render);
