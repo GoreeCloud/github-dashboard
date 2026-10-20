@@ -42,3 +42,11 @@ test("untrusted API strings are length bounded and sanitized for display",()=>{
  assert.deepEqual(item.reasons.map(x=>x.length),[280,5]);
  assert.deepEqual(attentionCounts([null,{},item]),{critical:0,warning:0,info:1,total:1});
 });
+
+test("missing timestamps sort after known dates even before year 2000",()=>{
+ const entries=[
+  {repository:"unknown",updatedAt:null},
+  {repository:"dated",updatedAt:"1995-01-01T00:00:00Z"}
+ ];
+ assert.deepEqual(filterAttention(entries,{sort:"recent"}).map(x=>x.repository),["dated","unknown"]);
+});
