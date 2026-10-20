@@ -2,11 +2,11 @@ export const PRIORITY = Object.freeze({critical: 0, warning: 1, info: 2});
 
 export function normalizeAttention(item) {
   if (!item || typeof item !== "object") return null;
-  const repository = typeof item.repository === "string" ? item.repository.trim() : "";
+  const repository = typeof item.repository === "string" ? item.repository.trim().slice(0, 100) : "";
   if (!repository) return null;
   const severity = Object.hasOwn(PRIORITY, item.severity) ? item.severity : "info";
   const reasons = Array.isArray(item.reasons)
-    ? item.reasons.filter(x => typeof x === "string" && x.trim()).slice(0, 8)
+    ? item.reasons.filter(x => typeof x === "string" && x.trim()).slice(0, 8).map(x => x.trim().slice(0, 280))
     : [];
   const score = Number(item.activityScore);
   const time = Date.parse(item.updatedAt);
@@ -28,7 +28,7 @@ export function attentionCounts(items) {
   return totals;
 }
 export function filterAttention(items, {query="", severity="all", sort="priority"}={}) {
-  const needle = String(query).trim().toLowerCase();
+  const needle = String(query).trim().slice(0, 160).toLowerCase();
   const wanted = Object.hasOwn(PRIORITY, severity) ? severity : "all";
   const rows = (Array.isArray(items) ? items : []).map(normalizeAttention).filter(Boolean)
     .filter(row => (wanted === "all" || row.severity === wanted)
@@ -42,12 +42,13 @@ export function filterAttention(items, {query="", severity="all", sort="priority
   return rows;
 }
 export function allowedRepositoryUrl(value) {
-  if (typeof value !== "string") return null;
+  if (typeof value !== "string" || value.length > 2048) return null;
   try {
     const url = new URL(value);
     if (url.protocol !== "https:" || url.hostname.toLowerCase() !== "github.com"
-      || url.username || url.password || url.port
-      || !/^\/GoreeCloud\/[A-Za-z0-9_.-]+(?:\/.*)?$/i.test(url.pathname)) return null;
-    return url.href;
+      || url.username || url.password || url.port || url.search || url.hash) return null;
+    const match = /^\/GoreeCloud\/([A-Za-z0-9_.-]{1,100})\/?$/i.exec(url.pathname);
+    if (!match || match[1] === "." || match[1] === "..") return null;
+    return "https://github.com/GoreeCloud/" + match[1];
   } catch { return null; }
 }
