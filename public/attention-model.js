@@ -35,7 +35,7 @@ export function filterAttention(items, {query="", severity="all", sort="priority
       && (!needle || [row.repository, ...row.reasons].some(value => value.toLowerCase().includes(needle))));
   rows.sort((a,b) => {
     const primary = sort === "activity" ? b.activityScore-a.activityScore
-      : sort === "recent" ? Date.parse(b.updatedAt || 0)-Date.parse(a.updatedAt || 0)
+      : sort === "recent" ? (b.updatedAt ? Date.parse(b.updatedAt) : -8640000000000000)-(a.updatedAt ? Date.parse(a.updatedAt) : -8640000000000000)
       : PRIORITY[a.severity]-PRIORITY[b.severity];
     return primary || PRIORITY[a.severity]-PRIORITY[b.severity] || a.repository.localeCompare(b.repository);
   });
