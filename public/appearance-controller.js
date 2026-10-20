@@ -50,6 +50,10 @@ export function applyAppearance(value, { persist = true } = {}) {
     document.documentElement.dataset.theme = mode;
   }
 
+  document.documentElement.dataset.mode = mode === "system"
+    ? (window.matchMedia?.("(prefers-color-scheme: dark)").matches ? "dark" : "light")
+    : mode;
+
   if (persist) persistAppearance(mode);
   updateAppearanceButton(mode);
   return mode;
@@ -72,3 +76,8 @@ export function installAppearanceControl() {
 
 initializeAppearance();
 installAppearanceControl();
+
+const systemAppearanceMedia = window.matchMedia?.("(prefers-color-scheme: dark)");
+systemAppearanceMedia?.addEventListener?.("change", () => {
+  if (currentAppearance() === "system") applyAppearance("system", { persist: false });
+});
