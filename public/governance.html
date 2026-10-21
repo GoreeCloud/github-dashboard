@@ -16,8 +16,9 @@
     <link rel="stylesheet" href="/gc-ui-foundations.css" />
     <link rel="stylesheet" href="/gc-ui-adapter.css" />
     <link rel="stylesheet" href="/gc-ui-polish.css" />
+    <link rel="stylesheet" href="/locked-sections.css" />
   </head>
-  <body>
+  <body class="governance-page">
     <a class="skip-link" href="#main">Skip to governance dashboard</a>
 
     <div class="app-shell">
@@ -72,6 +73,20 @@
             <span class="pill" id="coverage-state">Observation unknown</span>
             <span class="pill" id="refresh-state">Refresh available</span>
           </div>
+        </section>
+
+        <section id="locked-governance" class="private-access-view" aria-labelledby="locked-governance-title">
+          <article class="private-access-card">
+            <p class="private-access-eyebrow">Protected governance evidence</p>
+            <h2 id="locked-governance-title">Policy signals need an authorized observation.</h2>
+            <p>Repository governance is read-only. Baseline documents, Platform Contract declarations, rulesets, and required workflows appear only after an approved GitHub session. Unavailable observations do not prove policy compliance or violation.</p>
+            <div class="private-access-links"><a href="/">Portfolio overview</a><a href="/attention.html">Attention queue</a></div>
+          </article>
+          <aside class="private-access-card private-access-list" aria-label="Governance capabilities">
+            <div><span aria-hidden="true">01</span><div><strong>Documentation inventory</strong><p>Required files and availability evidence, without invented compliance scores.</p></div></div>
+            <div><span aria-hidden="true">02</span><div><strong>Branch protection</strong><p>Classic GitHub rules and active repository or organization rulesets.</p></div></div>
+            <div><span aria-hidden="true">03</span><div><strong>Platform declarations</strong><p>Bounded contract fields and required-workflow references.</p></div></div>
+          </aside>
         </section>
 
         <section class="stats-grid" aria-label="Governance observation summary">

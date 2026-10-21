@@ -5,14 +5,27 @@
 <meta name="color-scheme" content="light dark"><meta name="theme-color" content="#087c8d">
 <meta name="description" content="Read-only GoreeCloud repository attention queue">
 <title>Attention queue — GoreeCloud GitHub Dashboard</title>
-<link rel="stylesheet" href="/attention-tokens.css"><link rel="stylesheet" href="/attention.css"></head>
-<body><a class="skip-link" href="#main">Skip to attention queue</a>
+<link rel="stylesheet" href="/attention-tokens.css"><link rel="stylesheet" href="/attention.css"><link rel="stylesheet" href="/locked-sections.css"></head>
+<body class="attention-page"><a class="skip-link" href="#main">Skip to attention queue</a>
 <div class="workspace"><header class="topbar"><div class="brand"><span class="mark" aria-hidden="true">G</span><div><strong>GoreeCloud</strong><small>GitHub Dashboard</small></div></div>
 <nav aria-label="Application"><a href="/">Overview</a><a href="/governance.html">Governance</a><a href="/attention.html" aria-current="page">Attention queue</a></nav></header>
 <main id="main" tabindex="-1"><section class="intro" aria-labelledby="page-heading"><div>
 <p class="eyebrow">Private repository operations · read-only</p><h1 id="page-heading">Attention queue</h1>
 <p class="intro-description">Inspect the signals that need attention across ranked GoreeCloud repositories. Signals are observations, not compliance or release decisions.</p></div>
 <div class="intro-actions"><button id="appearance" class="appearance-button" type="button" aria-label="Change appearance" title="Change appearance">◐</button><button id="reload" class="primary-button" type="button" aria-controls="queue">Refresh data</button></div></section>
+<section id="locked-attention" class="private-access-view" aria-labelledby="locked-attention-title">
+  <article class="private-access-card">
+    <p class="private-access-eyebrow">Protected repository signals</p>
+    <h2 id="locked-attention-title">Your next priorities, when access is ready.</h2>
+    <p>Repository attention observations are unavailable in this preview—not zero. With an authorized session, actual failing CI, issues, and pull requests can be ranked and filtered for triage.</p>
+    <div class="private-access-links"><a href="/">Portfolio overview</a><a href="/governance.html">Explore governance</a></div>
+  </article>
+  <aside class="private-access-card private-access-list" aria-label="Attention queue capabilities">
+    <div><span aria-hidden="true">01</span><div><strong>Priority signals</strong><p>Observed workflow failures, open issues and review queues.</p></div></div>
+    <div><span aria-hidden="true">02</span><div><strong>Focused triage</strong><p>Search and filter by repository, severity and recent activity.</p></div></div>
+    <div><span aria-hidden="true">03</span><div><strong>Evidence boundaries</strong><p>Coverage is labeled partial when repository observations are incomplete.</p></div></div>
+  </aside>
+</section>
 <div class="status-row" role="status" aria-live="polite" id="status">Connecting to protected data…</div>
 <section class="summary-grid" aria-label="Observed priority totals">
 <article class="summary-card"><span>Critical</span><strong id="count-critical">—</strong></article>
