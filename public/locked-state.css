@@ -32,3 +32,13 @@
 @media(max-width:890px){#locked-overview{grid-template-columns:minmax(0,1fr)}}
 @media(max-width:599px){#locked-overview{margin-block:12px 24px;gap:12px}#locked-overview .lock-panel{padding:22px 20px}#locked-overview h2{max-width:none}#locked-overview .lock-links{display:grid}#locked-overview .lock-module{gap:10px}}
 @media(forced-colors:active){#locked-overview .lock-panel,#locked-overview .lock-link{border:1px solid CanvasText;background:Canvas;color:CanvasText}}
+
+/* Prioritize the protected-access explanation on small signed-out screens. */
+@media(max-width:599px){
+ :root[data-authentication="required"] .hero-copy,
+ :root[data-authentication="unavailable"] .hero-copy{display:none}
+ :root[data-authentication="required"] .hero,
+ :root[data-authentication="unavailable"] .hero{padding:14px 16px;min-height:0}
+ :root[data-authentication="required"] .hero-meta,
+ :root[data-authentication="unavailable"] .hero-meta{max-width:none}
+}
