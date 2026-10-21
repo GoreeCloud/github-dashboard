@@ -87,7 +87,8 @@ function governanceNode({ missing = [] } = {}) {
 }
 
 test("governance API fails closed when GitHub credentials are missing", async () => {
-  const response = await onRequestGet({ env: { GITHUB_OWNER: OWNER, ACCESS_GATE_CONFIRMED: "true" } });
+  const auth=await sessionFixture();
+  const response = await onRequestGet({ env: { ...auth.env, GITHUB_OWNER: OWNER }, request: new Request(BASE+"/api/governance",{headers:{cookie:auth.cookie}}) });
   const payload = await response.json();
 
   assert.equal(response.status, 503);
@@ -95,9 +96,9 @@ test("governance API fails closed when GitHub credentials are missing", async ()
   assert.equal(response.headers.get("cache-control"), "private, no-store, max-age=0");
 });
 
-test("governance API fails closed when the external access gate is unconfirmed", async () => {
+test("governance API fails closed when GitHub OAuth is not configured", async () => {
   const response = await onRequestGet({
-    env: { GITHUB_OWNER: OWNER, GITHUB_TOKEN: TOKEN, ACCESS_GATE_CONFIRMED: "false" },
+    env: { GITHUB_OWNER: OWNER, GITHUB_TOKEN: TOKEN, GITHUB_OAUTH_CLIENT_ID: "" },
   });
   const payload = await response.json();
 

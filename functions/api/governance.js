@@ -24,6 +24,9 @@ export async function onRequestGet(context) {
   const { env } = context;
   const owner = String(env.GITHUB_OWNER || "GoreeCloud").trim();
 
+  const session = await verifySession(context.request, env);
+  if (!session.ok) return json({error:"Sign in with GitHub to view private GoreeCloud data.",code:session.code},session.status);
+
   if (!env.GITHUB_TOKEN) {
     return json(
       {
@@ -33,9 +36,6 @@ export async function onRequestGet(context) {
       503,
     );
   }
-
-  const session = await verifySession(context.request, env);
-  if (!session.ok) return json({error:"Sign in with GitHub to view private GoreeCloud data.",code:session.code},session.status);
 
   try {
     const repositories = await fetchAllRepositories(env, owner);

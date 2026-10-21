@@ -36,13 +36,12 @@ test("health endpoint rejects mutation-style methods", async () => {
   assert.deepEqual(await body(response), { error: "Method not allowed.", code: "method_not_allowed" });
 });
 
-test("readiness fails closed until both private-access gate and credential are configured", async () => {
+test("readiness fails closed until GitHub OAuth and data credentials are configured", async () => {
   const token = syntheticCredential();
   for (const env of [
     {},
     { GITHUB_TOKEN: token },
-    { ACCESS_GATE_CONFIRMED: "true" },
-    { GITHUB_TOKEN: token, ACCESS_GATE_CONFIRMED: "false" },
+    { GITHUB_TOKEN: token, GITHUB_OAUTH_CLIENT_ID: "" },
   ]) {
     const response = readyGet({ env });
     const payload = await body(response);
@@ -51,7 +50,7 @@ test("readiness fails closed until both private-access gate and credential are c
     assert.equal(payload.code, "deployment_not_ready");
     assert.equal(JSON.stringify(payload).includes(token), false);
     assert.equal(JSON.stringify(payload).includes("GITHUB_TOKEN"), false);
-    assert.equal(JSON.stringify(payload).includes("ACCESS_GATE_CONFIRMED"), false);
+    assert.equal(JSON.stringify(payload).includes("GITHUB_OAUTH_CLIENT_SECRET"), false);
   }
 });
 

@@ -84,3 +84,18 @@ test("private Dashboard and Governance APIs require the signed-in session",async
   assert.match(response.headers.get("cache-control"),/no-store/);
  }
 });
+
+
+test("unauthenticated callers cannot probe missing GitHub data credentials",async()=>{
+ const {onRequestGet:dashboard}=await import("../functions/api/dashboard.js");
+ const {onRequestGet:governance}=await import("../functions/api/governance.js");
+ const env=fixtureEnv();
+ for(const [route,handler] of [["dashboard",dashboard],["governance",governance]]){
+  const res=await handler({request:new Request(BASE+"/api/"+route),env});
+  assert.equal(res.status,401);
+  const body=await res.json();
+  assert.equal(body.code,"authentication_required");
+  assert.ok(!JSON.stringify(body).includes("github_not_configured"));
+  assert.match(res.headers.get("cache-control"),/no-store/);
+ }
+});
