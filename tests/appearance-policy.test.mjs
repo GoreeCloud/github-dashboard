@@ -72,8 +72,8 @@ test("dashboard renderer no longer carries the superseded binary theme implement
 test("GC UI appearance uses dark, deep-dark and solid surfaces",()=>{
  const css=read("public/gc-ui-adapter.css");
  const tokens=read("public/gc-ui-foundations.css");
- assert.match(css,/:root\\[data-mode="deep-dark"\\]/);
- assert.match(tokens,/:root\\[data-mode="dark"\\]/);
+ assert.ok(css.includes(':root[data-mode="deep-dark"]'));
+ assert.ok(tokens.includes(':root[data-mode="dark"]'));
  assert.ok(css.includes("--gc-canvas"));
  assert.ok(css.includes("backdrop-filter:none"));
 });
