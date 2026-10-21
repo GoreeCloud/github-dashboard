@@ -49,6 +49,8 @@ try{
     const nav=await page.locator(".mobile-nav").evaluate(e=>({wrap:getComputedStyle(e).flexWrap,height:e.getBoundingClientRect().height}));
     assert.equal(nav.wrap,"nowrap","mobile navigation must stay on one row");
     assert.ok(nav.height<=88,"mobile navigation obscures content");
+    const links=await page.locator(".mobile-nav a").evaluateAll(items=>items.map(a=>({left:a.getBoundingClientRect().left,right:a.getBoundingClientRect().right})));
+    assert.ok(links.every(x=>x.left>=0&&x.right<=width+1),"mobile destination clipped: "+route+" "+width+" "+JSON.stringify(links));
    }
    await page.keyboard.press('Tab');
    assert.equal(await page.evaluate(()=>document.activeElement?.getAttribute('href')),'#main');
