@@ -41,13 +41,13 @@ test("shared appearance controller loads before refresh and application behavior
   const governanceBootstrap = read("public/governance-bootstrap.js");
   const controller = read("public/appearance-controller.js");
 
-  const glaze = bootstrap.indexOf('import "./glaze-ui.js"');
+  const gc = bootstrap.indexOf('import "./gc-ui-bridge.js"');
   const appearance = bootstrap.indexOf('import "./appearance-controller.js"');
   const refresh = bootstrap.indexOf('import "./refresh-guard.js"');
   const app = bootstrap.indexOf('import "./app.js"');
 
-  assert.ok(glaze >= 0);
-  assert.ok(appearance > glaze);
+  assert.ok(gc >= 0);
+  assert.ok(appearance > gc);
   assert.ok(refresh > appearance);
   assert.ok(app > refresh);
   assert.match(governanceBootstrap, /import "\.\/appearance-controller\.js"/);
@@ -69,12 +69,11 @@ test("dashboard renderer no longer carries the superseded binary theme implement
   assert.doesNotMatch(app, /theme-toggle.*toggleTheme/);
 });
 
-test("V1.6 appearance CSS includes system dark, explicit Deep Dark, and solid color-mix fallback", () => {
-  const css = read("public/glaze-v1.6.css");
-
-  assert.match(css, /@media \(prefers-color-scheme: dark\)/);
-  assert.match(css, /:root:not\(\[data-theme\]\)/);
-  assert.match(css, /:root\[data-theme="deep-dark"\]/);
-  assert.match(css, /--canvas: #06090b/);
-  assert.match(css, /\.panel-glaze \{[\s\S]*background: var\(--content-surface\);[\s\S]*color-mix/);
+test("GC UI appearance uses dark, deep-dark and solid surfaces",()=>{
+ const css=read("public/gc-ui-adapter.css");
+ const tokens=read("public/gc-ui-foundations.css");
+ assert.match(css,/:root\\[data-mode="deep-dark"\\]/);
+ assert.match(tokens,/:root\\[data-mode="dark"\\]/);
+ assert.ok(css.includes("--gc-canvas"));
+ assert.ok(css.includes("backdrop-filter:none"));
 });

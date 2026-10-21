@@ -11,13 +11,13 @@ const requiredFiles = [
   "PRIVACY POLICY.md",
   "NOTES.md",
   "goreecloud.platform.yaml",
-  "docs/GLAZE_UI_CONFORMANCE.md",
+  "docs/GC_UI_MIGRATION.md",
   "docs/PLATFORM_CONFORMANCE.md",
   "docs/OPERATIONAL_HEALTH.md",
   "docs/PUBLIC_SOURCE_BOUNDARY.md",
   "docs/GOVERNANCE_CONTROL_PLANE.md",
-  "public/glaze-ui.js",
-  "public/glaze-v1.6.css",
+  "public/gc-ui-bridge.js",
+  "public/gc-ui-shell.css",
   "public/theme-policy.js",
   "public/appearance-controller.js",
   "public/governance.html",
@@ -27,7 +27,7 @@ const requiredFiles = [
   "functions/lib/governance.js",
   "functions/lib/rulesets.js",
   "scripts/validate-public-source.mjs",
-  "tests/glaze-ui-conformance.test.mjs",
+  "tests/gc-ui-conformance.test.mjs",
   "tests/appearance-policy.test.mjs",
   "tests/health-readiness.test.mjs",
   "tests/governance.test.mjs",
@@ -53,9 +53,9 @@ if (!failures.length) {
   const rulesetsSource = fs.readFileSync("functions/lib/rulesets.js", "utf8");
   const githubSource = fs.readFileSync("functions/lib/github.js", "utf8");
   const governanceDocs = fs.readFileSync("docs/GOVERNANCE_CONTROL_PLANE.md", "utf8");
-  const glazeRuntime = fs.readFileSync("public/glaze-ui.js", "utf8");
-  const glazeMapping = fs.readFileSync("docs/GLAZE_UI_CONFORMANCE.md", "utf8");
-  const glazeCss = fs.readFileSync("public/glaze-v1.6.css", "utf8");
+  const gcUiRuntime = fs.readFileSync("public/gc-ui-bridge.js", "utf8");
+  const gcUiMapping = fs.readFileSync("docs/GC_UI_MIGRATION.md", "utf8");
+  const gcUiCss = fs.readFileSync("public/gc-ui-shell.css", "utf8");
   const themePolicy = fs.readFileSync("public/theme-policy.js", "utf8");
   const appearanceController = fs.readFileSync("public/appearance-controller.js", "utf8");
   const platform = fs.readFileSync("docs/PLATFORM_CONFORMANCE.md", "utf8");
@@ -98,7 +98,7 @@ if (!failures.length) {
   }
 
   const expectedBootstrapOrder = [
-    'import "./glaze-ui.js";',
+    'import "./gc-ui-bridge.js";',
     'import "./appearance-controller.js";',
     'import "./refresh-guard.js";',
     'import "./app.js";',
@@ -187,21 +187,9 @@ if (!failures.length) {
     failures.push("Governance renderer must remain observational and must not classify repositories as compliant/noncompliant.");
   }
 
-  if (!glazeRuntime.includes('GLAZE_UI_VERSION = "1.6.0"')) {
-    failures.push("Dashboard must target current approved GLAZE UI 1.6.0.");
-  }
-
-  if (!glazeRuntime.includes('GLAZE_UI_ACCEPTANCE = "pending"')) {
-    failures.push("GLAZE UI acceptance must remain fail-closed while rendered evidence is pending.");
-  }
-
-  if (!glazeMapping.includes("a7180679ea851389e0f3004515f9a25f420e716d")) {
-    failures.push("GLAZE UI mapping must retain the exact Stable source anchor.");
-  }
-
-  for (const appearance of ["System", "Light", "Dark", "Deep Dark"]) {
-    if (!glazeMapping.includes(appearance)) failures.push(`GLAZE UI mapping must document ${appearance} appearance.`);
-  }
+  if (!gcUiRuntime.includes('dataset.gcUiAcceptance="pending"')) failures.push("GC UI acceptance must remain pending.");
+  if (!gcUiMapping.includes("3ffe26a1c62f59a2ee3c9478dcb31ecc0f9cf444")) failures.push("GC UI mapping must record its pinned token source.");
+  for(const mode of ["System","Light","Dark","Deep Dark"]) if(!gcUiMapping.includes(mode)) failures.push("GC UI mapping must document "+mode);
   if (!themePolicy.includes('Object.freeze(["system", "light", "dark", "deep-dark"])')) {
     failures.push("Appearance policy must retain the governed four-state cycle.");
   }
@@ -217,22 +205,15 @@ if (!failures.length) {
   for (const legacyMarker of ["function applyTheme(", "function toggleTheme(", "function initializeTheme("]) {
     if (app.includes(legacyMarker)) failures.push(`Dashboard renderer must not retain legacy binary theme code: ${legacyMarker}`);
   }
-  if (!glazeCss.includes(':root[data-theme="deep-dark"]')) {
-    failures.push("GLAZE UI CSS must implement explicit Deep Dark appearance.");
-  }
-  if (!glazeCss.includes(":root:not([data-theme])")) {
-    failures.push("System appearance must preserve operating-system dark preference behavior.");
-  }
-  if (!/\.panel-glaze\s*\{[\s\S]*background:\s*var\(--content-surface\);[\s\S]*color-mix/.test(glazeCss)) {
-    failures.push("Optional color-mix hero material must retain a solid compatibility fallback.");
-  }
-
+  if (!gcUiCss.includes("var(--gc-surface)") || !gcUiCss.includes("min-height: 48px")) failures.push("GC UI shell must provide semantic surfaces and touch targets.");
+  if (!fs.existsSync("public/gc-ui-foundations.css") || !fs.existsSync("public/gc-ui-adapter.css")) failures.push("GC UI foundations and adapter missing.");
+  if (fs.existsSync("public/glaze-ui.js") || fs.existsSync("public/glaze-v1.6.css")) failures.push("Retired design assets must not ship in public.");
   for (const system of [
     "GoreeCloud Manager",
     "Privacy Shield",
     "Wardveil Security",
     "Everkeep",
-    "Glaze UI",
+    "GoreeCloud UI",
     "GoreeCloud Mesh",
     "GoreeCloud Identity",
     "GoreeCloud Policy",
