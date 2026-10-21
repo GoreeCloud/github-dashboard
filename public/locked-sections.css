@@ -1,0 +1,2 @@
+.private-access-view{display:none}
+:root:not([data-authentication="signed-in"]) #locked-governance,:root:not([data-authentication="signed-in"]) #locked-attention{display:grid}
