@@ -3,7 +3,7 @@
 **Now:** GitHub OAuth for dashboard sign-in. **Future:** GoreeCloud Identity, only after its Stable release and independent integration acceptance. Cloudflare Access is optional additional protection, not required.
 
 ## Architecture
-Use GitHub's confidential OAuth web authorization-code flow. The server creates one-time, short-lived CSRF state bound to a secure HttpOnly cookie, exchanges the callback code server-side and verifies the user's immutable GitHub numeric ID against an explicit approved-user allowlist. The browser receives only a short-lived encrypted session cookie, not the OAuth access token.
+Use GitHub's confidential OAuth web authorization-code flow. The server creates short-lived CSRF state and a fresh PKCE S256 verifier bound together inside an encrypted HttpOnly state cookie. The authorization URL sends only the SHA-256 code challenge; the callback verifies the returned state and submits its original code verifier during the server-side code exchange. The server then verifies the user's immutable GitHub numeric ID against an explicit approved-user allowlist. The browser receives only a short-lived encrypted session cookie, not the OAuth access token.
 
 The dashboard's independent, server-side, least-privilege read-only `GITHUB_TOKEN` continues to fetch repository data. Protected `/api/dashboard` and `/api/governance` requests must validate the session and current allowlist first. Authentication must never be based solely on GitHub display names or emails.
 

@@ -21,6 +21,10 @@ test("OAuth sign-in redirects only to GitHub using CSRF state and secure host-on
  assert.equal(url.searchParams.get("scope"),"read:user");
  assert.equal(url.searchParams.get("redirect_uri"),BASE+"/api/auth/callback");
  assert.ok(url.searchParams.get("state")?.length>=40);
+ assert.equal(url.searchParams.get("code_challenge_method"),"S256");
+ assert.equal(url.searchParams.get("code_challenge")?.length,43);
+ const next=await startOAuth(new Request(BASE+"/api/auth/login"),env);
+ assert.notEqual(new URL(next.location).searchParams.get("code_challenge"),url.searchParams.get("code_challenge"));
  assert.match(x.cookie,/__Host-gc_oauth_state=/);
  for(const flag of ["HttpOnly","Secure","SameSite=Lax","Path=/","Max-Age=300"])assert.ok(x.cookie.includes(flag),flag);
  assert.equal((await startOAuth(new Request("https://evil.test/api/auth/login"),env)).status,403);

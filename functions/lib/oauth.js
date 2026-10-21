@@ -29,20 +29,23 @@ export async function startOAuth(req,env,now=Math.floor(Date.now()/1000)){
  const c=oauthConfig(env);if(!c)return {status:503,code:"oauth_not_configured"};
  if(!originOK(req,c))return {status:403,code:"oauth_origin_mismatch"};
  const state=b64(crypto.getRandomValues(new Uint8Array(32)));
+ const verifier=b64(crypto.getRandomValues(new Uint8Array(32)));
+ const challenge=b64(new Uint8Array(await crypto.subtle.digest("SHA-256",enc.encode(verifier))));
  const url=new URL("https://github.com/login/oauth/authorize");
  url.searchParams.set("client_id",c.clientId);url.searchParams.set("redirect_uri",c.origin+"/api/auth/callback");
  url.searchParams.set("scope","read:user");url.searchParams.set("state",state);url.searchParams.set("allow_signup","false");
- return {status:302,location:url.toString(),cookie:cookie(T,await seal(c,{v:1,state,exp:now+300}),300)};
+ url.searchParams.set("code_challenge",challenge);url.searchParams.set("code_challenge_method","S256");
+ return {status:302,location:url.toString(),cookie:cookie(T,await seal(c,{v:2,state,verifier,exp:now+300}),300)};
 }
 export async function completeOAuth(req,env,{fetchImpl=fetch,now=Math.floor(Date.now()/1000)}={}){
  const c=oauthConfig(env);if(!c)return {status:503,code:"oauth_not_configured"};
  if(!originOK(req,c))return {status:403,code:"oauth_origin_mismatch"};
  const q=new URL(req.url).searchParams,code=q.get("code"),state=q.get("state"),saved=await open(c,cv(req,T));
- if(!code||code.length>512||!/^[A-Za-z0-9_-]+$/.test(code)||!state||state.length>512||!saved||saved.v!==1||saved.exp<=now||saved.state!==state)return {status:403,code:"oauth_state_invalid"};
+ if(!code||code.length>512||!/^[A-Za-z0-9_-]+$/.test(code)||!state||state.length>512||!saved||saved.v!==2||saved.exp<=now||saved.state!==state||typeof saved.verifier!=="string"||saved.verifier.length!==43)return {status:403,code:"oauth_state_invalid"};
  try{
   const tokenResponse=await fetchImpl("https://github.com/login/oauth/access_token",{method:"POST",
    headers:{Accept:"application/json","Content-Type":"application/x-www-form-urlencoded"},
-   body:new URLSearchParams({client_id:c.clientId,client_secret:c.secret,code,redirect_uri:c.origin+"/api/auth/callback"}),
+   body:new URLSearchParams({client_id:c.clientId,client_secret:c.secret,code,redirect_uri:c.origin+"/api/auth/callback",code_verifier:saved.verifier}),
    signal:AbortSignal.timeout(7000)});
   if(!tokenResponse.ok)return {status:502,code:"oauth_provider_unavailable"};
   const tokens=await tokenResponse.json();
