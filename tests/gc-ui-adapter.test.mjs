@@ -45,3 +45,11 @@ test("GC UI bridge keeps semantic styles last and acceptance pending",()=>{
   assert.ok(!source.includes("glaze-ui.js"));
  }
 });
+
+test("GC UI visual polish preserves hero readability and mobile navigation",()=>{
+ const css=read("public/gc-ui-polish.css");
+ assert.ok(css.includes("minmax(180px,255px)"));
+ assert.ok(css.includes(".mobile-nav.has-attention"));
+ for(const page of ["public/index.html","public/governance.html"])
+  assert.ok(read(page).includes('href="/gc-ui-polish.css"'),page);
+});
