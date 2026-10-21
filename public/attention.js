@@ -1,6 +1,7 @@
 import "./auth-controls.js";
 import "./attention-appearance.js";
 import {filterAttention, attentionCounts, allowedRepositoryUrl} from "./attention-model.js";
+import {authenticationStatus,invalidateAuthentication} from "./auth-controls.js";
 import {SUCCESS_COOLDOWN_SECONDS, FAILURE_RETRY_SECONDS} from "./refresh-policy.js";
 
 const el = id => document.getElementById(id);
@@ -37,7 +38,21 @@ async function refresh(){
  state.busy=true;control();setStatus("Refreshing protected GitHub observations…");
  const abort=new AbortController();const timeout=setTimeout(()=>abort.abort(),30000);
  try{
+  const auth=await authenticationStatus();
+  if(!auth.authenticated){
+   state.items=[];render();
+   for(const key of ["critical","warning","info","all"])text("count-"+key,"—");
+   text("coverage","Private data locked");
+   setStatus(auth.unavailable?"GitHub sign-in is unavailable.":"Sign in with GitHub to view repository attention.");
+   return;
+  }
   const response=await fetch("/api/dashboard",{method:"GET",cache:"no-store",credentials:"same-origin",headers:{Accept:"application/json"},signal:abort.signal});
+  if(response.status===401||response.status===403){
+   invalidateAuthentication();state.items=[];render();
+   for(const key of ["critical","warning","info","all"])text("count-"+key,"—");
+   text("coverage","Private data locked");
+   throw Error("Your GitHub session ended. Sign in again.");
+  }
   if(!response.ok)throw Error(response.status===503?"Private dashboard access is locked or not configured.":"Dashboard temporarily unavailable.");
   const data=await response.json();
   if(data?.mode!=="read-only"||!Array.isArray(data?.repositoryAttention))throw Error("Unexpected read-only dashboard response.");
