@@ -242,6 +242,7 @@ test("governance API returns normalized baseline, documentation applicability, c
         lifecycle: "forge",
         platformContract: "2.0",
         glazeUiRequired: "1.6.0",
+        gcUiRequired: null,
         declaredConformance: "nonconformant",
       },
     });

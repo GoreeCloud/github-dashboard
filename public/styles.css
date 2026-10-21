@@ -297,7 +297,7 @@ input:focus-visible {
   -webkit-backdrop-filter: blur(22px) saturate(125%);
 }
 
-.panel-glaze {
+.panel-gc {
   background: linear-gradient(135deg, var(--surface-raised), var(--surface));
 }
 

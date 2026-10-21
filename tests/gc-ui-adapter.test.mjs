@@ -38,9 +38,18 @@ test("shared four-state controller sends explicit semantic mode to GC UI",()=>{
 test("GC UI bridge keeps semantic styles last and acceptance pending",()=>{
  const bridge=read("public/gc-ui-bridge.js");
  assert.ok(bridge.includes("document.head.append(adapter)"));
- assert.ok(bridge.includes('dataset.gcUiAcceptance = "pending"'));
+ assert.ok(bridge.includes('dataset.gcUiAcceptance="pending"'));
  for(const p of ["public/bootstrap.js","public/governance-bootstrap.js"]){
   const source=read(p);
-  assert.ok(source.indexOf('import "./gc-ui-bridge.js"')>source.indexOf('import "./glaze-ui.js"'));
+  assert.ok(source.includes('import "./gc-ui-bridge.js"'));
+  assert.ok(!source.includes("glaze-ui.js"));
  }
+});
+
+test("GC UI visual polish preserves hero readability and mobile navigation",()=>{
+ const css=read("public/gc-ui-polish.css");
+ assert.ok(css.includes("minmax(180px,255px)"));
+ assert.ok(css.includes(".mobile-nav.has-attention"));
+ for(const page of ["public/index.html","public/governance.html"])
+  assert.ok(read(page).includes('href="/gc-ui-polish.css"'),page);
 });

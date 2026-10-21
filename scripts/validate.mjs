@@ -88,8 +88,8 @@ if (!failures.length) {
   if (!refreshGuard.includes("MutationObserver")) failures.push("Refresh guard must react to completed refresh state changes.");
   if (!refreshPolicy.includes("SUCCESS_COOLDOWN_SECONDS = 30")) failures.push("Successful refresh cooldown must remain explicit and reviewable.");
   if (!refreshPolicy.includes("FAILURE_RETRY_SECONDS = 10")) failures.push("Failed refresh retry floor must remain explicit and reviewable.");
-  if (!css.includes("@media (max-width: 599px)")) failures.push("Mobile Glaze UI range is missing.");
-  if (!css.includes("@media (max-width: 1023px)")) failures.push("Tablet Glaze UI range is missing.");
+  if (!css.includes("@media (max-width: 599px)")) failures.push("Mobile layout range is missing.");
+  if (!css.includes("@media (max-width: 1023px)")) failures.push("Tablet layout range is missing.");
   if (!css.includes("prefers-reduced-motion")) failures.push("Reduced-motion resilience is missing.");
   if (!css.includes("forced-colors")) failures.push("Forced-colors resilience is missing.");
   if (!api.includes("ACCESS_GATE_CONFIRMED")) failures.push("Private-data deployment interlock is missing.");

@@ -20,7 +20,7 @@ Former PF-001 (current fourteen-file application/service repository baseline obs
 | PF-002 | Validate representative live REST/GraphQL behavior with the intended least-privilege credential across public/private repositories. | High | Controlled private runtime evidence required. |
 | PF-003 | Complete rendered Phone, Tablet, Desktop, and Wide Desktop review. | High | Exact-revision rendered evidence required. |
 | PF-004 | Complete keyboard, focus, 200% text/reflow, touch, Reduced Motion/Transparency, Increased Contrast, and Forced Colors review. | High | Accessibility evidence required. |
-| PF-005 | Produce representative dashboard performance/layout-stability evidence for Glaze UI 1.6. | High | Shared Glaze qualification is not downstream acceptance. |
+| PF-005 | Produce representative dashboard performance/layout-stability evidence for GC UI. | High | Scoped GC UI Foundations validation is not downstream acceptance. |
 | PF-006 | Establish a unique canonical product identity and derived assets. | Medium | Owner/design approval required. |
 | PF-007 | Complete GoreeCloud Identity integration/acceptance for the production authorization boundary. | High | Blocked. |
 | PF-008 | Complete applicable GoreeCloud Manager integration/acceptance. | Medium | Blocked. |

@@ -209,7 +209,8 @@ function platformDeclarationDetail(item = {}) {
     declaration.componentType || null,
     declaration.lifecycle ? "lifecycle " + declaration.lifecycle : null,
     declaration.platformContract ? "compatibility " + declaration.platformContract : null,
-    declaration.glazeUiRequired ? "Glaze " + declaration.glazeUiRequired : null,
+    declaration.gcUiRequired ? "GC UI " + declaration.gcUiRequired : null,
+    declaration.glazeUiRequired ? "Historical design " + declaration.glazeUiRequired : null,
     declaration.declaredConformance ? "declared " + declaration.declaredConformance : null,
   ].filter(Boolean).join(" · ");
 }

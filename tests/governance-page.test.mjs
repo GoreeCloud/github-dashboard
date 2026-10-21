@@ -5,7 +5,7 @@ import assert from "node:assert/strict";
 const html = fs.readFileSync(new URL("../public/governance.html", import.meta.url), "utf8");
 const bootstrap = fs.readFileSync(new URL("../public/governance-bootstrap.js", import.meta.url), "utf8");
 const renderer = fs.readFileSync(new URL("../public/governance.js", import.meta.url), "utf8");
-const glaze = fs.readFileSync(new URL("../public/glaze-ui.js", import.meta.url), "utf8");
+const gc = fs.readFileSync(new URL("../public/gc-ui-bridge.js", import.meta.url), "utf8");
 
 test("governance page keeps the same no-inline-script and no-inline-style boundary", () => {
   assert.doesNotMatch(html, /<script(?![^>]*src=)/i);
@@ -40,14 +40,14 @@ test("governance page keeps the same no-inline-script and no-inline-style bounda
   assert.match(html, /src="\/governance-bootstrap\.js"/);
 });
 
-test("governance bootstrap applies Glaze, shared appearance, refresh discipline, then the renderer", () => {
-  const glazeIndex = bootstrap.indexOf('import "./glaze-ui.js"');
+test("governance bootstrap applies GC UI, shared appearance, refresh discipline, then the renderer", () => {
+  const gcIndex = bootstrap.indexOf('import "./gc-ui-bridge.js"');
   const appearanceIndex = bootstrap.indexOf('import "./appearance-controller.js"');
   const refreshIndex = bootstrap.indexOf('import "./refresh-guard.js"');
   const governanceIndex = bootstrap.indexOf('import "./governance.js"');
 
-  assert.ok(glazeIndex >= 0);
-  assert.ok(appearanceIndex > glazeIndex);
+  assert.ok(gcIndex >= 0);
+  assert.ok(appearanceIndex > gcIndex);
   assert.ok(refreshIndex > appearanceIndex);
   assert.ok(governanceIndex > refreshIndex);
 });
@@ -79,8 +79,8 @@ test("governance renderer exposes application/service applicability without weak
   assert.doesNotMatch(renderer, /\bnoncompliant\b/i);
 });
 
-test("main Glaze bootstrap exposes the governance control plane without duplicating its active page navigation", () => {
-  assert.match(glaze, /href = "\/governance\.html"/);
-  assert.match(glaze, /window\.location\.pathname\.endsWith\("\/governance\.html"\)/);
-  assert.match(glaze, /!isGovernanceView/);
+test("main GC UI bootstrap exposes the governance control plane without duplicating its active page navigation", () => {
+  assert.match(gc, /"\/governance\.html"/);
+  assert.match(gc, /window\.location\.pathname\.endsWith\("\/governance\.html"\)/);
+  assert.match(gc, /!isGovernanceView/);
 });

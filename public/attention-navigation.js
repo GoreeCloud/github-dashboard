@@ -14,6 +14,7 @@ const mobile = document.querySelector(".mobile-nav");
 if (mobile) {
   appendLink(mobile, "Queue", "", href);
   mobile.classList.add("has-attention");
+  if (mobile.querySelectorAll("a").length >= 6) mobile.classList.add("has-six-destinations");
   if (!document.querySelector('link[data-attention-navigation]')) {
     const style = document.createElement("link");
     style.rel = "stylesheet";
