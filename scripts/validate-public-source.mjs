@@ -130,7 +130,7 @@ export function validatePublicSource(root = process.cwd()) {
   } else {
     const envExample = read(".env.example");
     if (!/GITHUB_TOKEN=\s*$/m.test(envExample)) failures.push(".env.example must keep GITHUB_TOKEN blank.");
-    if (!/^ACCESS_GATE_CONFIRMED=false\s*$/m.test(envExample)) failures.push(".env.example must keep ACCESS_GATE_CONFIRMED fail-closed.");
+    for (const name of ["GITHUB_OAUTH_CLIENT_ID","GITHUB_OAUTH_CLIENT_SECRET","GITHUB_OAUTH_SESSION_KEY","GITHUB_OAUTH_ALLOWED_USER_IDS","GITHUB_OAUTH_BASE_URL"]) if (!new RegExp("^"+name+"=\\s*$","m").test(envExample)) failures.push(".env.example must keep "+name+" blank and fail-closed.");
   }
 
   if (exists("package.json")) {
@@ -141,7 +141,7 @@ export function validatePublicSource(root = process.cwd()) {
   for (const apiPath of ["functions/api/dashboard.js", "functions/api/governance.js"]) {
     if (!exists(apiPath)) continue;
     const source = read(apiPath);
-    if (!source.includes("ACCESS_GATE_CONFIRMED")) failures.push(`${apiPath} must retain the private deployment interlock.`);
+    if (!source.includes("verifySession")) failures.push(`${apiPath} must verify an authenticated GitHub OAuth session.`);
     if (!source.includes('"Cache-Control": "private, no-store, max-age=0"')) failures.push(`${apiPath} must remain private no-store.`);
   }
 

@@ -1,3 +1,4 @@
+import {oauthConfig} from "../lib/oauth.js";
 const SERVICE = "goreecloud-github-dashboard";
 const VERSION = "0.3.0-dev";
 
@@ -12,14 +13,10 @@ function json(data, status = 200) {
   });
 }
 
-function privateAccessConfirmed(value) {
-  return String(value || "").trim().toLowerCase() === "true";
-}
-
 export function onRequestGet(context) {
   const { env = {} } = context;
   const credentialConfigured = Boolean(String(env.GITHUB_TOKEN || "").trim());
-  const accessConfigured = privateAccessConfirmed(env.ACCESS_GATE_CONFIRMED);
+  const accessConfigured = Boolean(oauthConfig(env));
 
   if (!credentialConfigured || !accessConfigured) {
     return json(

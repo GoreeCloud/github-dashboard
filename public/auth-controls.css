@@ -1,0 +1,6 @@
+.auth-controls{display:flex;align-items:center;gap:9px;flex-wrap:wrap;min-width:0}
+.auth-status{font-size:.78rem;line-height:1.4;color:var(--gc-text-soft,#778);overflow-wrap:anywhere}
+.auth-action{appearance:none;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--gc-outline,#aab);border-radius:999px;min-height:44px;padding:9px 13px;background:var(--gc-surface-raised,#fff);color:var(--gc-text,#18202e);font:inherit;font-size:.81rem;cursor:pointer}
+.auth-action:hover{background:var(--gc-surface-tonal,#eee)}
+.auth-action:focus-visible{outline:3px solid var(--gc-brand,#268);outline-offset:2px}
+.auth-action:disabled{opacity:.65;cursor:wait}

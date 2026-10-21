@@ -189,7 +189,7 @@ Classic rules and active rulesets can coexist. A repository can have no matching
 `/api/governance` uses the same deployment boundary as `/api/dashboard`:
 
 1. `GITHUB_TOKEN` must exist server-side.
-2. `ACCESS_GATE_CONFIRMED=true` must be set only after an authenticated private-access layer has been configured and verified.
+2. Each read must verify the encrypted GitHub OAuth session and ensure the GitHub numeric user ID remains on the approved allowlist; Cloudflare Access is optional extra protection.
 3. Browser responses remain `private, no-store, max-age=0`.
 4. The GitHub token is never returned to the browser.
 5. The API is GET-only and exposes no GitHub mutation route.

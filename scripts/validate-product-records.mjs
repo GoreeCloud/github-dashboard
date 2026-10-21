@@ -91,7 +91,7 @@ if (!failures.length) {
     "isForbiddenPublicArtifact",
     "GITHUB_TOKEN",
     "api\\.github\\.com",
-    "ACCESS_GATE_CONFIRMED=false",
+    "GITHUB_OAUTH_SESSION_KEY",
     'packageJson.private !== true',
   ]) {
     if (!publicSourceValidator.includes(marker)) failures.push(`Public source validator missing required marker: ${marker}`);
@@ -248,8 +248,8 @@ if (!failures.length) {
       failures.push("Operational endpoints must retain the read-only mode declaration.");
     }
   }
-  if (!ready.includes("ACCESS_GATE_CONFIRMED") || !ready.includes("GITHUB_TOKEN")) {
-    failures.push("Readiness must fail closed on both private-access confirmation and GitHub credential configuration.");
+  if (!ready.includes("oauthConfig") || !ready.includes("GITHUB_TOKEN")) {
+    failures.push("Readiness must fail closed on GitHub OAuth and GitHub credential configuration.");
   }
   if (!ready.includes('code: "deployment_not_ready"')) {
     failures.push("Readiness must retain a generic not-ready response code.");

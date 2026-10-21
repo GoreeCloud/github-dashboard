@@ -36,15 +36,9 @@ Synthetic fixtures must remain synthetic and must not be copied from private Git
 
 Before private repository data is enabled, the deployed application must remain behind an authenticated private-access layer.
 
-The current fail-closed sequence remains:
+The development OAuth boundary requires a valid GitHub OAuth configuration, an approved numeric GitHub user ID, an encrypted signed-in session and a separate least-privilege read-only server-side GitHub data token. No authenticated data is returned while any prerequisite is absent. Cloudflare Access may be deployed as an optional additional perimeter but is not a prerequisite.
 
-1. Deploy source with `ACCESS_GATE_CONFIRMED` unset or false.
-2. Configure and verify the authenticated private-access layer.
-3. Provision the least-privilege read-only `GITHUB_TOKEN` in server-side secret storage.
-4. Set `ACCESS_GATE_CONFIRMED=true` only after the authenticated boundary is verified.
-5. Validate that unauthenticated users cannot reach private dashboard or governance data.
-
-`ACCESS_GATE_CONFIRMED` is a deployment interlock, not an authentication mechanism.
+See [GitHub OAuth](GITHUB_OAUTH.md) for the migration strategy and verification gates.
 
 ## Browser boundary
 
@@ -74,9 +68,9 @@ Sanitized failures must not expose credentials, raw authorization headers, or un
 - Forbidden secret-bearing files are absent.
 - Public static assets do not include credential markers or direct GitHub API authentication logic.
 - Common reusable credential and private-key signatures are absent from committed text files.
-- `.env.example` keeps the GitHub token blank and the access gate disabled.
+- `.env.example` keeps the GitHub token blank and all OAuth credential and allowlist examples blank.
 - `.gitignore` protects local secret files.
-- Private dashboard/governance APIs retain the access interlock and private no-store response policy.
+- Private dashboard/governance APIs retain OAuth session authorization and private no-store response policy.
 - Public-source/private-deployment documentation remains explicit.
 
 This validation reduces accidental disclosure risk but does not replace GitHub secret scanning, code review, deployment authentication, least-privilege credential review, or production security testing.

@@ -20,7 +20,7 @@ test("dashboard API fails closed when the GitHub credential is absent", async ()
   assert.match(response.headers.get("cache-control") || "", /no-store/);
 });
 
-test("dashboard API fails closed until the private access interlock is confirmed", async () => {
+test("dashboard API fails closed when OAuth is not configured", async () => {
   const token = syntheticCredential();
   const response = await onRequestGet({
     env: {
@@ -31,7 +31,7 @@ test("dashboard API fails closed until the private access interlock is confirmed
   const payload = await readJson(response);
 
   assert.equal(response.status, 503);
-  assert.equal(payload.code, "private_access_gate_locked");
+  assert.equal(payload.code, "oauth_not_configured");
   assert.equal(JSON.stringify(payload).includes(token), false);
 });
 

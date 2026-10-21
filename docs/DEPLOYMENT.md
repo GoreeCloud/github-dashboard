@@ -11,7 +11,7 @@ Because the dashboard may expose private repository metadata, the deployed appli
 Recommended path:
 
 ```text
-User -> Cloudflare Access -> Cloudflare Pages -> Pages Function -> GitHub API
+User -> GitHub OAuth sign-in -> Cloudflare Pages Function -> private server-side GitHub API credential
 ```
 
 Do not deploy a public static site that calls GitHub directly with a private token. Do not place a GitHub token in browser JavaScript, HTML, a checked-in environment file, Pages build output, or client-visible runtime configuration.
@@ -22,7 +22,7 @@ Configure the following in the server-side Pages/Workers environment:
 
 - `GITHUB_OWNER=GoreeCloud`
 - `GITHUB_TOKEN` — secret, read-only, repository-scoped as narrowly as practical.
-- `ACCESS_GATE_CONFIRMED=true` — set only after the private-access layer is configured and verified.
+- GitHub OAuth credentials, exact callback base origin, encryption key and approved numeric GitHub user IDs (see [GitHub OAuth](GITHUB_OAUTH.md)).
 
 For local work, store real secrets in `.dev.vars`; the repository ignores that file.
 
@@ -60,22 +60,16 @@ The browser applies a visible cooldown to the manual Refresh control. A successf
 
 This guard is an operational user-interface safeguard, not server-side rate limiting. Direct authenticated API requests are not throttled by this browser control. If enforceable request throttling becomes necessary after live deployment observation, it must be designed and validated as a separate server-side control inside the authenticated private-access boundary.
 
-## Access-gate sequence
+## GitHub OAuth enablement sequence
 
-1. Create the Pages project from this public/open-source repository or another approved GoreeCloud deployment path.
-2. Leave `ACCESS_GATE_CONFIRMED` unset or false.
-3. Deploy and verify that `/api/dashboard` fails closed with the private-access-gate message.
-4. Configure the authenticated private-access layer for the dashboard hostname.
-5. Verify an unauthenticated request cannot reach the application data surface.
-6. Verify an authorized user can reach the static application.
-7. Add the read-only `GITHUB_TOKEN` as a server-side secret.
-8. Set `GITHUB_OWNER`.
-9. Only after the access boundary is confirmed, set `ACCESS_GATE_CONFIRMED=true`.
-10. Verify the dashboard loads expected private and public repository metadata without exposing the token in browser source, network payloads, logs, or generated assets.
-11. Confirm whether workflow visibility is complete or partial with the chosen least-privilege token.
-12. Confirm normalized GitHub API budget visibility is present, or that its absence is reported as partial coverage.
-13. Confirm an intentionally stalled or unreachable upstream request is bounded by the request timeout rather than hanging the dashboard indefinitely.
-14. Confirm successful manual refreshes enforce the visible 30-second browser cooldown and failed refreshes enforce the 10-second retry floor without interfering with the initial automatic load.
+1. Register a GitHub OAuth App under the authorized GoreeCloud GitHub account with an exact HTTPS callback ending `/api/auth/callback`.
+2. Configure `GITHUB_OAUTH_BASE_URL`, `GITHUB_OAUTH_CLIENT_ID`, `GITHUB_OAUTH_CLIENT_SECRET`, `GITHUB_OAUTH_SESSION_KEY`, and `GITHUB_OAUTH_ALLOWED_USER_IDS` as described in [GitHub OAuth](GITHUB_OAUTH.md).
+3. Confirm an unconfigured deployment returns `503` readiness and does not expose private API data.
+4. Add the independent server-side least-privilege read-only `GITHUB_TOKEN`.
+5. Verify authorized and unauthorized GitHub accounts, OAuth callback state, HTTPS origin, secure cookie handling and direct API denial in staging.
+6. Verify login/logout, sign-in fallback, mobile UI, preview-host bypass resistance, safe logs and rollback before any production promotion.
+
+Cloudflare Access can be an optional extra protection layer and is not an OAuth requirement.
 
 ## Validation before production approval
 
@@ -84,7 +78,7 @@ At minimum, validate:
 - `npm test` and `npm run check` pass at the exact release-candidate head when the project reaches that lifecycle stage.
 - The deployed operational site is inaccessible to unauthenticated users even though the source repository is public.
 - The API fails closed if the GitHub token is removed.
-- The API fails closed if `ACCESS_GATE_CONFIRMED` is not true.
+- The API fails closed without a valid OAuth configuration or currently authorized encrypted session.
 - Browser developer tools show no GitHub credential or authorization header.
 - Private repository data is not cached publicly.
 - Security headers are present.
@@ -103,4 +97,4 @@ TV is not an initial supported target and is not part of the initial acceptance 
 
 ## Rollback
 
-Source rollback is performed through Git history. Deployment rollback should use the hosting platform's previous known-good deployment. If private access cannot be verified, set `ACCESS_GATE_CONFIRMED=false` or remove it; the API will immediately stop returning GitHub data even if the static shell remains reachable.
+Source rollback is performed through Git history. Deployment rollback should use the hosting platform's previous known-good deployment. If OAuth access cannot be verified, remove the OAuth client/allowlist configuration or the GitHub data credential; protected APIs will fail closed even when public static assets remain reachable.

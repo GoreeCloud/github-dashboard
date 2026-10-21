@@ -8,7 +8,7 @@ GoreeCloud GitHub Dashboard is a read-only operational view over GoreeCloud-owne
 
 ```text
 Authenticated private user
-  -> private access layer (required for deployment)
+  -> GitHub OAuth session (server-verified)
   -> Cloudflare Pages static interface
   -> /api/dashboard Pages Function
   -> read-only GitHub API credential
@@ -143,7 +143,7 @@ These fixtures are source-level acceptance evidence only. They do not satisfy th
 
 The dashboard repository is private and the intended live dashboard is private. Private repository names, descriptions, commit messages, issue titles, pull request titles, workflow names/branches, changelog text, release metadata, and derived attention signals are all treated as private operational information unless separately approved for public display.
 
-The source includes a deployment interlock: `/api/dashboard` refuses to return data until `ACCESS_GATE_CONFIRMED=true`. That value may be enabled only after an authenticated private-access layer has been configured and tested. The interlock is not authentication by itself.
+The source now requires an encrypted GitHub OAuth session before each Dashboard or Governance API read. Authorization is an explicit numeric GitHub user-ID allowlist. Cloudflare Access is optional additional protection, not a requirement.
 
 ## Credential boundary
 

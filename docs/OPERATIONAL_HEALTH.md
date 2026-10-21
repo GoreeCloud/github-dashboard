@@ -17,7 +17,7 @@ Purpose: configuration readiness for the private dashboard data boundary.
 Readiness returns HTTP `200` only when both conditions required before the dashboard may attempt private GitHub aggregation are configured:
 
 - A non-empty server-side `GITHUB_TOKEN` exists.
-- `ACCESS_GATE_CONFIRMED=true` is set after the external authenticated private-access layer has been verified.
+- GitHub OAuth configuration is complete, including HTTPS callback origin, OAuth client credentials, a 32-byte session key and an allowlist of numeric GitHub user IDs.
 
 Otherwise it returns HTTP `503` with the generic code `deployment_not_ready`.
 
@@ -27,7 +27,7 @@ The endpoint deliberately does not identify which prerequisite is absent, does n
 
 Both endpoints are read-only, reject non-GET methods, return JSON with `X-Content-Type-Options: nosniff`, and use `Cache-Control: private, no-store, max-age=0`.
 
-The readiness route does not replace Cloudflare Access or another authenticated private-access layer. `ACCESS_GATE_CONFIRMED` remains a deployment interlock rather than an authentication mechanism.
+Readiness confirms configuration only. The protected API routes separately validate every request using the encrypted GitHub OAuth session. Cloudflare Access is optional additional protection.
 
 ## Acceptance boundary
 

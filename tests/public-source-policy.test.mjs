@@ -19,12 +19,12 @@ function write(root, relativePath, content) {
 function minimalFixture() {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), "goreecloud-public-source-"));
   write(root, ".gitignore", ".dev.vars\n.env\n.env.*\n!.env.example\n");
-  write(root, ".env.example", "GITHUB_OWNER=GoreeCloud\nACCESS_GATE_CONFIRMED=false\nGITHUB_TOKEN=\n");
+  write(root, ".env.example", "GITHUB_OWNER=GoreeCloud\nGITHUB_OAUTH_CLIENT_ID=\nGITHUB_OAUTH_CLIENT_SECRET=\nGITHUB_OAUTH_SESSION_KEY=\nGITHUB_OAUTH_ALLOWED_USER_IDS=\nGITHUB_OAUTH_BASE_URL=\nGITHUB_TOKEN=\n");
   write(root, "package.json", JSON.stringify({ private: true }));
   write(root, "README.md", "Public/open-source repository with private authenticated deployment.\n");
   write(root, "docs/PUBLIC_SOURCE_BOUNDARY.md", "Public, open-source repository. Private, authenticated deployment.\n");
-  write(root, "functions/api/dashboard.js", 'const ACCESS_GATE_CONFIRMED = true;\nconst h = { "Cache-Control": "private, no-store, max-age=0" };\n');
-  write(root, "functions/api/governance.js", 'const ACCESS_GATE_CONFIRMED = true;\nconst h = { "Cache-Control": "private, no-store, max-age=0" };\n');
+  write(root, "functions/api/dashboard.js", 'const verifySession = true;\nconst h = { "Cache-Control": "private, no-store, max-age=0" };\n');
+  write(root, "functions/api/governance.js", 'const verifySession = true;\nconst h = { "Cache-Control": "private, no-store, max-age=0" };\n');
   write(root, "public/index.html", "<!doctype html><title>Dashboard</title>\n");
   return root;
 }
@@ -71,9 +71,9 @@ test("browser assets cannot carry GitHub credentials or direct GitHub API logic"
 test("public source validator fails closed when example configuration enables private data", () => {
   const root = minimalFixture();
   try {
-    write(root, ".env.example", "GITHUB_OWNER=GoreeCloud\nACCESS_GATE_CONFIRMED=true\nGITHUB_TOKEN=\n");
+    write(root, ".env.example", "GITHUB_OWNER=GoreeCloud\nGITHUB_OAUTH_CLIENT_ID=enabled\nGITHUB_OAUTH_CLIENT_SECRET=\nGITHUB_OAUTH_SESSION_KEY=\nGITHUB_OAUTH_ALLOWED_USER_IDS=\nGITHUB_OAUTH_BASE_URL=\nGITHUB_TOKEN=\n");
     const failures = validatePublicSource(root);
-    assert.ok(failures.some((failure) => failure.includes("ACCESS_GATE_CONFIRMED fail-closed")));
+    assert.ok(failures.some((failure) => failure.includes("GITHUB_OAUTH_CLIENT_ID blank and fail-closed")));
   } finally {
     fs.rmSync(root, { recursive: true, force: true });
   }

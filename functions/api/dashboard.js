@@ -1,3 +1,4 @@
+import {verifySession} from "../lib/oauth.js";
 import {
   buildRepositoryAttention,
   fetchAllRepositories,
@@ -37,15 +38,8 @@ export async function onRequestGet(context) {
     );
   }
 
-  if (String(env.ACCESS_GATE_CONFIRMED || "").toLowerCase() !== "true") {
-    return json(
-      {
-        error: "Private-data access is locked. Protect the deployment with an authenticated private-access layer, verify it, then set ACCESS_GATE_CONFIRMED=true.",
-        code: "private_access_gate_locked",
-      },
-      503,
-    );
-  }
+  const session = await verifySession(context.request, env);
+  if (!session.ok) return json({error:"Sign in with GitHub to view private GoreeCloud data.",code:session.code},session.status);
 
   try {
     const repositories = await fetchAllRepositories(env, owner);

@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
 
+import {fixtureEnv} from "./oauth-fixture.mjs";
 import { onRequest as healthRequest, onRequestGet as healthGet } from "../functions/api/health.js";
 import { onRequest as readyRequest, onRequestGet as readyGet } from "../functions/api/ready.js";
 
@@ -59,7 +60,7 @@ test("readiness reports configuration-ready without probing or exposing GitHub",
   const response = readyGet({
     env: {
       GITHUB_TOKEN: token,
-      ACCESS_GATE_CONFIRMED: "TRUE",
+      ...fixtureEnv(),
     },
   });
   const payload = await body(response);
