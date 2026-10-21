@@ -99,12 +99,11 @@ The dashboard must never require a broad administrative token merely for conveni
 ## 7. Private Repository Data Boundary
 The repository portfolio includes private information. The source repository may remain public/open source, but I therefore treat the deployed dashboard and its authenticated API responses as private whenever they display private repository names, activity, issues, pull requests, changelogs, release information, or other non-public metadata.
 GITHUB_TOKEN must remain server-side only. It must not be embedded in browser JavaScript, HTML, generated static assets, logs, screenshots, ordinary documentation, or source-controlled environment files.
-The current source includes ACCESS_GATE_CONFIRMED as a fail-closed deployment interlock. The API refuses to return private dashboard data until that value is explicitly enabled.
-ACCESS_GATE_CONFIRMED is not authentication. I may enable it only after an authenticated private-access layer has been configured and verified for the deployed application.
+The current development source uses GitHub OAuth for sign-in and checks an encrypted session against approved numeric GitHub user IDs before private API reads. The separate GITHUB_TOKEN remains server-side. Cloudflare Access is optional protection, not an authentication dependency. GoreeCloud Identity is the planned successor only after it reaches Stable and passes migration acceptance.
 ## 8. Intended Deployment Architecture
 The intended deployment path is:
 Authorized user
-→ authenticated private-access layer
+→ GitHub OAuth authentication and server-side session verification
 → Cloudflare Pages
 → Cloudflare Pages Function
 → GitHub API

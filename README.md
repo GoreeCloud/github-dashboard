@@ -32,7 +32,7 @@ The application is deliberately text-first while its unique canonical product ic
 - Shared native appearance controller used by both dashboard and governance views; the superseded binary Light/Dark renderer listener has been removed.
 - Forge-stage GC UI first-party Foundation tokens, semantic surfaces, 48 px touch targets, Tablet navigation and resilience fallbacks.
 - Visible focus, Reduced Motion, Increased Contrast, and Forced Colors resilience.
-- Fail-closed private-data gate for Cloudflare Pages deployments.
+- Fail-closed GitHub OAuth session authorization for private API reads.
 - Public-source safety validation for credential, private-key, browser-authentication, example-configuration, and exported-data boundaries.
 - GoreeCloud Platform Contract 2.0 root declaration with exact-head Forge conformance validation and fail-closed Anchor eligibility.
 - Repository-policy validation for the six mandatory application/service root documentation records.
@@ -45,13 +45,7 @@ The public source repository must never contain reusable credentials, private de
 
 This dashboard is designed to display private repository metadata. The GitHub credential must therefore stay server-side in a Cloudflare Pages Function secret and must be read-only. It must never be embedded in browser JavaScript, HTML, build output, screenshots, documentation, or source control.
 
-The API refuses to return repository data unless all of the following are true:
-
-1. `GITHUB_TOKEN` is configured as a server-side secret.
-2. `GITHUB_OWNER` identifies the intended account (default: `GoreeCloud`).
-3. `ACCESS_GATE_CONFIRMED=true` is configured **only after** the deployed site is protected by an authenticated private-access layer such as Cloudflare Access.
-
-`ACCESS_GATE_CONFIRMED` is a deployment safety interlock, not an authentication mechanism. The external access layer remains mandatory before enabling private data.
+The API refuses to return private repository data until the server has a read-only `GITHUB_TOKEN`, an exact HTTPS GitHub OAuth app configuration, a valid encrypted session, and an authorized numeric GitHub user ID. Cloudflare Access is optional, not required. See [GitHub OAuth](docs/GITHUB_OAUTH.md).
 
 GitHub Actions visibility is deliberately best-effort. If the read-only credential does not include the permission needed to read workflow runs, the rest of the dashboard remains available and the interface reports partial coverage rather than failing the complete aggregation request.
 
@@ -75,7 +69,7 @@ See [docs/GOVERNANCE_CONTROL_PLANE.md](docs/GOVERNANCE_CONTROL_PLANE.md) for the
 
 ## Operational health and readiness
 
-`/api/health` reports only process-level liveness and safe lifecycle/deployment-state metadata. `/api/ready` reports configuration readiness only after the server-side GitHub credential exists and the external private-access layer has been verified and represented by `ACCESS_GATE_CONFIRMED=true`. It does not identify which prerequisite is missing and does not probe GitHub.
+`/api/health` reports only process-level liveness and safe lifecycle/deployment-state metadata. `/api/ready` reports configuration readiness only after the server-side GitHub credential exists and the configured GitHub OAuth identity provider and allowlist are valid. It does not identify which prerequisite is missing and does not probe GitHub.
 
 See [docs/OPERATIONAL_HEALTH.md](docs/OPERATIONAL_HEALTH.md) for exact semantics. Neither endpoint establishes upstream availability, authenticated-user acceptance, production readiness, or Stable status by itself.
 
@@ -96,7 +90,7 @@ The static interface can be opened directly from `public/` for visual work. Live
 ```text
 GITHUB_OWNER=GoreeCloud
 GITHUB_TOKEN=<read-only secret>
-ACCESS_GATE_CONFIRMED=true
+GITHUB_OAUTH_CLIENT_ID=(configured server-side)
 ```
 
 Keep real values in local secret storage such as `.dev.vars`; that file is ignored by Git.

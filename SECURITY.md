@@ -14,7 +14,7 @@ GoreeCloud GitHub Dashboard is a private, read-only operational interface. Secur
 
 ## Private deployment rule
 
-A deployment that can display private repository metadata must be protected by an authenticated private-access layer. The `ACCESS_GATE_CONFIRMED` environment value is a fail-closed deployment interlock, not an authentication mechanism. It must remain false until the external access control is configured and verified.
+A deployment that can display private repository metadata must validate the encrypted GitHub OAuth session and an explicit approved numeric GitHub user ID before every private API response. The server-side data token remains separate and read-only. Cloudflare Access is optional defense-in-depth, not a requirement. Verify actual callback origin, preview-host denial, cookie security and fail-closed behavior before release.
 
 ## Runtime behavior
 

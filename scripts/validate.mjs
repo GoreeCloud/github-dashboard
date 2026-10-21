@@ -92,7 +92,7 @@ if (!failures.length) {
   if (!css.includes("@media (max-width: 1023px)")) failures.push("Tablet layout range is missing.");
   if (!css.includes("prefers-reduced-motion")) failures.push("Reduced-motion resilience is missing.");
   if (!css.includes("forced-colors")) failures.push("Forced-colors resilience is missing.");
-  if (!api.includes("ACCESS_GATE_CONFIRMED")) failures.push("Private-data deployment interlock is missing.");
+  if (!api.includes("verifySession")) failures.push("GitHub OAuth session gate is missing.");
   if (!api.includes('mode: "read-only"')) failures.push("Read-only API mode declaration is missing.");
   if (!api.includes("repositoryAttention")) failures.push("Repository Attention API output is missing.");
   if (!api.includes("workflowHealth")) failures.push("CI Health API output is missing.");

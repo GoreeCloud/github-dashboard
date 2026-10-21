@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { onRequest, onRequestGet } from "../functions/api/dashboard.js";
+import {sessionFixture} from "./oauth-fixture.mjs";
 
 async function readJson(response) {
   return response.json();
@@ -11,7 +12,8 @@ function syntheticCredential() {
 }
 
 test("dashboard API fails closed when the GitHub credential is absent", async () => {
-  const response = await onRequestGet({ env: {} });
+  const auth = await sessionFixture();
+  const response = await onRequestGet({ env: auth.env, request: auth.request });
   const payload = await readJson(response);
 
   assert.equal(response.status, 503);
@@ -20,18 +22,17 @@ test("dashboard API fails closed when the GitHub credential is absent", async ()
   assert.match(response.headers.get("cache-control") || "", /no-store/);
 });
 
-test("dashboard API fails closed until the private access interlock is confirmed", async () => {
+test("dashboard API fails closed when OAuth is not configured", async () => {
   const token = syntheticCredential();
   const response = await onRequestGet({
     env: {
       GITHUB_TOKEN: token,
-      ACCESS_GATE_CONFIRMED: "false",
     },
   });
   const payload = await readJson(response);
 
   assert.equal(response.status, 503);
-  assert.equal(payload.code, "private_access_gate_locked");
+  assert.equal(payload.code, "oauth_not_configured");
   assert.equal(JSON.stringify(payload).includes(token), false);
 });
 

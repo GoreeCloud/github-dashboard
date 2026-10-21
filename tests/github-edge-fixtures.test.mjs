@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { onRequestGet } from "../functions/api/dashboard.js";
+import {sessionFixture} from "./oauth-fixture.mjs";
 import {
   fetchAllRepositories,
   fetchRecentChanges,
@@ -99,6 +100,7 @@ test("repository pagination continues across full pages while filtering foreign 
 });
 
 test("search rate-limit failure stays sanitized at the dashboard boundary", async () => {
+  const auth=await sessionFixture();
   const originalError = console.error;
   const logs = [];
   console.error = (...args) => logs.push(args.join(" "));
@@ -131,8 +133,9 @@ test("search rate-limit failure stays sanitized at the dashboard boundary", asyn
         env: {
           GITHUB_TOKEN: TOKEN,
           GITHUB_OWNER: OWNER,
-          ACCESS_GATE_CONFIRMED: "true",
+          ...auth.env,
         },
+        request:auth.request,
       });
       return { response, payload: await response.json() };
     });

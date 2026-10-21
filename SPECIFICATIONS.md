@@ -34,7 +34,7 @@ Authorized user
 → GitHub API
 ```
 
-Static browser assets contain no reusable GitHub credential. `GITHUB_TOKEN` remains server-side. `ACCESS_GATE_CONFIRMED=true` is a deployment interlock that may be enabled only after the external authenticated access layer has been configured and verified; it is not authentication itself.
+Static browser assets contain no reusable GitHub credential. `GITHUB_TOKEN` remains server-side. Each private API requires a verified GitHub OAuth session tied to an approved GitHub numeric user ID. Cloudflare Access is optional; the server-side repository data credential remains independent.
 
 Private dashboard and governance API responses use `private, no-store, max-age=0`.
 

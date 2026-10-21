@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { onRequestGet } from "../functions/api/dashboard.js";
+import {sessionFixture} from "./oauth-fixture.mjs";
 
 const OWNER = "GoreeCloud";
 const TOKEN = "fixture-token";
@@ -201,6 +202,7 @@ function createFixtureFetch({
 async function runDashboardWithFixture(options = {}) {
   const originalFetch = globalThis.fetch;
   const { fixtureFetch, seenAuthorizations } = createFixtureFetch(options);
+  const auth=await sessionFixture();
   globalThis.fetch = fixtureFetch;
 
   try {
@@ -208,8 +210,9 @@ async function runDashboardWithFixture(options = {}) {
       env: {
         GITHUB_TOKEN: TOKEN,
         GITHUB_OWNER: OWNER,
-        ACCESS_GATE_CONFIRMED: "true",
+        ...auth.env,
       },
+      request:auth.request,
     });
     const payload = await response.json();
     return { response, payload, seenAuthorizations };

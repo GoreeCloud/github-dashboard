@@ -1,3 +1,4 @@
+import {verifySession} from "../lib/oauth.js";
 import { fetchAllRepositories } from "../lib/github.js";
 import { fetchGovernanceCoverage } from "../lib/governance.js";
 import { fetchRulesetCoverage } from "../lib/rulesets.js";
@@ -23,21 +24,14 @@ export async function onRequestGet(context) {
   const { env } = context;
   const owner = String(env.GITHUB_OWNER || "GoreeCloud").trim();
 
+  const session = await verifySession(context.request, env);
+  if (!session.ok) return json({error:"Sign in with GitHub to view private GoreeCloud data.",code:session.code},session.status);
+
   if (!env.GITHUB_TOKEN) {
     return json(
       {
         error: "GitHub governance data is not configured.",
         code: "github_not_configured",
-      },
-      503,
-    );
-  }
-
-  if (String(env.ACCESS_GATE_CONFIRMED || "").toLowerCase() !== "true") {
-    return json(
-      {
-        error: "Private governance data access is locked.",
-        code: "private_access_gate_locked",
       },
       503,
     );

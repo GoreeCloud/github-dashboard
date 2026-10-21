@@ -30,7 +30,16 @@ try{
    const context=await browser.newContext({viewport:{width,height:900},colorScheme:"light"});
    const page=await context.newPage();
    const errors=[];page.on("pageerror",e=>errors.push(e.message));
-   await page.goto(base+route,{waitUntil:"networkidle"});
+   await page.route("**/api/auth/session",route=>route.fulfill({status:200,contentType:"application/json",body:JSON.stringify({authenticated:false,provider:"github"})}));
+   await page.goto(base+route,{waitUntil:"domcontentloaded",timeout:15000});
+   const signin=page.locator('a.auth-action[href="/api/auth/login"]');
+   assert.equal(await signin.count(),1,"Sign-in action missing on "+route+" "+width);
+   assert.equal(await page.locator("#refresh-button").isVisible(),false,"Unauthenticated refresh must not be promoted");
+   assert.equal(await page.locator(".hero-meta .auth-controls").evaluate(e=>getComputedStyle(e).order),"-1");
+   if(process.env.GC_UI_SCREENSHOT_DIR && (width===390||width===1280)){
+    await fs.mkdir(process.env.GC_UI_SCREENSHOT_DIR,{recursive:true});
+    await page.screenshot({path:path.join(process.env.GC_UI_SCREENSHOT_DIR,(route==="/"?"overview":"governance")+"-"+width+".png")});
+   }
    const css=await page.evaluate(()=>{
     const d=document.documentElement,st=getComputedStyle(d),body=getComputedStyle(document.body);
     return {mode:d.dataset.mode,accent:d.dataset.accent,gc:st.getPropertyValue("--gc-canvas").trim(),
@@ -70,6 +79,29 @@ try{
    results.push({route,width,passed:true,light:css.gc,dark:dark.canvas});
    await context.close();
   }
+ }
+ {
+  const context=await browser.newContext({viewport:{width:390,height:844}});
+  const page=await context.newPage();
+  await page.route("**/api/auth/session",r=>r.fulfill({status:200,contentType:"application/json",body:JSON.stringify({authenticated:false,provider:"github"})}));
+  await page.goto(base+"/attention.html",{waitUntil:"domcontentloaded",timeout:15000});
+  await page.locator('a.auth-action[href="/api/auth/login"]').waitFor({timeout:5000});
+  assert.equal(await page.locator("#reload").isVisible(),false);
+  const geometry=await page.evaluate(()=>({w:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth}));
+  assert.ok(geometry.scroll<=geometry.w,"Attention sign-in overflow");
+  results.push({route:"/attention.html",width:390,authenticated:false,passed:true});
+  await context.close();
+ }
+ for(const route of ["/","/governance.html","/attention.html"]){
+  const context=await browser.newContext({viewport:{width:390,height:844}});
+  const page=await context.newPage();
+  await page.route("**/api/auth/session",r=>r.fulfill({status:200,contentType:"application/json",body:JSON.stringify({authenticated:true,provider:"github",login:"GoreeCloud"})}));
+  await page.goto(base+route,{waitUntil:"domcontentloaded",timeout:15000});
+  await page.locator('button.auth-action').waitFor({timeout:5000});
+  assert.equal(await page.locator('a.auth-action[href="/api/auth/login"]').count(),0);
+  assert.equal(await page.locator('html').getAttribute("data-authentication"),"signed-in");
+  results.push({route,width:390,authenticated:true,passed:true});
+  await context.close();
  }
  console.log(JSON.stringify({outcome:"PASS",checks:results},null,2));
 }catch(e){console.log(JSON.stringify({outcome:"FAIL",error:e.message,checks:results},null,2));process.exitCode=1}

@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { onRequest, onRequestGet } from "../functions/api/governance.js";
+import {sessionFixture,BASE} from "./oauth-fixture.mjs";
 
 const OWNER = "GoreeCloud";
 const TOKEN = "governance-api-fixture-token";
@@ -86,7 +87,8 @@ function governanceNode({ missing = [] } = {}) {
 }
 
 test("governance API fails closed when GitHub credentials are missing", async () => {
-  const response = await onRequestGet({ env: { GITHUB_OWNER: OWNER, ACCESS_GATE_CONFIRMED: "true" } });
+  const auth=await sessionFixture();
+  const response = await onRequestGet({ env: { ...auth.env, GITHUB_OWNER: OWNER }, request: new Request(BASE+"/api/governance",{headers:{cookie:auth.cookie}}) });
   const payload = await response.json();
 
   assert.equal(response.status, 503);
@@ -94,18 +96,19 @@ test("governance API fails closed when GitHub credentials are missing", async ()
   assert.equal(response.headers.get("cache-control"), "private, no-store, max-age=0");
 });
 
-test("governance API fails closed when the external access gate is unconfirmed", async () => {
+test("governance API fails closed when GitHub OAuth is not configured", async () => {
   const response = await onRequestGet({
-    env: { GITHUB_OWNER: OWNER, GITHUB_TOKEN: TOKEN, ACCESS_GATE_CONFIRMED: "false" },
+    env: { GITHUB_OWNER: OWNER, GITHUB_TOKEN: TOKEN, GITHUB_OAUTH_CLIENT_ID: "" },
   });
   const payload = await response.json();
 
   assert.equal(response.status, 503);
-  assert.equal(payload.code, "private_access_gate_locked");
+  assert.equal(payload.code, "oauth_not_configured");
   assert.doesNotMatch(JSON.stringify(payload), new RegExp(TOKEN));
 });
 
 test("governance API returns normalized baseline, documentation applicability, classic protection, rulesets, and workflow references without credential leakage", async () => {
+  const auth=await sessionFixture();
   const originalFetch = globalThis.fetch;
   const authorizations = [];
   const rulesetApiVersions = [];
@@ -201,7 +204,8 @@ test("governance API returns normalized baseline, documentation applicability, c
 
   try {
     const response = await onRequestGet({
-      env: { GITHUB_OWNER: OWNER, GITHUB_TOKEN: TOKEN, ACCESS_GATE_CONFIRMED: "true" },
+      env: { GITHUB_OWNER: OWNER, GITHUB_TOKEN: TOKEN, ...auth.env },
+      request:new Request(BASE+"/api/governance",{headers:{cookie:auth.cookie}}),
     });
     const payload = await response.json();
     const serialized = JSON.stringify(payload);
@@ -288,6 +292,7 @@ test("governance API returns normalized baseline, documentation applicability, c
 });
 
 test("ruleset observation can fail soft while file, documentation, applicability, and classic evidence remain usable", async () => {
+  const auth=await sessionFixture();
   const originalFetch = globalThis.fetch;
 
   globalThis.fetch = async (input, options = {}) => {
@@ -313,7 +318,8 @@ test("ruleset observation can fail soft while file, documentation, applicability
 
   try {
     const response = await onRequestGet({
-      env: { GITHUB_OWNER: OWNER, GITHUB_TOKEN: TOKEN, ACCESS_GATE_CONFIRMED: "true" },
+      env: { GITHUB_OWNER: OWNER, GITHUB_TOKEN: TOKEN, ...auth.env },
+      request:new Request(BASE+"/api/governance",{headers:{cookie:auth.cookie}}),
     });
     const payload = await response.json();
 

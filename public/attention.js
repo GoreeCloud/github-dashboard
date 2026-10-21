@@ -1,3 +1,4 @@
+import "./auth-controls.js";
 import "./attention-appearance.js";
 import {filterAttention, attentionCounts, allowedRepositoryUrl} from "./attention-model.js";
 import {SUCCESS_COOLDOWN_SECONDS, FAILURE_RETRY_SECONDS} from "./refresh-policy.js";
