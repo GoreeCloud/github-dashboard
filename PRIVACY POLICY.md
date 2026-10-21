@@ -18,7 +18,7 @@ Reusable GitHub credentials remain server-side and must not appear in browser as
 
 ## Storage and retention
 
-Dashboard API responses use `private, no-store, max-age=0`. Shared private-data caching is disabled. The application does not currently own a durable user repository dataset. Browser storage may contain only the selected appearance preference.
+Dashboard API responses use `private, no-store, max-age=0`. Shared private-data caching is disabled. The application does not currently own a durable user repository dataset. Browser storage may contain the selected appearance preference and secure HttpOnly host-only cookies for transient OAuth state and an encrypted, time-limited session. GitHub OAuth bearer tokens remain server-only and are not persisted in browser storage.
 
 ## Telemetry
 
@@ -26,11 +26,11 @@ The current source does not require third-party analytics or advertising tracker
 
 ## Access and disclosure
 
-A deployment that can access private GitHub information must be protected by an authenticated private-access layer before `ACCESS_GATE_CONFIRMED=true` is enabled. Operators must avoid copying private output into public logs, issues, screenshots, or documentation.
+A deployment that can access private GitHub information requires a valid GitHub OAuth session for a currently approved numeric GitHub user ID. Cloudflare Access remains optional. Operators must avoid copying private output into public logs, issues, screenshots, or documentation.
 
 ## External services
 
-The design uses GitHub APIs and plans Cloudflare Pages/Pages Functions plus authenticated private access. Those providers operate under their own service terms and controls.
+The design uses GitHub APIs and plans Cloudflare Pages/Pages Functions with GitHub OAuth authentication. Cloudflare Access is optional. Those providers operate under their own service terms and controls.
 
 ## Acceptance boundary
 

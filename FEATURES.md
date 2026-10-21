@@ -6,11 +6,11 @@ This record distinguishes verified source functionality from work that is partia
 
 - Read-only Cloudflare Pages Function aggregation of GoreeCloud GitHub repository data.
 - Server-side GitHub credential boundary; reusable credentials are not shipped to the browser.
-- Fail-closed `ACCESS_GATE_CONFIRMED` deployment interlock before private dashboard data is returned.
+- Fail-closed server-side GitHub OAuth session validation and explicit allowed numeric GitHub user IDs before private dashboard data is returned.
 - Intentional public/open-source repository model separated from the private authenticated operational deployment boundary.
 - Automated public-source safety validation that rejects common reusable GitHub/Cloudflare credentials, private-key signatures, credentialed URLs, forbidden local secret files, and exported data/secret artifacts under `public/`.
 - Browser-source safety checks that reject direct `api.github.com` references, authorization-header logic, and `GITHUB_TOKEN` references in publicly retrievable application assets.
-- Non-secret example configuration contract requiring a blank `GITHUB_TOKEN`, `ACCESS_GATE_CONFIRMED=false`, ignored local secret files, and npm `private=true` as an accidental-package-publication guard rather than a repository-visibility setting.
+- Non-secret example configuration contract requiring a blank `GITHUB_TOKEN` and OAuth configuration values, ignored local secret files, and npm `private=true` as an accidental-package-publication guard rather than a repository-visibility setting.
 - Recent commit aggregation with bounded repository enumeration and fan-out.
 - Top 10 repository ranking based primarily on current operational activity.
 - Total, public, and private repository counts.
@@ -28,7 +28,7 @@ This record distinguishes verified source functionality from work that is partia
 - Private/no-store API cache policy; shared private-data caching is intentionally disabled.
 - Strict browser security headers and sanitized API failure responses.
 - Safe `/api/health` process-liveness endpoint with no GitHub or credential dependency.
-- Fail-closed `/api/ready` configuration-readiness endpoint requiring both server-side GitHub credential configuration and confirmed external private-access configuration without exposing which prerequisite is missing.
+- Fail-closed `/api/ready` configuration-readiness endpoint requiring both server-side GitHub credential configuration and complete GitHub OAuth configuration without exposing which prerequisite is missing.
 - Dedicated `/governance.html` Portfolio Control Plane view and GET-only `/api/governance` endpoint.
 - Batched GitHub GraphQL observation of exact default-branch presence for `goreecloud.platform.yaml`, root `SECURITY.md`, root `CONTRIBUTING.md`, and `.github/CODEOWNERS`, with a default batch size of 20 and hard maximum of 25 repositories.
 - Governance baseline-file observations distinguish present, absent, and unavailable evidence; failed GraphQL batches and GraphQL errors are never converted into false missing-file claims.
