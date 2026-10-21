@@ -1,1 +1,3 @@
 @media(max-width:599px){.mobile-nav.has-attention{grid-template-columns:repeat(5,minmax(0,1fr))}.mobile-nav.has-attention a{min-width:0;font-size:.70rem}}
+
+@media(max-width:599px){.mobile-nav.has-attention.has-six-destinations{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:2px;padding:6px}.mobile-nav.has-attention.has-six-destinations a{min-width:0;max-width:100%;padding:7px 0;font-size:clamp(.56rem,2vw,.66rem);white-space:nowrap}}
