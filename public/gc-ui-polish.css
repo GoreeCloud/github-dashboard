@@ -6,3 +6,4 @@
 .hero p{font-size:clamp(1rem,1.25vw,1.1rem);line-height:1.6}
 .hero-kicker{color:var(--gc-brand);font-weight:800}
 @media(max-width:1023px){.hero{grid-template-columns:minmax(0,1fr)}.hero-meta{max-width:none}}
+@media(max-width:599px){.hero{padding:24px 20px}.hero h2{font-size:clamp(1.6rem,6.8vw,2.2rem);line-height:1.15}.mobile-nav,.mobile-nav.has-attention{display:flex;grid-template-columns:none;flex-wrap:nowrap;gap:4px;align-items:center;overflow-x:auto;padding:6px 10px}.mobile-nav a,.mobile-nav.has-attention a{flex:0 0 auto;min-width:56px;min-height:48px;display:grid;place-items:center;padding:8px 10px;font-size:.72rem}}
