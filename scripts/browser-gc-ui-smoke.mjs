@@ -43,6 +43,13 @@ try{
    assert.equal(css.canvas,css.gc);
    assert.ok(css.scroll<=css.screen,"layout overflow "+route+" "+width+" "+JSON.stringify(css));
    assert.ok(css.nav);
+   const heroWidth=await page.locator(".hero-copy").evaluate(e=>e.getBoundingClientRect().width);
+   assert.ok(heroWidth >= (width>=1024?320:190),"hero reading column too narrow: "+route+" "+width+" "+heroWidth);
+   if(width<=599){
+    const nav=await page.locator(".mobile-nav").evaluate(e=>({wrap:getComputedStyle(e).flexWrap,height:e.getBoundingClientRect().height}));
+    assert.equal(nav.wrap,"nowrap","mobile navigation must stay on one row");
+    assert.ok(nav.height<=88,"mobile navigation obscures content");
+   }
    await page.keyboard.press('Tab');
    assert.equal(await page.evaluate(()=>document.activeElement?.getAttribute('href')),'#main');
    await page.locator("#theme-toggle").click();
