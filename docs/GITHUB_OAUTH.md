@@ -10,6 +10,10 @@ The dashboard's independent, server-side, least-privilege read-only `GITHUB_TOKE
 ## Required owner-side setup
 Register a GitHub OAuth App in the GoreeCloud GitHub account with an exact HTTPS callback URL ending `/api/auth/callback`. Configure `GITHUB_OAUTH_BASE_URL`, `GITHUB_OAUTH_CLIENT_ID`, `GITHUB_OAUTH_CLIENT_SECRET`, `GITHUB_OAUTH_SESSION_KEY` (32 random bytes encoded base64url), and `GITHUB_OAUTH_ALLOWED_USER_IDS` (numeric user IDs separated by commas) in the server-side environment. No sample secrets or approved-user grants belong in committed source. Keep `GITHUB_TOKEN` read-only and server-side. Do not enable public data access while settings or authentication verification are absent.
 
+## Browser session behavior (Development)
+
+All three private views wait for one shared same-origin session check before loading repository data. The browser shows a sign-in state without calling the protected APIs when unauthenticated. A private API 401 or 403 clears the previously rendered private observations and cached signed-in status. This does not revoke a stolen session cookie on another device: authoritative server-side revocation remains a separate acceptance gate.
+
 ## Release gates
 Test login/denial, CSRF callback state, cookie integrity and expiration, authorization changes, same-origin logout, direct private API access, callback origin and preview-host bypasses, credential rotation, browser accessibility, staging and rollback. Until then, this is **Forge** development and not production accepted. Session revocation beyond short expiry needs explicit design.
 
@@ -23,3 +27,7 @@ References: [GitHub OAuth web flow](https://docs.github.com/en/apps/oauth-apps/b
 The isolated source branch has automated OAuth route and session fixtures and a synthetic Chromium regression runner. The browser run exercises signed-out navigation at 320, 390, 768 and 1280 CSS pixels on overview/governance, 200% text reflow, theme switching, keyboard skip links, and signed-out/signed-in account controls at 390 CSS pixels, including the attention queue. A screenshot-led review confirmed the sign-in action is prominent and the unavailable refresh control is hidden while signed out.
 
 These checks validate source behavior with synthetic responses only. They **do not** establish a live GitHub OAuth App, real callback exchange, production access control, assistive-technology acceptance, or deployment readiness.
+
+## Synthetic session-gate acceptance — 2026-10-21
+
+The dedicated `npm run test:browser:session` script uses locally served public assets and mocked same-origin API responses. Chromium passed seven scenarios across Overview, Governance and Attention Queue: signed-out pages make zero protected API requests; simulated 401 responses restore sign-in controls; and an expired Attention Queue session removes previously rendered synthetic private data. These are local fixture checks, not real GitHub OAuth callback, hosted staging, screen-reader, or production acceptance.

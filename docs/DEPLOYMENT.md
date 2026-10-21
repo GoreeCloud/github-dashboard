@@ -98,3 +98,7 @@ TV is not an initial supported target and is not part of the initial acceptance 
 ## Rollback
 
 Source rollback is performed through Git history. Deployment rollback should use the hosting platform's previous known-good deployment. If OAuth access cannot be verified, remove the OAuth client/allowlist configuration or the GitHub data credential; protected APIs will fail closed even when public static assets remain reachable.
+
+## Private staging acceptance
+
+Use [Staging acceptance](STAGING_ACCEPTANCE.md) for a nonsecret setup and verification checklist. A successful source check or static test is not evidence of an authenticated staging deployment. Do not activate private repository API responses for an unverified public/preview host.

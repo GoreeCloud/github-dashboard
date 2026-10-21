@@ -1,5 +1,19 @@
 # Changelogs
 
+## 0.3.0-dev — 2026-10-21 — Authentication-aware refresh indicator
+
+- Corrected signed-out Overview/Governance refresh pills from misleading “Refresh available” to “Sign in to refresh.”
+- Added authorization-state observation to the shared refresh guard, without changing private API behavior or weakening cooldown rules.
+- Rechecked the synthetic Chromium session regression, screenshot at 390px, local Node suite (127 passing) and four repository validators. Live OAuth and staging remain unverified.
+
+
+## 0.3.0-dev — 2026-10-21 — Session-aware protected views
+
+- A shared session check gates protected data reads on Overview, Governance and Attention Queue.
+- Expired sessions remove private data from the visible page and offer GitHub sign-in.
+- Unit and source-contract checks pass locally. Live OAuth and browser acceptance remain pending.
+- Development-only stacked change; no merge, deployment, or release promotion.
+
 ## 2026-09-27 — Source-of-truth migration preserved from main
 
 - The synchronized Google Drive feature roadmap was retired after parity verification.

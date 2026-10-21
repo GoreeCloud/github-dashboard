@@ -33,6 +33,7 @@ The application is deliberately text-first while its unique canonical product ic
 - Forge-stage GC UI first-party Foundation tokens, semantic surfaces, 48 px touch targets, Tablet navigation and resilience fallbacks.
 - Visible focus, Reduced Motion, Increased Contrast, and Forced Colors resilience.
 - Fail-closed GitHub OAuth session authorization for private API reads.
+- A shared browser sign-in gate across Overview, Governance, and Attention Queue prevents signed-out private API requests and clears displayed private observations when an authenticated API returns 401/403.
 - Public-source safety validation for credential, private-key, browser-authentication, example-configuration, and exported-data boundaries.
 - GoreeCloud Platform Contract 2.0 root declaration with exact-head Forge conformance validation and fail-closed Anchor eligibility.
 - Repository-policy validation for the six mandatory application/service root documentation records.
@@ -129,7 +130,7 @@ Deterministic representative GitHub fixtures exercise the complete dashboard agg
 
 ## Deployment
 
-See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md). The source repository may remain public; do not expose the operational dashboard or its private-repository API data until the authenticated private-access boundary is configured and verified.
+See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md). For a private staging acceptance checklist and synthetic browser evidence, see [Staging acceptance](docs/STAGING_ACCEPTANCE.md). The source repository may remain public; do not expose the operational dashboard or its private-repository API data until the authenticated private-access boundary is configured and verified.
 
 ## Architecture
 

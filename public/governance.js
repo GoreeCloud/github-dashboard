@@ -1,3 +1,5 @@
+import {authenticationStatus,invalidateAuthentication} from "./auth-controls.js";
+
 const state = {
   data: null,
   loading: false,
@@ -688,12 +690,26 @@ async function refreshGovernance() {
   showAlert("");
 
   try {
+    const auth=await authenticationStatus();
+    if(!auth.authenticated) {
+      state.data=null;
+      showAlert(auth.unavailable ? "GitHub sign-in is currently unavailable." : "Sign in with GitHub to load private repository data.");
+      setPill("api-state", "Sign-in required");
+      setText("sidebar-status", "Private data locked");
+      return;
+    }
     const response = await fetch("/api/governance", {
       headers: { Accept: "application/json" },
       cache: "no-store",
     });
     const payload = await response.json().catch(() => ({}));
 
+    if (response.status === 401 || response.status === 403) {
+      invalidateAuthentication();
+      // Remove already rendered private data when a session expires or access is revoked.
+      renderGovernance({});
+      throw new Error("Your GitHub session ended. Sign in again to view private repository data.");
+    }
     if (!response.ok) {
       throw new Error(payload.error || `Governance API returned ${response.status}.`);
     }
