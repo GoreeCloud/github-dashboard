@@ -1,5 +1,13 @@
 # Changelogs
 
+## 0.3.0-dev — 2026-10-21 — Protected overview improvements
+
+- Added a polished, responsive Overview access state instead of showing empty private repository metrics to signed-out users.
+- Preserved all existing private data sections for authenticated sessions, while the browser continues to deny data loads until the same-origin session check succeeds.
+- Added two source-contract tests. No fabricated repository statistics, GitHub write operations, new secrets, or hosted private staging claims.
+- Browser screenshot acceptance and real OAuth access remain pending.
+
+
 ## 0.3.0-dev — 2026-10-21 — Authentication-aware refresh indicator
 
 - Corrected signed-out Overview/Governance refresh pills from misleading “Refresh available” to “Sign in to refresh.”
