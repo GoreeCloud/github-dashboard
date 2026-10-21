@@ -2,13 +2,11 @@
 
 GoreeCloud GitHub Dashboard is original GoreeCloud-owned software. Under the canonical lifecycle it is in **Forge**, with deployment_state development, and remains deliberately **nonconformant**. Anchor eligibility requires substantive, evidence-backed evaluation of exactly nine Integral Platform Systems; labels, badges, manifests, or UI copy do not constitute integration.
 
-## Platform Contract 2.0
+## Platform Contract 2.1 — versioned GC UI successor
 
-The repository declares its machine-readable platform state in root goreecloud.platform.yaml using GoreeCloud Platform Contract 2.0. The migration from historical Contract 0.2 is explicit: the prior seven-system declaration remains historical evidence only, while the current manifest adds GoreeCloud Policy and GoreeCloud Observability, uses the canonical Seed → Lab → Forge → Weave → Seal → Anchor → Sunset → Archive lifecycle, and keeps lifecycle separate from deployment and qualification state.
+This development candidate opts in to the separate GC UI successor Contract 2.1 from [GoreeCloud/GoreeCloud](https://github.com/GoreeCloud/GoreeCloud). The exact-head evaluation workflow pins reviewed upstream revision `1499491159250d5f15dad4e2835fbeee2fda9ce9`, preserving independent source/evaluator provenance. Nine systems remain required, Forge remains nonconformant, and Anchor remains unqualified.
 
-The exact-head validation workflow pins the reviewed central implementation at GoreeCloud/GoreeCloud revision 32cfe6395f6e4bc4872a99e8d0c666ea0b1ed7b8. It validates the exact pull-request head, computes conformance, validates the result schema, and asserts that Forge remains nonconformant and not Anchor-eligible.
-
-A passing structural manifest or computed Forge result proves only the checks encoded by the validator. It does not establish runtime acceptance, deployment, production approval, platform-system acceptance, Seal qualification, or Anchor eligibility.
+The GC UI version target is the *scoped* `foundations-v1.0.1` semantic token and browser theme release. This declaration is not complete component, accessibility, authenticated-runtime or production acceptance. Historic Contract 2.0 results are separate evidence, not current design authority.
 
 ## Current conformance state
 

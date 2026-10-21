@@ -118,6 +118,7 @@ export function parsePlatformDeclaration(text) {
       lifecycle: null,
       platformContract: null,
       glazeUiRequired: null,
+      gcUiRequired: null,
       declaredConformance: null,
     };
   }
@@ -134,6 +135,7 @@ export function parsePlatformDeclaration(text) {
     lifecycle: topLevelScalar(lines, "lifecycle")?.toLowerCase() || null,
     platformContract: nestedScalar(lines, "compatibility", "platform_contract"),
     glazeUiRequired: nestedScalar(lines, "compatibility", "glaze_ui_required"),
+    gcUiRequired: nestedScalar(lines, "compatibility", "gc_ui_required"),
     declaredConformance: ["conformant", "nonconformant", "unverified"].includes(declaredConformance?.toLowerCase())
       ? declaredConformance.toLowerCase()
       : null,
@@ -511,8 +513,8 @@ export function buildGovernanceCoverage(repositories, observations = [], protect
     platformDeclarationUnavailableRepositories,
   );
   const platformContract2DeclaredRepositories = platformDeclarationObservedRows.filter((row) => (
-    row.platformDeclaration.declaration?.schemaVersion === "2.0"
-    || row.platformDeclaration.declaration?.platformContract === "2.0"
+    ["2.0","2.1"].includes(row.platformDeclaration.declaration?.schemaVersion)
+    || ["2.0","2.1"].includes(row.platformDeclaration.declaration?.platformContract)
   )).length;
   const platformApplicationRepositories = platformDeclarationObservedRows.filter(
     (row) => row.platformDeclaration.declaration?.componentType === "application",

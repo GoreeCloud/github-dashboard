@@ -21,7 +21,7 @@ These entries record source capabilities implemented in the authoritative reposi
 | IF-015 | Governance observation | Selected file evidence, classic protection, active rulesets, and bounded required-workflow references. |
 | IF-016 | Applicability evidence | Conservative application/service classification from bounded Platform Contract declarations. |
 | IF-017 | Appearance | Shared System / Light / Dark / Deep Dark controller. |
-| IF-018 | Glaze source target | GLAZE UI V1.6 / 1.6.0 source target with acceptance pending. |
+| IF-018 | GC UI Foundations source consumer | First-party responsive GC UI consumer shell and scoped Foundations tokens in development; complete acceptance pending. |
 | IF-019 | Public-source safety | Secret/private-artifact detection and public-source/private-deployment boundary validation. |
 | IF-020 | Private API boundary | Server-side credentials, read-only routes, security headers, sanitized errors, and private/no-store responses. |
 | IF-021 | Platform declaration | Platform Contract 2.0 manifest covering all nine Integral Platform Systems in nonconformant Forge state. |

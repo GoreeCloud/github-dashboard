@@ -223,12 +223,12 @@ if (!failures.length) {
   }
 
   for (const marker of [
-    'schema_version: "2.0"',
+    'schema_version: "2.1"',
     "component:\n  type: application\n  id: github-dashboard",
     "repository: GoreeCloud/github-dashboard",
     "lifecycle: forge",
     "version: 0.3.0-dev",
-    'glaze_ui_required: "1.6.0"',
+    'gc_ui_required: "foundations-v1.0.1"',
     "health_endpoint: /api/health",
     "readiness_endpoint: /api/ready",
     "status: nonconformant",
@@ -255,15 +255,9 @@ if (!failures.length) {
     failures.push("Readiness must retain a generic not-ready response code.");
   }
 
-  if (!platformWorkflow.includes("32cfe6395f6e4bc4872a99e8d0c666ea0b1ed7b8")) {
-    failures.push("Platform Contract validation must pin the reviewed central implementation revision.");
-  }
-  if (!platformWorkflow.includes("github.event.pull_request.head.sha")) {
-    failures.push("Platform Contract validation must resolve pull requests to the exact head SHA.");
-  }
-  if (!platformWorkflow.includes("result['anchor_eligible'] is False")) {
-    failures.push("Platform Contract workflow must verify Forge remains fail-closed and is not Anchor-eligible.");
-  }
+  if (!platformWorkflow.includes("reusable-platform-manifest-v2-1.yml@1499491159250d5f15dad4e2835fbeee2fda9ce9")) failures.push("GC UI 2.1 workflow must use a pinned successor evaluator.");
+  if (!platformWorkflow.includes("manifest-path: goreecloud.platform.yaml")) failures.push("GC UI 2.1 workflow must pass the local manifest.");
+
 }
 
 if (failures.length) {
