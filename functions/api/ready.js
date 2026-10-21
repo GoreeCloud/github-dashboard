@@ -1,3 +1,4 @@
+import {accessConfigurationReady} from "../lib/access.js";
 const SERVICE = "goreecloud-github-dashboard";
 const VERSION = "0.3.0-dev";
 
@@ -21,7 +22,7 @@ export function onRequestGet(context) {
   const credentialConfigured = Boolean(String(env.GITHUB_TOKEN || "").trim());
   const accessConfigured = privateAccessConfirmed(env.ACCESS_GATE_CONFIRMED);
 
-  if (!credentialConfigured || !accessConfigured) {
+  if (!credentialConfigured || !accessConfigured || !accessConfigurationReady(env)) {
     return json(
       {
         status: "not-ready",

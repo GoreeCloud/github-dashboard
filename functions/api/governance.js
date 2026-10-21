@@ -1,3 +1,4 @@
+import { verifyCloudflareAccess } from "../lib/access.js";
 import { fetchAllRepositories } from "../lib/github.js";
 import { fetchGovernanceCoverage } from "../lib/governance.js";
 import { fetchRulesetCoverage } from "../lib/rulesets.js";
@@ -42,6 +43,9 @@ export async function onRequestGet(context) {
       503,
     );
   }
+
+  const access = await verifyCloudflareAccess(context.request, env);
+  if (!access.ok) return json({ code: access.code, error: "Private access denied or unavailable." }, access.status);
 
   try {
     const repositories = await fetchAllRepositories(env, owner);

@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { onRequestGet } from "../functions/api/dashboard.js";
+import {syntheticAccess} from "./access-fixture.mjs";
 
 const OWNER = "GoreeCloud";
 const TOKEN = "fixture-token";
@@ -201,7 +202,8 @@ function createFixtureFetch({
 async function runDashboardWithFixture(options = {}) {
   const originalFetch = globalThis.fetch;
   const { fixtureFetch, seenAuthorizations } = createFixtureFetch(options);
-  globalThis.fetch = fixtureFetch;
+  const access=await syntheticAccess();
+  globalThis.fetch = (input,opts={})=>new URL(String(input)).pathname==="/cdn-cgi/access/certs" ? access.certsResponse() : fixtureFetch(input,opts);
 
   try {
     const response = await onRequestGet({
@@ -209,7 +211,9 @@ async function runDashboardWithFixture(options = {}) {
         GITHUB_TOKEN: TOKEN,
         GITHUB_OWNER: OWNER,
         ACCESS_GATE_CONFIRMED: "true",
+        ...access.env,
       },
+      request:access.request,
     });
     const payload = await response.json();
     return { response, payload, seenAuthorizations };

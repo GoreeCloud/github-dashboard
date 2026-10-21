@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { onRequest, onRequestGet } from "../functions/api/governance.js";
+import {syntheticAccess} from "./access-fixture.mjs";
 
 const OWNER = "GoreeCloud";
 const TOKEN = "governance-api-fixture-token";
@@ -109,9 +110,11 @@ test("governance API returns normalized baseline, documentation applicability, c
   const originalFetch = globalThis.fetch;
   const authorizations = [];
   const rulesetApiVersions = [];
+  const fixture=await syntheticAccess();
 
   globalThis.fetch = async (input, options = {}) => {
     const url = new URL(String(input));
+    if(url.pathname==="/cdn-cgi/access/certs") return fixture.certsResponse();
     authorizations.push(options.headers?.Authorization || null);
 
     if (url.pathname === "/user/repos") {
@@ -201,7 +204,8 @@ test("governance API returns normalized baseline, documentation applicability, c
 
   try {
     const response = await onRequestGet({
-      env: { GITHUB_OWNER: OWNER, GITHUB_TOKEN: TOKEN, ACCESS_GATE_CONFIRMED: "true" },
+      env: { GITHUB_OWNER: OWNER, GITHUB_TOKEN: TOKEN, ACCESS_GATE_CONFIRMED: "true", ...fixture.env },
+      request: fixture.request,
     });
     const payload = await response.json();
     const serialized = JSON.stringify(payload);
@@ -289,9 +293,11 @@ test("governance API returns normalized baseline, documentation applicability, c
 
 test("ruleset observation can fail soft while file, documentation, applicability, and classic evidence remain usable", async () => {
   const originalFetch = globalThis.fetch;
+  const fixture=await syntheticAccess();
 
   globalThis.fetch = async (input, options = {}) => {
     const url = new URL(String(input));
+    if (url.pathname === "/cdn-cgi/access/certs") return fixture.certsResponse();
     if (url.pathname === "/user/repos") return jsonResponse([repositoryFixture()]);
     if (url.pathname.includes("/rules/branches/")) return jsonResponse({ message: "forbidden" }, 403);
     if (url.pathname === "/graphql") {
@@ -313,7 +319,8 @@ test("ruleset observation can fail soft while file, documentation, applicability
 
   try {
     const response = await onRequestGet({
-      env: { GITHUB_OWNER: OWNER, GITHUB_TOKEN: TOKEN, ACCESS_GATE_CONFIRMED: "true" },
+      env: { GITHUB_OWNER: OWNER, GITHUB_TOKEN: TOKEN, ACCESS_GATE_CONFIRMED: "true", ...fixture.env },
+      request: fixture.request,
     });
     const payload = await response.json();
 
@@ -342,4 +349,14 @@ test("governance API rejects mutation-style methods", async () => {
   assert.equal(response.status, 405);
   assert.equal(payload.code, "method_not_allowed");
   assert.equal(response.headers.get("cache-control"), "private, no-store, max-age=0");
+});
+
+
+test("governance rejects missing Cloudflare assertion even with the external gate confirmed",async()=>{
+ const response=await onRequestGet({
+  request:new Request("https://dashboard.invalid/api/governance"),
+  env:{GITHUB_TOKEN:["synthetic","only","token"].join("-"),ACCESS_GATE_CONFIRMED:"true",CF_ACCESS_TEAM_DOMAIN:"fixture-team.cloudflareaccess.com",CF_ACCESS_AUD:"fixture-dashboard-audience"}
+ });
+ assert.equal(response.status,403);
+ assert.equal((await response.json()).code,"private_access_denied");
 });

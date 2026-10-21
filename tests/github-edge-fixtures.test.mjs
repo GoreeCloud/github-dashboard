@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { onRequestGet } from "../functions/api/dashboard.js";
+import {syntheticAccess} from "./access-fixture.mjs";
 import {
   fetchAllRepositories,
   fetchRecentChanges,
@@ -99,6 +100,7 @@ test("repository pagination continues across full pages while filtering foreign 
 });
 
 test("search rate-limit failure stays sanitized at the dashboard boundary", async () => {
+  const fixture=await syntheticAccess();
   const originalError = console.error;
   const logs = [];
   console.error = (...args) => logs.push(args.join(" "));
@@ -106,6 +108,7 @@ test("search rate-limit failure stays sanitized at the dashboard boundary", asyn
   try {
     const { response, payload } = await withFixtureFetch(async (input) => {
       const url = new URL(String(input));
+      if (url.pathname === "/cdn-cgi/access/certs") return fixture.certsResponse();
       if (url.pathname === "/user/repos") return jsonResponse([]);
       if (url.pathname === "/search/issues") {
         return jsonResponse(
@@ -132,7 +135,9 @@ test("search rate-limit failure stays sanitized at the dashboard boundary", asyn
           GITHUB_TOKEN: TOKEN,
           GITHUB_OWNER: OWNER,
           ACCESS_GATE_CONFIRMED: "true",
+          ...fixture.env,
         },
+        request:fixture.request,
       });
       return { response, payload: await response.json() };
     });

@@ -56,3 +56,20 @@ test("dashboard API error responses retain JSON and no-store protections", async
   assert.match(response.headers.get("cache-control") || "", /private, no-store/);
   assert.equal(response.headers.get("x-content-type-options"), "nosniff");
 });
+
+
+test("dashboard refuses a confirmed access flag without a verified Cloudflare assertion",async()=>{
+ const env={GITHUB_TOKEN:["synthetic","only","token"].join("-"),ACCESS_GATE_CONFIRMED:"true",CF_ACCESS_TEAM_DOMAIN:"fixture-team.cloudflareaccess.com",CF_ACCESS_AUD:"fixture-dashboard-audience"};
+ const response=await onRequestGet({env,request:new Request("https://dashboard.invalid/api/dashboard")});
+ const data=await response.json();
+ assert.equal(response.status,403);
+ assert.equal(data.code,"private_access_denied");
+ assert.doesNotMatch(JSON.stringify(data),/synthetic-only-token/);
+ assert.match(response.headers.get("cache-control"),/no-store/);
+});
+
+test("dashboard refuses a confirmed access flag without a configured JWT verifier",async()=>{
+ const response=await onRequestGet({env:{GITHUB_TOKEN:"test-token",ACCESS_GATE_CONFIRMED:"true"},request:new Request("https://dashboard.invalid/api/dashboard")});
+ assert.equal(response.status,503);
+ assert.equal((await response.json()).code,"access_verification_unavailable");
+});

@@ -42,6 +42,7 @@ test("readiness fails closed until both private-access gate and credential are c
     { GITHUB_TOKEN: token },
     { ACCESS_GATE_CONFIRMED: "true" },
     { GITHUB_TOKEN: token, ACCESS_GATE_CONFIRMED: "false" },
+    { GITHUB_TOKEN: token, ACCESS_GATE_CONFIRMED: "true" },
   ]) {
     const response = readyGet({ env });
     const payload = await body(response);
@@ -60,6 +61,8 @@ test("readiness reports configuration-ready without probing or exposing GitHub",
     env: {
       GITHUB_TOKEN: token,
       ACCESS_GATE_CONFIRMED: "TRUE",
+      CF_ACCESS_TEAM_DOMAIN: "fixture-team.cloudflareaccess.com",
+      CF_ACCESS_AUD: "fixture-dashboard-audience",
     },
   });
   const payload = await body(response);
