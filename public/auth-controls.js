@@ -2,11 +2,12 @@
 async function renderAccount(){
  const host=document.querySelector(".hero-meta")||document.querySelector(".intro-actions");
  if(!host)return;
- const area=document.createElement("div");area.className="auth-controls";area.setAttribute("aria-label","Account");host.append(area);
+ const area=document.createElement("div");area.className="auth-controls";area.setAttribute("aria-label","Account");area.setAttribute("role","status");host.prepend(area);
  const label=document.createElement("span");label.className="auth-status";let state;
  try{const r=await fetch("/api/auth/session",{credentials:"same-origin",cache:"no-store"});state=r.ok?await r.json():{unavailable:true};}
  catch{state={unavailable:true};}
- if(state.unavailable){label.textContent="GitHub sign-in unavailable";area.append(label);return;}
+ if(state.unavailable){document.documentElement.dataset.authentication="unavailable";label.textContent="GitHub sign-in unavailable";area.append(label);return;}
+ document.documentElement.dataset.authentication=state.authenticated?"signed-in":"required";
  if(state.authenticated){
   label.textContent="Signed in · "+state.login;
   const button=document.createElement("button");button.type="button";button.className="auth-action";button.textContent="Sign out";

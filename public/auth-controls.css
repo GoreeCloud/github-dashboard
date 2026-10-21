@@ -4,3 +4,9 @@
 .auth-action:hover{background:var(--gc-surface-tonal,#eee)}
 .auth-action:focus-visible{outline:3px solid var(--gc-brand,#268);outline-offset:2px}
 .auth-action:disabled{opacity:.65;cursor:wait}
+.auth-controls{flex-basis:100%;padding:10px 12px;border:1px solid var(--gc-outline,#aab);border-radius:14px;background:var(--gc-surface,#fff)}
+.auth-controls a.auth-action{background:var(--gc-brand,#068d98);border-color:var(--gc-brand,#068d98);color:var(--gc-on-brand,#00272c);font-weight:700}
+.auth-controls a.auth-action:hover{filter:brightness(.96)}
+[data-authentication="required"] #refresh-button,[data-authentication="unavailable"] #refresh-button,
+[data-authentication="required"] #reload,[data-authentication="unavailable"] #reload{display:none}
+.hero-meta>.auth-controls{order:-1}
