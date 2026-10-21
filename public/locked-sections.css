@@ -1,0 +1,35 @@
+/* Protected UI presentation; server authorization remains authoritative. */
+.private-access-view{display:none;grid-template-columns:minmax(0,1.2fr) minmax(230px,1fr);gap:16px;margin:20px 0 28px}
+:root:not([data-authentication="signed-in"]) .governance-page .stats-grid,
+:root:not([data-authentication="signed-in"]) .governance-page .repository-section,
+:root:not([data-authentication="signed-in"]) .governance-page #dashboard-alert,
+:root:not([data-authentication="signed-in"]) .attention-page .summary-grid,
+:root:not([data-authentication="signed-in"]) .attention-page .queue-panel,
+:root:not([data-authentication="signed-in"]) .attention-page .status-row,
+:root:not([data-authentication="signed-in"]) .attention-page .footnote,
+:root:not([data-authentication="signed-in"]) .attention-page #reload{display:none!important}
+:root:not([data-authentication="signed-in"]) .governance-page .nav-list a[href^="#"]:not([href="#summary"]),
+:root:not([data-authentication="signed-in"]) .governance-page .mobile-nav a[href^="#"]:not([href="#summary"]),
+:root:not([data-authentication="signed-in"]) .governance-page .hero-copy,
+:root:not([data-authentication="signed-in"]) .governance-page .hero-meta>.pill{display:none}
+:root:not([data-authentication="signed-in"]) .governance-page .hero{min-height:0;padding:16px 22px}
+:root:not([data-authentication="signed-in"]) .governance-page .hero-meta{max-width:none}
+:root:not([data-authentication="signed-in"]) #locked-governance,
+:root:not([data-authentication="signed-in"]) #locked-attention{display:grid}
+.private-access-card{min-width:0;padding:clamp(22px,3vw,40px);border-radius:24px;border:1px solid var(--gc-outline,#d6dce5);background:var(--gc-surface,#fff)}
+.private-access-card:first-child{background:linear-gradient(145deg,var(--gc-surface-raised,#fff),var(--gc-surface-tonal,#e8edf5))}
+.private-access-eyebrow{margin:0 0 12px!important;font-weight:800;letter-spacing:.1em;font-size:.74rem;text-transform:uppercase;color:var(--gc-brand,#087c8d)!important}
+.private-access-view h2{max-width:19ch;margin:0 0 15px;font-size:clamp(1.6rem,3vw,2.55rem);letter-spacing:-.035em;line-height:1.12}
+.private-access-view p{color:var(--gc-text-soft,#646d80);max-width:55ch;line-height:1.65}
+.private-access-links{display:flex;flex-wrap:wrap;gap:10px;margin-top:23px}
+.private-access-links a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 15px;border-radius:12px;text-decoration:none;background:var(--gc-brand-container,#d7f5f3);color:var(--gc-on-brand-container,#095963);font-weight:750}
+.private-access-links a:nth-child(even){background:var(--gc-surface-raised,#fff);color:var(--gc-text,#212738);border:1px solid var(--gc-outline,#d6dce5)}
+.private-access-links a:focus-visible{outline:3px solid var(--gc-brand,#087c8d);outline-offset:3px}
+.private-access-list{display:grid;gap:18px;align-content:center}
+.private-access-list>div{display:grid;grid-template-columns:36px minmax(0,1fr);gap:12px;align-items:start}
+.private-access-list span{width:36px;height:36px;display:grid;place-items:center;border-radius:12px;background:var(--gc-brand-container,#d7f5f3);color:var(--gc-on-brand-container,#095963);font-weight:800}
+.private-access-list strong{display:block;margin:0 0 3px}
+.private-access-list p{margin:0;font-size:.86rem}
+@media(max-width:850px){.private-access-view{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:520px){.private-access-card{padding:22px 20px}.private-access-links{display:grid}}
+@media(forced-colors:active){.private-access-card,.private-access-links a{border:1px solid CanvasText;background:Canvas;color:CanvasText}}
