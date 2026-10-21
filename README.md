@@ -130,7 +130,7 @@ Deterministic representative GitHub fixtures exercise the complete dashboard agg
 
 ## Deployment
 
-See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md). The source repository may remain public; do not expose the operational dashboard or its private-repository API data until the authenticated private-access boundary is configured and verified.
+See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md). For a private staging acceptance checklist and synthetic browser evidence, see [Staging acceptance](docs/STAGING_ACCEPTANCE.md). The source repository may remain public; do not expose the operational dashboard or its private-repository API data until the authenticated private-access boundary is configured and verified.
 
 ## Architecture
 
