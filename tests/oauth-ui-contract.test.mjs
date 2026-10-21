@@ -38,3 +38,9 @@ test("private views gate API reads and clear stale data on session denial",()=>{
   assert.ok(js.includes("response.status === 401")||js.includes("response.status===401"),page);
  }
 });
+
+test("signed-out pages cannot present refresh as available",()=>{
+ const source=read("public/refresh-guard.js");
+ assert.ok(source.includes("Sign in to refresh"));
+ assert.ok(source.includes("data-authentication"));
+});

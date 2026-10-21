@@ -28,6 +28,13 @@ function stopCooldownTimer() {
 
 function updateRefreshControl() {
   if (!button) return;
+  const authentication = document.documentElement.dataset.authentication;
+  if (authentication !== "signed-in") {
+    button.disabled = true;
+    setRefreshState(authentication === "required" ? "Sign in to refresh" : authentication === "unavailable" ? "Sign-in unavailable" : "Checking sign-in");
+    stopCooldownTimer();
+    return;
+  }
   const remaining = remainingCooldownSeconds(nextRefreshAt);
   const busy = button.getAttribute("aria-busy") === "true";
 
@@ -81,4 +88,6 @@ if (apiState) {
   apiObserver.observe(apiState, { childList: true, characterData: true, subtree: true });
 }
 
-setRefreshState("Refresh available");
+const sessionObserver = new MutationObserver(updateRefreshControl);
+sessionObserver.observe(document.documentElement, { attributes: true, attributeFilter: ["data-authentication"] });
+updateRefreshControl();

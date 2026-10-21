@@ -41,6 +41,6 @@ The last command checks signed-out API suppression, 401 session rejection on all
 ## Current observed evidence (October 21, 2026)
 
 - Draft PR #7 is based on Draft PR #6. Exact-head published checks passed at `60f03202da37d0fae9fbe748cc600d62bb3b6d01` before this new checklist/test-runner increment.
-- Prior local suite: 126 passing Node tests, 0 failures, and four repository validation groups passed.
-- Seven local synthetic Chromium session scenarios passed, including private-data removal from Attention Queue after a 401.
+- Prior local suite: 127 passing Node tests, 0 failures, and four repository validation groups passed.
+- Seven local synthetic Chromium session scenarios passed, including private-data removal from Attention Queue after a 401. A screenshot-led signed-out UI audit found an incorrect refresh-available label; the updated guard now shows sign-in-required refresh status on Overview and Governance, with a rechecked 390px screenshot and browser assertions. Full accessibility acceptance remains pending.
 - **Not verified:** OAuth App registration, real OAuth sign-in, private staging host, deployed secrets, live data permissions, preview isolation, accessible rendered production experience and rollback.

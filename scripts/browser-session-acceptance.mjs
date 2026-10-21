@@ -32,6 +32,7 @@ try {
    await page.locator('html[data-authentication="required"]').waitFor({timeout:12000});
    await page.locator('a.auth-action[href="/api/auth/login"]').waitFor();
    assert.equal(privateCalls,signedIn?1:0,route+" protected request count");
+   if(route!=="/attention.html") assert.equal(await page.locator("#refresh-state").innerText(),"Sign in to refresh");
    assert.deepEqual(errors,[],route+" script errors");
    console.log("PASS",route,signedIn?"denied-session":"signed-out","calls",privateCalls);
    await context.close();
