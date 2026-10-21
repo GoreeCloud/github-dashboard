@@ -1,0 +1,175 @@
+/* GoreeCloud UI native consumer shell, first-party GC UI semantics. */
+.panel,.panel-gc{background:var(--gc-surface);backdrop-filter:none;-webkit-backdrop-filter:none}
+.panel-gc{background:var(--gc-surface-tonal)}
+.timeline-item,.list-card,.ranking-item,.section-count,.search-field input,.sidebar-footer,.pill,.badge,table{background:var(--gc-surface-raised)}
+:root{--on-accent:var(--gc-on-brand);--content-surface:var(--gc-surface);--content-surface-raised:var(--gc-surface-raised)}
+.button,
+.icon-button,
+.search-field input,
+.nav-item,
+.mobile-nav a {
+  min-height: 48px;
+}
+
+.button-primary {
+  color: var(--on-accent);
+  background: var(--accent);
+}
+
+.icon-button {
+  width: 48px;
+  height: 48px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+}
+
+.item-title,
+.item-description,
+.repo-name,
+.repo-description,
+.hero h2,
+.hero p {
+  overflow-wrap: anywhere;
+}
+
+/* Tablet / Medium: a horizontal GC UI navigation bar uses the extra canvas
+ * without collapsing navigation labels into a first-letter rail.
+ */
+@media (min-width: 600px) and (max-width: 1023px) {
+  :root {
+    --sidebar-width: auto;
+  }
+
+  .app-shell {
+    display: block;
+  }
+
+  .sidebar {
+    position: sticky;
+    inset: auto;
+    top: 10px;
+    width: auto;
+    margin: 12px 14px 0;
+    padding: 10px 12px;
+    flex-direction: row;
+    align-items: center;
+    gap: 14px;
+    border-radius: 24px;
+  }
+
+  .brand-block {
+    flex: 0 0 auto;
+    padding: 4px 8px;
+  }
+
+  .brand-wordmark {
+    margin: 0;
+    font-size: 0.9rem;
+    writing-mode: horizontal-tb;
+    transform: none;
+  }
+
+  .brand-product {
+    display: block;
+    margin-top: 2px;
+    font-size: 0.72rem;
+  }
+
+  .nav-list {
+    min-width: 0;
+    display: flex;
+    flex: 1 1 auto;
+    gap: 6px;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scrollbar-width: thin;
+  }
+
+  .nav-item {
+    flex: 0 0 auto;
+    min-height: 48px;
+    padding: 0 13px;
+    font-size: 0.78rem;
+    white-space: nowrap;
+  }
+
+  .nav-item::first-letter {
+    font-size: inherit;
+    font-weight: inherit;
+  }
+
+  .sidebar-footer {
+    display: none;
+  }
+
+  .main-content {
+    width: 100%;
+    margin-left: 0;
+    padding: 20px 18px 38px;
+  }
+
+  .topbar {
+    padding-inline: 4px;
+  }
+}
+
+@media (max-width: 599px) {
+  .sidebar {
+    display: none;
+  }
+
+  .button,
+  .icon-button,
+  .search-field input,
+  .mobile-nav a {
+    min-height: 48px;
+  }
+
+  .button {
+    padding-inline: 16px;
+  }
+
+  .icon-button {
+    width: 48px;
+    height: 48px;
+  }
+
+  .mobile-nav a {
+    padding-inline: 4px;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .sidebar,
+  .mobile-nav {
+    background: var(--gc-surface-raised);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .sidebar,
+  .mobile-nav {
+    background: var(--gc-surface-raised);
+  }
+}
+
+@media (forced-colors: active) {
+  .panel,
+  .panel-gc,
+  .timeline-item,
+  .list-card,
+  .ranking-item,
+  .section-count,
+  .search-field input,
+  .pill,
+  .badge,
+  table {
+    background: Canvas;
+    color: CanvasText;
+  }
+}
