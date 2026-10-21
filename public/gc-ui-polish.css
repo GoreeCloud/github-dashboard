@@ -1,0 +1,8 @@
+/* GC UI editorial hero: status signals never consume the reading column. */
+.hero{grid-template-columns:minmax(0,1fr) minmax(180px,255px);align-items:start;gap:clamp(18px,3vw,36px);background:linear-gradient(145deg,var(--gc-surface-tonal),var(--gc-surface))}
+.hero-copy{min-width:0;width:100%;max-width:790px}
+.hero-meta{min-width:0;max-width:255px;justify-content:flex-start;align-content:start}
+.hero h2{font-size:clamp(1.9rem,3.1vw,3.2rem);line-height:1.1;overflow-wrap:break-word;word-break:normal}
+.hero p{font-size:clamp(1rem,1.25vw,1.1rem);line-height:1.6}
+.hero-kicker{color:var(--gc-brand);font-weight:800}
+@media(max-width:1023px){.hero{grid-template-columns:minmax(0,1fr)}.hero-meta{max-width:none}}
