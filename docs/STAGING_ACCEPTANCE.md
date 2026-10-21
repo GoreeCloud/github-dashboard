@@ -44,3 +44,13 @@ The last command checks signed-out API suppression, 401 session rejection on all
 - Prior local suite: 127 passing Node tests, 0 failures, and four repository validation groups passed.
 - Seven local synthetic Chromium session scenarios passed, including private-data removal from Attention Queue after a 401. A screenshot-led signed-out UI audit found an incorrect refresh-available label; the updated guard now shows sign-in-required refresh status on Overview and Governance, with a rechecked 390px screenshot and browser assertions. Full accessibility acceptance remains pending.
 - **Not verified:** OAuth App registration, real OAuth sign-in, private staging host, deployed secrets, live data permissions, preview isolation, accessible rendered production experience and rollback.
+
+## Verified public UI-only preview — October 21, 2026
+
+URL: https://goreecloud-github-dashboard-staging.pages.dev/ — **public, not private authenticated staging**. It is non-indexed and explicitly marked Development Preview. Do not input credentials here.
+
+An isolated Cloudflare Pages project was created within the authorized GoreeCloud account, without touching the existing website or production. Direct-upload branch `staging` uses PR #7 source revision `5bedb2e7eff6fc61aad0e5d983cf41172c010954`, plus local staging-only banner/CSS, robots.txt and `_headers` overlays (not committed to the product source). Current deployment ID: `097ef223-7fc0-4e9a-a890-8f603d1bed4b`; previous: `25011eba-aac9-401e-a873-ceefa84bc57b`. Snapshot presence is not proof of rollback acceptance.
+
+Live probes verified 200 for the three UI views and health, 503 for readiness, OAuth login and session, and both private APIs. Pages served `X-Robots-Tag: noindex`, `Cache-Control: no-store` and CSP/security headers; the protected API had `private, no-store`. A browser audit verified 390px mobile and 1280px desktop. A staging-only banner/sidebar overlap was fixed and the final 1280px layout had no horizontal overflow.
+
+**Important:** robots directives do not protect access. OAuth App registration, server-side confidential credentials, account allowlist, genuine authenticated/denied sign-in, preview isolation, accessibility acceptance, and rehearsed rollback remain pending. Configure none of the live data secrets until the host is appropriately access controlled. Proposed future OAuth callback, subject to final approval: `https://goreecloud-github-dashboard-staging.pages.dev/api/auth/callback`.
