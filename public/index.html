@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="/gc-ui-foundations.css" />
     <link rel="stylesheet" href="/gc-ui-adapter.css" />
     <link rel="stylesheet" href="/gc-ui-polish.css" />
+    <link rel="stylesheet" href="/locked-state.css" />
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to dashboard</a>
@@ -69,6 +70,23 @@
             <span class="pill" id="rate-state">Rate limit unknown</span>
             <span class="pill" id="refresh-state">Refresh available</span>
           </div>
+        </section>
+
+        <section id="locked-overview" aria-label="Private dashboard access">
+          <article class="lock-panel lock-primary">
+            <p class="lock-eyebrow">Secure by design</p>
+            <h2>One workspace. Protected insights.</h2>
+            <p class="lock-description">The interface is available, but private GitHub data is not connected in this development preview. When an authorized session is established, your repository health, activity, releases, and open work will appear automatically.</p>
+            <div class="lock-links">
+              <a class="lock-link" href="/governance.html">Explore governance →</a>
+              <a class="lock-link lock-link-secondary" href="/attention.html">View attention queue →</a>
+            </div>
+          </article>
+          <aside class="lock-panel lock-modules" aria-label="Dashboard capabilities">
+            <div class="lock-module"><span class="lock-module-icon" aria-hidden="true">01</span><div><strong>Portfolio overview</strong><p>Repository inventory, recent changes, and activity-ranked projects.</p></div></div>
+            <div class="lock-module"><span class="lock-module-icon" aria-hidden="true">02</span><div><strong>Actionable attention</strong><p>Failing CI, open issues, pull requests, and coverage warnings.</p></div></div>
+            <div class="lock-module"><span class="lock-module-icon" aria-hidden="true">03</span><div><strong>Releases &amp; governance</strong><p>Changelog radar, release milestones, and read-only policy observations.</p></div></div>
+          </aside>
         </section>
 
         <section class="stats-grid" aria-label="Repository summary">
