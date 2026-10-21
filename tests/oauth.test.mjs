@@ -45,6 +45,8 @@ test("no session, corrupted cookie and rotated key are denied",async()=>{
  assert.equal((await verifySession(bad,f.env)).status,401);
  const rotated={...f.env,GITHUB_OAUTH_SESSION_KEY:fixtureEnv().GITHUB_OAUTH_SESSION_KEY};
  assert.equal((await verifySession(f.request,rotated)).status,401);
+ const revoked={...f.env,GITHUB_OAUTH_ALLOWED_USER_IDS:"1234567"};
+ assert.equal((await verifySession(f.request,revoked)).status,401);
 });
 
 // Further cases are covered by API fixture tests.
