@@ -6,6 +6,8 @@ GoreeCloud GitHub Dashboard is original GoreeCloud-owned software. Under the can
 
 This development candidate opts in to the separate GC UI successor Contract 2.1 from [GoreeCloud/GoreeCloud](https://github.com/GoreeCloud/GoreeCloud). The exact-head evaluation workflow pins reviewed upstream revision `1499491159250d5f15dad4e2835fbeee2fda9ce9`, preserving independent source/evaluator provenance. Nine systems remain required, Forge remains nonconformant, and Anchor remains unqualified.
 
+**Current CI blocker (October 31, 2026):** The named Platform Contract 2.1 reusable workflow at the pinned GoreeCloud/GoreeCloud revision cannot currently be fetched from GitHub. The current upstream default branch does not contain that validator. The Platform Contract check fails before any validation jobs run; earlier passing checks do not validate the present candidate. See [issue #13](https://github.com/GoreeCloud/github-dashboard/issues/13). Do not remove this mandatory gate, present the foundation test workflow as an equivalent contract check, or advance release qualification until an authoritative, independently reviewed validator is restored and exact-head validation passes.
+
 The GC UI version target is the *scoped* `foundations-v1.0.1` semantic token and browser theme release. This declaration is not complete component, accessibility, authenticated-runtime or production acceptance. Historic Contract 2.0 results are separate evidence, not current design authority.
 
 ## Current conformance state
