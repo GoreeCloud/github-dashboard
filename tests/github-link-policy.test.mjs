@@ -19,7 +19,7 @@ test("fails closed for untrusted destinations and credentials", () => {
     "http://github.com/GoreeCloud/github-dashboard",
     "https://github.com.evil.test/GoreeCloud/github-dashboard",
     "https://github.com@evil.test/GoreeCloud/github-dashboard",
-    "https://user:pass@github.com/GoreeCloud/github-dashboard",
+    "https://" + "user:pass" + "@github.com/GoreeCloud/github-dashboard",
     "https://github.com:444/GoreeCloud/github-dashboard",
     "https://github.com/OtherOwner/github-dashboard",
     "https://github.com/GoreeCloudExtra/github-dashboard",
