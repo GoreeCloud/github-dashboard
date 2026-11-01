@@ -13,7 +13,7 @@ Classification: Internal
 Document Type: Software Project Specification and Implementation Blueprint
 Project Name: GoreeCloud GitHub Dashboard
 Release Lifecycle: Forge
-Project Status: Active Forge / Development Deployment — Read-only dashboard foundation, Repository Attention, CI Health, explicit partial-data state, API-budget visibility, bounded request timeouts, refresh discipline, fail-closed API contracts, current fourteen-file application/service repository-baseline governance observation, declaration-only Platform Contract evidence, classic protection/ruleset/workflow-reference evidence, Platform Contract 2.0, and GLAZE UI V1.6 source targeting implemented; Draft PR #1 open; exact-head CI green; rendered, platform-system, deployment, Seal, Anchor, and production acceptance pending
+Project Status: Active Forge / Development Deployment — Read-only dashboard foundation, Repository Attention, CI Health, explicit partial-data state, API-budget visibility, bounded request timeouts, refresh discipline, fail-closed API contracts, current fourteen-file application/service repository-baseline governance observation, declaration-only Platform Contract evidence, classic protection/ruleset/workflow-reference evidence, current five-MIPS requirements and GoreeCloud UI source targeting implemented; Draft PR #1 open; exact-head CI green; rendered, platform-system, deployment, Seal, Anchor, and production acceptance pending
 Repository: GoreeCloud/github-dashboard
 Repository Visibility: Public / Open Source
 Development Model: Original GoreeCloud-owned software development
@@ -64,7 +64,7 @@ The dashboard may later integrate with Manager through a link, summary card, or 
 ## 4. Release Lifecycle
 The current canonical GoreeCloud lifecycle stage is Forge, with deployment state development and qualification state not-started.
 This classification reflects the verified state: the source foundation exists, exact-head automated validation passes, and core dashboard capabilities are implemented, but rendered browser/device acceptance, final product identity, private-access deployment, live GitHub credential provisioning, deployment validation, monitoring, rollback validation, and production approval remain incomplete.
-I will not advance the project to Weave, Seal, or Anchor merely because source CI passes. Lifecycle transition and production acceptance must follow the applicable GoreeCloud release-lifecycle, Platform Contract 2.0, and production-readiness requirements.
+I will not advance the project to Weave, Seal, or Anchor merely because source CI passes. Lifecycle transition and production acceptance must follow the applicable GoreeCloud release-lifecycle, current five-MIPS requirements and production-readiness requirements.
 ## 5. Current Source Foundation
 The current development branch is agent/dashboard-foundation and Draft PR #1 is titled Build GoreeCloud GitHub Dashboard foundation.
 The current validated exact source head is 483775cc9d135442a7fa20a910999f4fccec63b6.
@@ -198,7 +198,7 @@ The project remains in Forge with deployment state development. Draft PR #1 is t
 I will continue improving operational visibility, repository health, CI awareness, rate-limit resilience, Glaze UI quality, accessibility, testing, documentation, and private deployment readiness while preserving GitHub as the authoritative repository platform and keeping the dashboard read-only by default.
 Superseding Native-Build and Platform Integration Mandate
 This specification is governed by the platform-wide requirement that this application be built natively from the ground up as original GoreeCloud-owned software. Earlier maintained-fork or upstream-product implementation language is transitional only. Narrow critical foundations may be retained only when independently replacing them would materially increase security, cryptographic, protocol, standards, codec, rendering, operating-system, runtime, or interoperability risk; WireGuard and mature cryptographic or encryption primitives are canonical examples. Such exceptions must remain limited to the minimum technical foundation and must not preserve upstream product architecture, UI, branding, workflows, or general application logic.
-This application must remain current with the applicable GoreeCloud Platform Contract, current Glaze UI consumer target, and all nine Integral Platform Systems: GoreeCloud Manager, Privacy Shield, Wardveil Security, Everkeep, Glaze UI, GoreeCloud Mesh, GoreeCloud Identity, GoreeCloud Policy, and GoreeCloud Observability. Missing, incomplete, superseded, outdated, unverified, or unaccepted required integration blocks Anchor qualification.
+This application must use the current GoreeCloud UI authority and evaluate the five Mandatory Integrated Platform Systems: GoreeCloud UI, GoreeShield, Wardveil, GoreeCloud Identity and GoreeCloud Mesh. Unverified required integration blocks Anchor qualification.
 
 ## Migration control
 
