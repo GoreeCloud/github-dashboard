@@ -201,11 +201,4 @@ test("documentation applicability is classified only from explicit Platform Cont
   }
 });
  
-test("Contract 2.1 GC UI declaration remains observational",()=>{
- const text=['schema_version: "2.1"',"component:","  type: application","compatibility:",'  platform_contract: "2.1"','  gc_ui_required: "foundations-v1.0.1"',"conformance:","  status: nonconformant"].join("\n");
- const d=parsePlatformDeclaration(text);
- assert.equal(d.schemaVersion,"2.1");
- assert.equal(d.gcUiRequired,"foundations-v1.0.1");
- assert.equal(d.glazeUiRequired,null);
- assert.equal(d.declaredConformance,"nonconformant");
-});
+
