@@ -24,8 +24,8 @@ These entries record source capabilities implemented in the authoritative reposi
 | IF-018 | GC UI Foundations source consumer | First-party responsive GC UI consumer shell and scoped Foundations tokens in development; complete acceptance pending. |
 | IF-019 | Public-source safety | Secret/private-artifact detection and public-source/private-deployment boundary validation. |
 | IF-020 | Private API boundary | Server-side credentials, read-only routes, security headers, sanitized errors, and private/no-store responses. |
-| IF-021 | Platform declaration | Platform Contract 2.0 manifest covering all nine Integral Platform Systems in nonconformant Forge state. |
-| IF-022 | Automated validation | Unit, fixture, contract, governance, appearance, source-policy, repository-policy, and exact-head Platform Contract checks. |
+| IF-021 | MIPS assessment | Five-system MIPS status is documented as incomplete; Forge is not release accepted. |
+| IF-022 | Automated validation | Unit, fixture, governance, appearance, source-policy and repository-policy checks on the development branch. |
 | IF-023 | Current application/service repository baseline observation | Observes all 14 required root records/controls when an explicit Platform Contract application/service declaration establishes applicability; `SECURITY.md` is shared with the legacy baseline probe and queried once. This implements former planned item PF-001. |
 | IF-024 | Platform Contract declaration evidence | Reuses the bounded manifest text already fetched by governance observation to normalize declaration-only schema, component type, lifecycle, compatibility, Glaze target, and declared-conformance fields. No full peer validation or computed conformance is claimed. |
 | IF-025 | Session-aware dashboard views (Development) | Shared session probe gates private browser reads across Overview, Governance and Attention Queue; denied sessions replace account status and purge prior displayed data. No server-side revocation or real OAuth deployment is implied. |

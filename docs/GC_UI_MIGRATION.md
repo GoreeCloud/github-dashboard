@@ -16,7 +16,7 @@ Design authority: [GoreeCloud/gc-ui](https://github.com/GoreeCloud/gc-ui) (exclu
 
 Synthetic fixture Chromium smoke at viewport widths 320/390/768/1280 CSS pixels covered the overview and governance screens, computed GC UI canvas values in light/dark modes, four-mode appearance interaction, and lack of document-wide horizontal overflow with 200% enlarged text. The dedicated attention view received the same-size interaction and reflow smoke separately. Automated source validation remains part of branch CI. These are **development observations only**.
 
-The retired browser design runtime files have been removed from this isolated development branch. The source now opts into a versioned Contract 2.1 candidate with a pinned evaluator and a scoped Foundations target; historic documentation remains historical. Complete GC UI, assistive technology, authenticated runtime, and production acceptance remain unverified.
+The retired browser design runtime files have been removed from this isolated development branch. The source uses a scoped GoreeCloud UI Foundations target; current five-MIPS integration is evaluated separately, without a retired evaluator. Complete GC UI, assistive technology, authenticated runtime, and production acceptance remain unverified.
 
 Still required before release: authenticated private API integration and fail-closed access verification, actual assistive-technology and keyboard testing, full GC UI component conformance and remaining runtime removal, representative deployment configuration and rollback verification, and all applicable GoreeCloud platform system gates. PRs remain Draft; no production deployment is asserted.
 

@@ -513,8 +513,8 @@ export function buildGovernanceCoverage(repositories, observations = [], protect
     platformDeclarationUnavailableRepositories,
   );
   const platformContract2DeclaredRepositories = platformDeclarationObservedRows.filter((row) => (
-    ["2.0","2.1"].includes(row.platformDeclaration.declaration?.schemaVersion)
-    || ["2.0","2.1"].includes(row.platformDeclaration.declaration?.platformContract)
+    ["2.0"].includes(row.platformDeclaration.declaration?.schemaVersion)
+    || ["2.0"].includes(row.platformDeclaration.declaration?.platformContract)
   )).length;
   const platformApplicationRepositories = platformDeclarationObservedRows.filter(
     (row) => row.platformDeclaration.declaration?.componentType === "application",

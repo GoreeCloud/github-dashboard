@@ -1,4 +1,5 @@
 import { buildCoverageRows } from "./data-health.js";
+import { allowedGitHubLink } from "./github-link-policy.js";
 
 import {authenticationStatus,invalidateAuthentication} from "./auth-controls.js";
 
@@ -44,10 +45,11 @@ function formatRelative(dateValue) {
 }
 
 function createLink(url, className = "item-link") {
-  const link = document.createElement("a");
+  const target = allowedGitHubLink(url);
+  const link = document.createElement(target ? "a" : "span");
   link.className = className;
-  link.href = url || "#";
-  if (url) {
+  if (target) {
+    link.href = target;
     link.target = "_blank";
     link.rel = "noreferrer noopener";
   }
