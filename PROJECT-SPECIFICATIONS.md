@@ -19,7 +19,7 @@ Repository Visibility: Public / Open Source
 Development Model: Original GoreeCloud-owned software development
 Approved License: MIT
 Source Version: 0.3.0-dev
-Design Language: GoreeCloud UI Foundations (scoped) — Current Shared Consumer Target; source targeting implemented; repository-local rendered, accessibility, performance, and production acceptance pending
+Design Language: GoreeCloud UI Foundations (scoped) — Current design authority; representative consumer integration, accessibility, performance, and production acceptance pending
 Planned Hosting Model: Cloudflare Pages with server-side Pages Functions behind an authenticated private-access layer
 Production Deployment: Not approved
 Authoritative Repository-State Source: GitHub
@@ -129,7 +129,7 @@ The dashboard prefers the current GoreeCloud repository-native CHANGELOGS.md rec
 The dashboard may extract a concise summary of the first meaningful release section, but the authoritative source remains the repository file itself. The user interface must link back to the authoritative GitHub source rather than presenting an extracted summary as a separate historical record.
 The private goreecloud-changelogs application is a separate GoreeCloud project and must not be made an undocumented dependency of this dashboard.
 ## 12. GoreeCloud UI and Form-Factor Contract
-The application must target GoreeCloud UI Foundations (scoped), a scoped design foundation. The GoreeCloud UI repository remains authoritative for its own supported release scope. The dashboard's V1.6 source target is implemented, but shared-library qualification does not certify this consumer; exact-revision rendered, accessibility, resilience, interaction-state, representative performance, layout/density, responsive, and production acceptance remain required for its supported form factors.
+The application must target GoreeCloud UI Foundations (scoped), a scoped design foundation. The GoreeCloud UI repository remains authoritative for its own supported release scope. This product still requires scoped consumer qualification; a shared library's release does not certify the dashboard; exact-revision rendered, accessibility, resilience, interaction-state, representative performance, layout/density, responsive, and production acceptance remain required for its supported form factors.
 The dashboard must provide purpose-built compositions for supported form factors rather than one generic layout scaled to different screen sizes.
 The current intended supported form factors are:
 - Phone / Compact — touch-first mobile composition.
@@ -137,7 +137,7 @@ The current intended supported form factors are:
 - Desktop / Expanded — persistent desktop navigation and efficient pointer/keyboard workspace.
 - Wide Desktop — expanded information density without uncontrolled line length or stretched mobile components.
 TV is explicitly unsupported in the initial project scope.
-Before visual production acceptance, representative task flows must be evaluated at the governing GoreeCloud UI acceptance sizes, including 390 × 844, 820 × 1180, 1280 × 900, and 1600 × 1000 for the supported classes.
+Before visual production acceptance, representative task flows must be evaluated at representative GoreeCloud UI verification sizes, including 390 × 844, 820 × 1180, 1280 × 900, and 1600 × 1000 for the supported classes.
 ## 13. Accessibility and Resilience
 The application must preserve keyboard navigation, visible focus, logical reading order, appropriate contrast, clear loading and error states, reduced-motion behavior, increased-contrast behavior, forced-colors resilience, and usable table/content overflow.
 Visual depth, translucency, gradients, blur, and motion must support hierarchy without becoming necessary for comprehension. Solid-surface fallbacks must remain usable when visual effects are unavailable or inappropriate.
