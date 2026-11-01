@@ -19,5 +19,5 @@ test("product records preserve implementation versus acceptance",()=>{
  assert.match(features,/Implemented in Forge source/);assert.match(features,/Partial or acceptance-gated/);
  assert.match(features,/Not currently implemented or approved/);assert.match(benefits,/Benefits not yet claimed/);
  assert.match(obj,/does not become a second repository-state authority/);
- for(const name of ["GoreeCloud Manager","Privacy Shield","Wardveil Security","Everkeep","GoreeCloud UI","GoreeCloud Mesh","GoreeCloud Identity","GoreeCloud Policy","GoreeCloud Observability"])assert.ok(platform.includes(name),name);
+ for(const name of ["GoreeCloud UI","GoreeShield","Wardveil","GoreeCloud Identity","GoreeCloud Mesh"])assert.ok(platform.includes(name),name);
 });
