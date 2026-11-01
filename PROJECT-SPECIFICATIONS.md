@@ -13,13 +13,13 @@ Classification: Internal
 Document Type: Software Project Specification and Implementation Blueprint
 Project Name: GoreeCloud GitHub Dashboard
 Release Lifecycle: Forge
-Project Status: Active Forge / Development Deployment — Read-only dashboard foundation, Repository Attention, CI Health, explicit partial-data state, API-budget visibility, bounded request timeouts, refresh discipline, fail-closed API contracts, current fourteen-file application/service repository-baseline governance observation, declaration-only Platform Contract evidence, classic protection/ruleset/workflow-reference evidence, Platform Contract 2.0, and GLAZE UI V1.6 source targeting implemented; Draft PR #1 open; exact-head CI green; rendered, platform-system, deployment, Seal, Anchor, and production acceptance pending
+Project Status: Active Forge / Development Deployment — Read-only dashboard foundation, Repository Attention, CI Health, explicit partial-data state, API-budget visibility, bounded request timeouts, refresh discipline, fail-closed API contracts, current fourteen-file application/service repository-baseline governance observation, declaration-only Platform Contract evidence, classic protection/ruleset/workflow-reference evidence, Platform Contract 2.0, and GoreeCloud UI Foundations (scoped) source targeting implemented; Draft PR #1 open; exact-head CI green; rendered, platform-system, deployment, Seal, Anchor, and production acceptance pending
 Repository: GoreeCloud/github-dashboard
 Repository Visibility: Public / Open Source
 Development Model: Original GoreeCloud-owned software development
 Approved License: MIT
 Source Version: 0.3.0-dev
-Design Language: GLAZE UI V1.6 / 1.6.0 — Current Shared Consumer Target; source targeting implemented; repository-local rendered, accessibility, performance, and production acceptance pending
+Design Language: GoreeCloud UI Foundations (scoped) — Current Shared Consumer Target; source targeting implemented; repository-local rendered, accessibility, performance, and production acceptance pending
 Planned Hosting Model: Cloudflare Pages with server-side Pages Functions behind an authenticated private-access layer
 Production Deployment: Not approved
 Authoritative Repository-State Source: GitHub
@@ -28,7 +28,7 @@ Related Records
 - Repository CHANGELOGS.md — GitHub Dashboard
 - GitHub-Repository-Index.xlsx
 - Table of Contents.docx
-- Standard — Glaze UI Design Language
+- Standard — GoreeCloud UI Design Language
 - Standard — Application Branding and User Interface Design
 - Standard — Application and Service Production Readiness
 - Standard — Application and Service Release Lifecycle
@@ -57,7 +57,7 @@ My objectives are to provide:
 - Latest release visibility.
 - A searchable repository directory.
 - Repository-health and attention signals as the project matures.
-- A responsive Glaze UI experience designed for phone, tablet, desktop, and Wide Desktop use.
+- A responsive GoreeCloud UI experience designed for phone, tablet, desktop, and Wide Desktop use.
 ## 3. Product Decision
 I approve the GitHub Dashboard as a separate GoreeCloud application and repository. I will not embed its primary implementation inside GoreeCloud Manager merely because Manager is also an administrative interface.
 The dashboard may later integrate with Manager through a link, summary card, or supported API boundary, but its source, release lifecycle, deployment, security model, and product identity remain independently governed.
@@ -128,8 +128,8 @@ Recent repository pushes are the primary ranking signal. Open-work activity and 
 The dashboard prefers the current GoreeCloud repository-native CHANGELOGS.md record and retains legacy CHANGELOG.md, docs/CHANGELOG.md, and changelog.md fallbacks for repositories not yet migrated.
 The dashboard may extract a concise summary of the first meaningful release section, but the authoritative source remains the repository file itself. The user interface must link back to the authoritative GitHub source rather than presenting an extracted summary as a separate historical record.
 The private goreecloud-changelogs application is a separate GoreeCloud project and must not be made an undocumented dependency of this dashboard.
-## 12. Glaze UI and Form-Factor Contract
-The application must target GLAZE UI V1.6 / 1.6.0, the current shared consumer baseline. The GoreeCloud Glaze UI source repository remains authoritative for shared release state. The dashboard's V1.6 source target is implemented, but shared-library qualification does not certify this consumer; exact-revision rendered, accessibility, resilience, interaction-state, representative performance, layout/density, responsive, and production acceptance remain required for its supported form factors.
+## 12. GoreeCloud UI and Form-Factor Contract
+The application must target GoreeCloud UI Foundations (scoped), a scoped design foundation. The GoreeCloud UI repository remains authoritative for its own supported release scope. The dashboard's V1.6 source target is implemented, but shared-library qualification does not certify this consumer; exact-revision rendered, accessibility, resilience, interaction-state, representative performance, layout/density, responsive, and production acceptance remain required for its supported form factors.
 The dashboard must provide purpose-built compositions for supported form factors rather than one generic layout scaled to different screen sizes.
 The current intended supported form factors are:
 - Phone / Compact — touch-first mobile composition.
@@ -137,7 +137,7 @@ The current intended supported form factors are:
 - Desktop / Expanded — persistent desktop navigation and efficient pointer/keyboard workspace.
 - Wide Desktop — expanded information density without uncontrolled line length or stretched mobile components.
 TV is explicitly unsupported in the initial project scope.
-Before visual production acceptance, representative task flows must be evaluated at the governing Glaze UI acceptance sizes, including 390 × 844, 820 × 1180, 1280 × 900, and 1600 × 1000 for the supported classes.
+Before visual production acceptance, representative task flows must be evaluated at the governing GoreeCloud UI acceptance sizes, including 390 × 844, 820 × 1180, 1280 × 900, and 1600 × 1000 for the supported classes.
 ## 13. Accessibility and Resilience
 The application must preserve keyboard navigation, visible focus, logical reading order, appropriate contrast, clear loading and error states, reduced-motion behavior, increased-contrast behavior, forced-colors resilience, and usable table/content overflow.
 Visual depth, translucency, gradients, blur, and motion must support hierarchy without becoming necessary for comprehension. Solid-surface fallbacks must remain usable when visual effects are unavailable or inappropriate.
@@ -183,7 +183,7 @@ The following gates remain open:
 - Explicit production approval.
 ## 19. Immediate Development Priorities
 I will continue development in the following order:
-## 1. Complete remaining GLAZE UI V1.6 / 1.6.0 repository-local rendered acceptance across the supported Phone, Tablet, Desktop, and Wide Desktop form factors, including accessibility, resilience, representative performance, motion, material/depth, layout/density, and interaction-state behavior.
+## 1. Complete remaining GoreeCloud UI Foundations (scoped) repository-local rendered acceptance across the supported Phone, Tablet, Desktop, and Wide Desktop form factors, including accessibility, resilience, representative performance, motion, material/depth, layout/density, and interaction-state behavior.
 ## 2. Validate the new Repository Attention, CI Health, partial-data, and API-budget surfaces against representative live public and private repositories.
 ## 3. Preserve the current private no-store cache boundary. Shared caching has been evaluated and deferred until authenticated deployment provides a verified authorization-aware identity partition, explicit freshness semantics, isolation tests, and rollback evidence.
 ## 4. Prepare deterministic rendered-acceptance evidence for the governing Phone, Tablet, Desktop, and Wide Desktop sizes without claiming visual acceptance until actual rendered evidence is captured.
@@ -196,10 +196,10 @@ The dashboard must not expose private repository information through a public st
 ## 21. Current Decision Summary
 I approve continued development of GoreeCloud GitHub Dashboard as a public/open-source, standalone, original GoreeCloud application in GoreeCloud/github-dashboard, with the operational deployment remaining private and authenticated.
 The project remains in Forge with deployment state development. Draft PR #1 is the current implementation review surface. Exact-head source validation is green at 483775cc9d135442a7fa20a910999f4fccec63b6 through foundation run #119 / 36340205861; Platform Contract 2.0 run #82 / 36340205883 also passes on the same head. The governance view observes the current fourteen-file application/service repository baseline when an explicit Platform Contract application/service declaration establishes applicability and now also exposes bounded declaration-only manifest fields from the same read. That declaration evidence is not full schema validation or computed conformance. Absent, unreadable, oversized, malformed, unknown, or non-application/service declarations remain unclassified for the application/service baseline channel. The application is not production accepted or deployed.
-I will continue improving operational visibility, repository health, CI awareness, rate-limit resilience, Glaze UI quality, accessibility, testing, documentation, and private deployment readiness while preserving GitHub as the authoritative repository platform and keeping the dashboard read-only by default.
+I will continue improving operational visibility, repository health, CI awareness, rate-limit resilience, GoreeCloud UI quality, accessibility, testing, documentation, and private deployment readiness while preserving GitHub as the authoritative repository platform and keeping the dashboard read-only by default.
 Superseding Native-Build and Platform Integration Mandate
 This specification is governed by the platform-wide requirement that this application be built natively from the ground up as original GoreeCloud-owned software. Earlier maintained-fork or upstream-product implementation language is transitional only. Narrow critical foundations may be retained only when independently replacing them would materially increase security, cryptographic, protocol, standards, codec, rendering, operating-system, runtime, or interoperability risk; WireGuard and mature cryptographic or encryption primitives are canonical examples. Such exceptions must remain limited to the minimum technical foundation and must not preserve upstream product architecture, UI, branding, workflows, or general application logic.
-This application must remain current with the applicable GoreeCloud Platform Contract, current Glaze UI consumer target, and all nine Integral Platform Systems: GoreeCloud Manager, Privacy Shield, Wardveil Security, Everkeep, Glaze UI, GoreeCloud Mesh, GoreeCloud Identity, GoreeCloud Policy, and GoreeCloud Observability. Missing, incomplete, superseded, outdated, unverified, or unaccepted required integration blocks Anchor qualification.
+This application must use GoreeCloud UI as its sole design and experience authority and assess the five current Mandatory Integrated Platform Systems: GoreeCloud UI, GoreeShield, Wardveil, GoreeCloud Identity, and GoreeCloud Mesh. Unverified applicable integration blocks Anchor eligibility; this specification does not certify release acceptance.
 
 ## Migration control
 
