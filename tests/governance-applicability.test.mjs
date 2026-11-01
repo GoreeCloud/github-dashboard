@@ -33,7 +33,7 @@ function response(body, status = 200) {
   });
 }
 
-function fileNode(name, componentType = null, missing = []) {
+function fileNode(name, componentType = null, missing = [], schemaVersion = "2.0") {
   const keys = [
     "platformContract",
     "security",
@@ -58,7 +58,7 @@ function fileNode(name, componentType = null, missing = []) {
     ...Object.fromEntries(keys.map((key) => [key, missing.includes(key) ? null : { oid: `${name}-${key}` }])),
   };
   if (node.platformContract && componentType) {
-    const text = `schema_version: "2.0"\n\ncomponent:\n  type: ${componentType}\n  id: fixture\n  product_name: Fixture\n  repository: GoreeCloud/${name}\n`;
+    const text = `schema_version: "${schemaVersion}"\n\ncomponent:\n  type: ${componentType}\n  id: fixture\n  product_name: Fixture\n  repository: GoreeCloud/${name}\n`;
     node.platformContract = {
       ...node.platformContract,
       byteSize: Buffer.byteLength(text),
@@ -153,7 +153,7 @@ test("documentation applicability is classified only from explicit Platform Cont
     return response({
       data: {
         r0: fileNode("app", "application"),
-        r1: fileNode("service", "service", ["benefits"]),
+        r1: fileNode("service", "service", ["benefits"], "2.9"),
         r2: fileNode("unclassified", null),
       },
     });
@@ -174,8 +174,9 @@ test("documentation applicability is classified only from explicit Platform Cont
     assert.equal(coverage.platformDeclarations.observedRepositories, 2);
     assert.equal(coverage.platformDeclarations.absentRepositories, 0);
     assert.equal(coverage.platformDeclarations.unavailableRepositories, 1);
-    assert.equal(coverage.platformDeclarations.contract2DeclaredRepositories, 2);
+    assert.equal(coverage.platformDeclarations.contract2DeclaredRepositories, 1);
     assert.equal(coverage.repositories.find((item) => item.name === "app").platformDeclaration.declaration.schemaVersion, "2.0");
+    assert.equal(coverage.repositories.find((item) => item.name === "service").platformDeclaration.declaration.schemaVersion, "2.9");
     assert.equal(coverage.documentation.applicableRepositoriesWithAllObservedFiles, 1);
     assert.equal(coverage.documentation.applicableRepositoriesWithObservedGaps, 1);
 
