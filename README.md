@@ -35,7 +35,7 @@ The application is deliberately text-first while its unique canonical product ic
 - Fail-closed GitHub OAuth session authorization for private API reads.
 - A shared browser sign-in gate across Overview, Governance, and Attention Queue prevents signed-out private API requests and clears displayed private observations when an authenticated API returns 401/403.
 - Public-source safety validation for credential, private-key, browser-authentication, example-configuration, and exported-data boundaries.
-- GoreeCloud Platform Contract 2.0 root declaration with exact-head Forge conformance validation and fail-closed Anchor eligibility.
+- Five-MIPS source assessment with blocked Anchor eligibility until applicable integrations are verified.
 - Repository-policy validation for the six mandatory application/service root documentation records.
 
 See [SPECIFICATIONS.md](SPECIFICATIONS.md) for the version-coupled product specification and [FEATURES.md](FEATURES.md) for the explicit implemented/partial/not-approved capability boundary.
@@ -80,9 +80,7 @@ The current development web runtime uses GC UI Foundations tokens and a first-pa
 
 ## Platform conformance
 
-The repository-root [goreecloud.platform.yaml](goreecloud.platform.yaml) declares GoreeCloud Platform Contract 2.1 successor state, including `/api/health` and `/api/ready`. All nine Integral Platform Systems and their current implementation status are explained in [docs/PLATFORM_CONFORMANCE.md](docs/PLATFORM_CONFORMANCE.md). The manifest is deliberately `nonconformant`; the dashboard lifecycle is Forge with deployment state Development while applicable Manager, Privacy Shield, Wardveil Security, Everkeep, GoreeCloud UI, Mesh, Identity, Policy, and Observability acceptance gates remain incomplete.
-
-The Platform Contract workflow pins the reviewed central contract implementation and validates the exact pull-request head rather than using a synthetic PR merge revision. A passing manifest check does not promote lifecycle status or establish any platform-system acceptance.
+The [five-MIPS assessment](docs/MIPS_ASSESSMENT.md) and [platform integration record](docs/PLATFORM_CONFORMANCE.md) document incomplete GoreeCloud UI, GoreeShield, Wardveil, GoreeCloud Identity and GoreeCloud Mesh integrations. The dashboard remains in Forge; no Anchor or production acceptance is claimed.
 
 ## Local development
 
@@ -105,7 +103,7 @@ npm test
 npm run check
 ```
 
-Validation covers repository structure, the current fourteen-file application/service repository baseline, public-source safety, JavaScript syntax, security invariants, dashboard health surfaces, timeout protection, refresh-guard integrity, fail-closed API contracts, deterministic GitHub aggregation, operational health/readiness, native four-state appearance-controller behavior, cache policy, data health, the GC UI source-migration contract, repository product records, governance evidence boundaries, and local Platform Contract source invariants. GitHub Actions additionally runs the pinned central Platform Contract 2.1 successor validator and evaluator against the exact dashboard revision.
+Validation covers repository structure, the current fourteen-file application/service repository baseline, public-source safety, JavaScript syntax, security invariants, dashboard health surfaces, timeout protection, refresh-guard integrity, fail-closed API contracts, deterministic GitHub aggregation, operational health/readiness, native four-state appearance-controller behavior, cache policy, data health, the GC UI source-migration contract, repository product records, governance evidence boundaries, and current five-MIPS release-blocking declarations. A successful foundation check does not establish release eligibility.
 
 Deterministic representative GitHub fixtures exercise the complete dashboard aggregation path without live credentials. They verify private-repository normalization and owner filtering, complete coverage, Actions permission denial, the distinction between confirmed optional `404` absence and unavailable permission-denied evidence, fail-soft rate-limit loss, and sanitized core GitHub failures. Fixture validation strengthens source confidence but does not replace live private-repository validation, rendered form-factor acceptance, or deployment acceptance.
 
@@ -126,7 +124,7 @@ Deterministic representative GitHub fixtures exercise the complete dashboard agg
 - [BRANDING.md](BRANDING.md) — current canonical identity boundary.
 - [docs/GOVERNANCE_CONTROL_PLANE.md](docs/GOVERNANCE_CONTROL_PLANE.md) — governance evidence model and interpretation boundaries.
 - [docs/PUBLIC_SOURCE_BOUNDARY.md](docs/PUBLIC_SOURCE_BOUNDARY.md) — public/open-source source contract and private authenticated deployment boundary.
-- [goreecloud.platform.yaml](goreecloud.platform.yaml) — machine-readable Platform Contract 2.0 declaration.
+- [docs/MIPS_ASSESSMENT.md](docs/MIPS_ASSESSMENT.md) — five-MIPS evidence and outstanding release requirements.
 
 ## Deployment
 
