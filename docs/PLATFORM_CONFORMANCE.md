@@ -1,13 +1,27 @@
-# Mandatory Native and Platform Conformance
+# GoreeCloud GitHub Dashboard — Native and MIPS Integration Status
 
-Effective August 24, 2026, this GoreeCloud application must be built and maintained as original GoreeCloud-owned software from the ground up.
+GoreeCloud GitHub Dashboard must remain original GoreeCloud-owned software, with appropriately licensed and technically necessary standards, cryptographic, operating-system and interoperability foundations.
 
-Small, technically necessary foundational dependencies remain permitted where independent reimplementation would reduce security, correctness, interoperability, standards compliance, or maintainability. Examples include WireGuard, cryptographic and encryption libraries, protocol libraries, codecs, database engines, operating-system APIs, and comparable critical foundations. Such dependencies must not become the application shell or define the GoreeCloud product identity.
+## Current mandatory integration scope
 
-The application must implement and remain current with the latest approved contracts for Glaze UI, Wardveil Security, GoreeCloud Privacy Shield, and Everkeep. All four integrations are mandatory and must be substantive and evidence-backed.
+GoreeCloud has **five Mandatory Integrated Platform Systems (MIPS)**:
 
-No release or service state may be classified or retained as Stable unless native application qualification and current validated conformance with all four platform systems are complete. A missing, materially incomplete, unvalidated, or materially outdated integration is a Stable blocker.
+- GoreeCloud UI
+- GoreeShield
+- Wardveil
+- GoreeCloud Identity
+- GoreeCloud Mesh
 
-If this repository contains inherited or upstream-derived application code, that code is transitional or historical. It may be maintained for security, continuity, migration, compatibility, recovery, and rollback while a native replacement is developed, but it is not the approved final architecture.
+Each MIPS must receive a verified integration where applicable, or a specific and documented non-applicability finding, before Anchor release eligibility. GoreeCloud UI is the sole design and experience authority; earlier Glaze branding is superseded.
 
-Repository CI, release documentation, project specifications, and change logs must progressively enforce and record this contract.
+## Current application status
+
+**Forge — development / not release approved.** Native operating-system support, authenticated private hosting, platform integration, accessibility, secret management and recovery must be independently tested where applicable. The GitHub Dashboard has not established completed acceptance for the five MIPS. Successful source CI or a manifest declaration is not proof of live platform integration.
+
+The source repository is public; private GitHub observations require verified authenticated and non-cached deployment controls. No release status is inferred from the contents of this document.
+
+## Engineering policy
+
+Use reviewed small foundational dependencies when native replacement would make security, correctness, interoperability or maintainability worse. Do not claim a Stable release until verified qualification and the applicable MIPS, security, privacy, accessibility and native-platform gates pass.
+
+See the [current five-MIPS requirement](https://drive.google.com/file/d/1mzBTnWag2ca8wsRg9uHl4IXOkjkoTT9o/view?usp=drivesdk). Active development details remain in the dashboard's staged implementation pull requests.
