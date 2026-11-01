@@ -10,9 +10,9 @@ const requiredFiles = [
   "USER-MANUAL.md",
   "PRIVACY POLICY.md",
   "NOTES.md",
-  "goreecloud.platform.yaml",
   "docs/GC_UI_MIGRATION.md",
   "docs/PLATFORM_CONFORMANCE.md",
+  "docs/MIPS_ASSESSMENT.md",
   "docs/OPERATIONAL_HEALTH.md",
   "docs/PUBLIC_SOURCE_BOUNDARY.md",
   "docs/GOVERNANCE_CONTROL_PLANE.md",
@@ -33,7 +33,6 @@ const requiredFiles = [
   "tests/governance.test.mjs",
   "tests/rulesets.test.mjs",
   "tests/public-source-policy.test.mjs",
-  ".github/workflows/platform-contract.yml",
 ];
 
 const failures = [];
@@ -59,8 +58,7 @@ if (!failures.length) {
   const themePolicy = fs.readFileSync("public/theme-policy.js", "utf8");
   const appearanceController = fs.readFileSync("public/appearance-controller.js", "utf8");
   const platform = fs.readFileSync("docs/PLATFORM_CONFORMANCE.md", "utf8");
-  const manifest = fs.readFileSync("goreecloud.platform.yaml", "utf8");
-  const platformWorkflow = fs.readFileSync(".github/workflows/platform-contract.yml", "utf8");
+  const mipsAssessment = fs.readFileSync("docs/MIPS_ASSESSMENT.md", "utf8");
   const health = fs.readFileSync("functions/api/health.js", "utf8");
   const ready = fs.readFileSync("functions/api/ready.js", "utf8");
   const publicSourceBoundary = fs.readFileSync("docs/PUBLIC_SOURCE_BOUNDARY.md", "utf8");
@@ -209,35 +207,17 @@ if (!failures.length) {
   if (!fs.existsSync("public/gc-ui-foundations.css") || !fs.existsSync("public/gc-ui-adapter.css")) failures.push("GC UI foundations and adapter missing.");
   if (fs.existsSync("public/glaze-ui.js") || fs.existsSync("public/glaze-v1.6.css")) failures.push("Retired design assets must not ship in public.");
   for (const system of [
-    "GoreeCloud Manager",
-    "Privacy Shield",
-    "Wardveil Security",
-    "Everkeep",
     "GoreeCloud UI",
-    "GoreeCloud Mesh",
+    "GoreeShield",
+    "Wardveil",
     "GoreeCloud Identity",
-    "GoreeCloud Policy",
-    "GoreeCloud Observability",
+    "GoreeCloud Mesh",
   ]) {
-    if (!platform.includes(system)) failures.push(`Platform conformance must evaluate ${system}.`);
+    if (!platform.includes(system)) failures.push(`Platform integration status must identify ${system}.`);
+    if (!mipsAssessment.includes("| " + system + " | Incomplete |")) failures.push(`MIPS assessment must conservatively track ${system} as incomplete.`);
   }
-
-  for (const marker of [
-    'schema_version: "2.1"',
-    "component:\n  type: application\n  id: github-dashboard",
-    "repository: GoreeCloud/github-dashboard",
-    "lifecycle: forge",
-    "version: 0.3.0-dev",
-    'gc_ui_required: "foundations-v1.0.1"',
-    "health_endpoint: /api/health",
-    "readiness_endpoint: /api/ready",
-    "status: nonconformant",
-  ]) {
-    if (!manifest.includes(marker)) failures.push(`Platform manifest missing required marker: ${marker}`);
-  }
-
-  if (manifest.includes("result: applicable-conformant")) {
-    failures.push("Forge manifest must not claim an accepted platform-system integration without evidence.");
+  if (!mipsAssessment.includes("Release decision: Blocked")) {
+    failures.push("MIPS assessment must block unaccepted Anchor eligibility.");
   }
 
   for (const source of [health, ready]) {
@@ -254,9 +234,6 @@ if (!failures.length) {
   if (!ready.includes('code: "deployment_not_ready"')) {
     failures.push("Readiness must retain a generic not-ready response code.");
   }
-
-  if (!platformWorkflow.includes("reusable-platform-manifest-v2-1.yml@1499491159250d5f15dad4e2835fbeee2fda9ce9")) failures.push("GC UI 2.1 workflow must use a pinned successor evaluator.");
-  if (!platformWorkflow.includes("manifest-path: goreecloud.platform.yaml")) failures.push("GC UI 2.1 workflow must pass the local manifest.");
 
 }
 
