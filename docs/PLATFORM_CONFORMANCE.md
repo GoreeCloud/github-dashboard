@@ -10,6 +10,14 @@ This development candidate opts in to the separate GC UI successor Contract 2.1 
 
 The GC UI version target is the *scoped* `foundations-v1.0.1` semantic token and browser theme release. This declaration is not complete component, accessibility, authenticated-runtime or production acceptance. Historic Contract 2.0 results are separate evidence, not current design authority.
 
+## Five-MIPS Anchor gate versus historical nine-field declaration
+
+The founder's current [Mandatory Integrated Platform Systems requirement](https://drive.google.com/file/d/1mzBTnWag2ca8wsRg9uHl4IXOkjkoTT9o/view?usp=drivesdk), updated October 25, 2026, defines **five** MIPS for Anchor eligibility: GoreeCloud UI, GoreeShield, Wardveil, GoreeCloud Identity, and GoreeCloud Mesh. Each must have a verified integration or a defensible documented non-applicability finding before Anchor.
+
+The historical `goreecloud.platform.yaml` Contract 2.1 candidate declares **nine** `platform_systems` fields from the earlier platform model. The nine-field declaration is retained as historical development-source evidence pending a separately reviewed schema and compatibility decision. Do **not** mistake a nine-field declaration test or a hypothetical restored legacy evaluator for verification of the current five-MIPS Anchor gate. In particular, `privacy_shield` cannot silently be renamed or asserted to satisfy GoreeShield without verified mapping and integration evidence.
+
+**Required reconciliation:** establish a founder-aligned, versioned contract schema and validator for the current five MIPS without erasing unrelated platform-system evidence; document any retained additional contracts separately; test the actual app integrations and release gate. Until then, this candidate stays Forge/nonconformant. Track under [issue #13](https://github.com/GoreeCloud/github-dashboard/issues/13).
+
 ## Current conformance state
 
 | Integral Platform System | Current state | Evidence / boundary |
