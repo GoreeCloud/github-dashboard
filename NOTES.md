@@ -13,7 +13,7 @@
 
 ## Open boundaries
 
-Representative live private-repository acceptance, rendered form-factor/accessibility/performance acceptance, all applicable nine-system platform integrations, authenticated production deployment verification, monitoring, rollback acceptance, Seal qualification, and Anchor approval remain open.
+Representative live private-repository acceptance, rendered form-factor/accessibility/performance acceptance, all five applicable MIPS integrations, authenticated production deployment verification, monitoring, rollback acceptance, Seal qualification, and Anchor approval remain open.
 
 ## Governance migration
 
