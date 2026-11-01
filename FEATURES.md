@@ -56,14 +56,14 @@ This record distinguishes verified source functionality from work that is partia
 - System appearance follows operating-system Light/Dark preference; Deep Dark remains an explicit opt-in rather than being inferred automatically.
 - Light/dark/deep-dark appearance support, visible focus, Reduced Motion, Increased Contrast, Forced Colors, Reduced Transparency fallback, and solid-surface/color-mix resilience.
 - GLAZE UI V1.6 / 1.6.0 source migration layer with 48 px touch targets, solid durable data surfaces, navigation-only Glaze material, and improved tablet navigation.
-- GoreeCloud Platform Contract 2.0 root manifest declaring all nine Integral Platform Systems, Forge lifecycle with Development deployment state, health/readiness interfaces, governance endpoint/dependency metadata, and nonconformant status.
-- Exact-head Platform Contract CI wrapper pinned to the reviewed central contract implementation, including computed-result schema validation and a fail-closed Anchor-eligibility assertion.
+- Current five-MIPS assessment identifying missing integration evidence, plus Forge lifecycle, health/readiness and deployment safeguards.
+- Exact-head application foundation CI and conservative five-MIPS blocked-release assessment.
 - Deterministic unit, contract, representative aggregation, edge, bounded-collection, request-header, cache-policy, data-health, refresh-policy, appearance-policy, operational-health, governance-observation, Platform Contract applicability, active-ruleset/required-workflow-observation, public-source-policy, Glaze-migration, repository-policy, and product/conformance source tests.
 
 ## Partial or acceptance-gated
 
 - **GLAZE UI V1.6:** source migration includes System, Light, Dark, and Deep Dark appearance states plus the shared native controller; rendered, accessibility, resilience, optical-quality, and form-factor acceptance remain pending.
-- **Platform Contract 2.0:** declaration and source/CI validation are implemented; the computed result is intentionally nonconformant because required platform-system integrations and acceptance evidence remain incomplete.
+- **Five-MIPS gate:** source assessment documents incomplete integration and acceptance for the current five Mandatory Integrated Platform Systems; it is not release acceptance.
 - **Operational health/readiness:** source endpoints and contract tests exist; deployed runtime and monitoring acceptance remain pending.
 - **Public-source safety:** repository-local detection and source contracts are implemented, but hosted secret scanning, dependency/security automation, branch/ruleset enforcement, signed release provenance, and production deployment security validation remain separate acceptance work.
 - **Governance control plane:** baseline-file, documentation-path, bounded application/service applicability declaration, classic default-branch protection, active default-branch ruleset, and required-workflow reference observation are implemented; full peer-manifest validation, broader governed repository taxonomy, governed-workflow policy evaluation, security/dependency automation interpretation, release eligibility, and platform-system integration state remain pending.
@@ -75,7 +75,7 @@ This record distinguishes verified source functionality from work that is partia
 - **Private deployment:** source contains the deployment boundary, but an authenticated private-access layer and production runtime have not been accepted.
 - **Live GitHub validation:** deterministic fixtures exist; representative live public/private repository validation remains required.
 - **Product identity:** text-first presentation is intentional until a unique canonical dashboard identity is approved.
-- **Platform-system conformance:** source-level privacy/security/continuity controls exist, but all nine Integral Platform Systems remain subject to the blocked/nonconformant statuses in `docs/PLATFORM_CONFORMANCE.md`.
+- **MIPS integration:** source-level privacy/security/continuity controls exist, but the five current MIPS require independently verified integration before Anchor eligibility.
 
 ## Not currently implemented or approved
 
